@@ -1,78 +1,109 @@
-function roundRobin(matriz, trocaContexto, quantum) {
-    // variaveis
-    const numTarefas = matriz[0].length;
-    const tarefas = ["t1", "t2", "t3", "t4"];
-    const ingresso = matriz[0];
-    const duracao = matriz[1];
-    const tempoEspera = Array(numTarefas).fill(0);
-    const tempoVida = Array(numTarefas).fill(0);
-  
-    let tempoAtual = Math.min(...ingresso);
-    let tarefasRestantes = numTarefas;
-    let indice = ingresso.indexOf(tempoAtual);
-  
-    while (tarefasRestantes > 0) {
-      if (duracao[indice] > 0) {
-        if (duracao[indice] <= quantum) {
-          const tempoExecucao = duracao[indice];
-          tempoAtual += tempoExecucao;
-          duracao[indice] = 0;
-          tarefasRestantes--;
-  
-          tempoVida[indice] = tempoAtual - ingresso[indice];
-          tempoEspera[indice] = tempoVida[indice] - matriz[1][indice];
-  
-          console.log(`Executando a tarefa ${tarefas[indice]} por ${tempoExecucao} unidades de tempo.`);
-        } else {
-          tempoAtual += quantum;
-          duracao[indice] -= quantum;
-  
-          console.log(`Executando a tarefa ${tarefas[indice]} por ${quantum} unidades de tempo.`);
-        }
-      }
-  
-      let proximoIndice = -1;
-      for (let i = 0; i < numTarefas; i++) {
-        const proximo = (indice + i + 1) % numTarefas;
-        if (duracao[proximo] > 0) {
-          proximoIndice = proximo; // se a tarefa não for totalemente executada
-          break;
-        }
-      }
-  
-      if (proximoIndice === -1) {
-        tempoAtual++;
-      } else if (ingresso[proximoIndice] <= tempoAtual + trocaContexto) { // se o tempo de inggresso for menor ou igual ao tempo atual mais o tempo de troca
-        tempoAtual += trocaContexto;
-      } else {
-        tempoAtual = ingresso[proximoIndice];
-      }
-  
-      indice = proximoIndice;
+class Tarefa {
+    constructor(nome, ingresso, duracao) {
+      this.nome = nome;
+      this.ingresso = ingresso;
+      this.duracao = duracao;
+      this.tempoRestante = duracao;
+      this.tempoVida = 0;
+      this.tempoEspera = 0;
+      this.tempoExecucao = 0;
     }
+}
+
+
   
-    const tempoTotalExecucao = tempoAtual - Math.min(...ingresso);
-    const tempoMedioVida = tempoVida.reduce((acc, val) => acc + val, 0);
-    const tempoMedioEspera = tempoEspera.reduce((acc, val) => acc + val, 0) / numTarefas;
-    
-    console.log(`Tempo total de execução: ${tempoTotalExecucao} unidades de tempo.`);
-    console.log(`Tempo médio de vida de todas as tarefas: ${tempoMedioVida} unidades de tempo.`);
-    console.log(`Tempo médio de espera de todas as tarefas: ${tempoMedioEspera} unidades de tempo.`);
+function roundRobin(tarefas, quantum, trocaContexto) {
+    let tempoTotal = 0;
+    let fila = [...tarefas];
+
+    //* Ordena as tarefas pelo tempo de ingresso
+    fila.sort((tarefaA, tarefaB) => {
+        if (tarefaA.ingresso < tarefaB.ingresso) {
+            return -1;
+        } else if (tarefaA.ingresso > tarefaB.ingresso) {
+            return 1;
+        }
+        return 0;
+    });
   
-    return {
-      tempoVida,
-      tempoEspera,
-      tempoMedioVida,
-      tempoMedioEspera,
-      tempoTotalExecucao
-    };
-  }
+    while (fila.length > 0) {
+        const tarefaAtual = fila[0];
+
+        if (tarefaAtual.tempoRestante > 0) {
+            console.log(`******** TAREFA ${tarefaAtual.nome} - Duração: ${tarefaAtual.tempoRestante}u.t ********`);
+            console.log(`Começa a executar em: ${tempoTotal}ut\n`);
+            //console.log(`Executando a tarefa ${tarefas[indice]} por ${tempoExecucao} unidades de tempo.`);
+
+            //* QUANTUM 
+            for (let count = 0; count < quantum; count++) {
+                tarefaAtual.tempoExecucao++;
+                tarefaAtual.tempoRestante--;
+                tempoTotal++;
+                if (tarefaAtual.tempoRestante === 0) {
+                    break;
+                }
+            }
+            
+            //* verifica se a tarefa ainda tem algo a executar
+            if (tarefaAtual.tempoRestante === 0) {
+                
+                tarefaAtual.tempoVida = tempoTotal - tarefaAtual.ingresso; //*
+                tarefaAtual.tempoEspera = tarefaAtual.tempoVida - tarefaAtual.tempoExecucao; //* 
+
+                if (fila.length > 1) {
+                    tempoTotal += trocaContexto;
+                    console.log('Troca de Contexto!\n');
+                }
+                fila.shift();
+            } else {
+                if (fila.length > 1) {
+                    tempoTotal += trocaContexto;
+                    console.log('Troca de Contexto!\n');
+                }
+                fila.push(fila.shift());
+                }
+        } else {
+            tempoTotal++;
+        }
+    }
+
+    //? variaveis de tempo total
+    let vidaTotal = 0;
+    let esperaTotal = 0;
+    let vidaMedia = 0;
+    let esperaMedia = 0;
+
+
+    //* CALCULO TEMPO VIDA - TEMPO ESPERA
+    for (let i = 0; i < [...tarefas].length; i++) {
+        esperaTotal += [...tarefas][i].tempoEspera ;
+        vidaTotal += [...tarefas][i].tempoVida;
+    }
+
+    vidaMedia = vidaTotal / [...tarefas].length;
+    esperaMedia = esperaTotal / [...tarefas].length;
+
+    // LOG TEMPOS
+    console.log('_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _\n');
+    console.log(`Tempo Médio de Vida = ${vidaMedia}`);
+    console.log(`Tempo Médio de Espera = ${esperaMedia}`);
+
+    //console.log([...tarefas][3].nome, [...tarefas][3].tempoVida);
+    //console.log([...tarefas].length);
+}
   
-  const matriz = [
-    [5, 15, 10, 0], // Ingresso
-    [30, 10, 40, 20] // Duração
-  ];
-  
-  // tc = 4u.t, quantum = 15u.t
-  const resultado = roundRobin(matriz, 4, 15);
-  
+
+//? TAREFAS
+const t1 = new Tarefa('t1', 5, 30);
+const t2 = new Tarefa('t2', 15, 10);
+const t3 = new Tarefa('t3', 10, 40);
+const t4 = new Tarefa('t4', 0, 20);
+const t5 = new Tarefa('t5', 0, 10);
+
+
+//? TC E QUANTUM
+const quantum = 15;
+const trocaContexto = 4;
+
+//? EXECUTADOR
+roundRobin([t1, t2, t3, t4, t5], quantum, trocaContexto);
