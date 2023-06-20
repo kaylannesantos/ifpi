@@ -9,8 +9,6 @@ class Tarefa {
       this.tempoExecucao = 0;
     }
 }
-
-
   
 function roundRobin(tarefas, quantum, trocaContexto) {
     let tempoTotal = 0;
@@ -92,14 +90,12 @@ function roundRobin(tarefas, quantum, trocaContexto) {
     //console.log([...tarefas].length);
 }
   
-
 //? TAREFAS
 const t1 = new Tarefa('t1', 5, 30);
 const t2 = new Tarefa('t2', 15, 10);
 const t3 = new Tarefa('t3', 10, 40);
 const t4 = new Tarefa('t4', 0, 20);
 const t5 = new Tarefa('t5', 0, 10);
-
 
 //? TC E QUANTUM
 const quantum = 15;
