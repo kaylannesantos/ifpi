@@ -72,7 +72,7 @@ function roundRobin(tarefas, quantum, trocaContexto) {
     let esperaMedia = 0;
 
 
-    //* CALCULO TEMPO VIDA - TEMPO ESPERA
+    //* CALCULO TEMPO VIDA && TEMPO ESPERA
     for (let i = 0; i < [...tarefas].length; i++) {
         esperaTotal += [...tarefas][i].tempoEspera ;
         vidaTotal += [...tarefas][i].tempoVida;
@@ -97,7 +97,7 @@ const t3 = new Tarefa('t3', 10, 40);
 const t4 = new Tarefa('t4', 0, 20);
 const t5 = new Tarefa('t5', 0, 10);
 
-//? TC E QUANTUM
+//? TC && QUANTUM
 const quantum = 15;
 const trocaContexto = 4;
 
