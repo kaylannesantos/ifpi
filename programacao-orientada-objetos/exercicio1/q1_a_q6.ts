@@ -42,4 +42,4 @@ características (atributos) e comportamentos (métodos) que os mesmos poderiam
 ter.
 Objeto --> Personagem
 Atributos --> altura, habilidades, nivel de inteligencia
-Metodos --> correr, saltar, caminhar, lutar                                                 
+Metodos --> correr, saltar, caminhar, lutar
