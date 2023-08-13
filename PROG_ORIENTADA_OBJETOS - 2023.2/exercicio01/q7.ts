@@ -21,9 +21,7 @@ class Retangulo {
     
   }
   
-  const retangulo = new Retangulo();
-  retangulo.l1 = 12;
-  retangulo.l2 = 3;
+  const retangulo = new Retangulo(12,3);
   
   console.log(retangulo.calcularArea());
   console.log(retangulo.calcularPerimetro());

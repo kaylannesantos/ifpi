@@ -17,10 +17,8 @@ class SituacaoFinanceira {
     }
 }
 
-let situacaofinanceira : SituacaoFinanceira;
-situacaofinanceira = new SituacaoFinanceira();
-
-situacaofinanceira.valorCreditos = 50;
-situacaofinanceira.valorDebitos = 20;
+let situacaofinanceira: SituacaoFinanceira;
+situacaofinanceira = new SituacaoFinanceira(50, 20);
 
 console.log(situacaofinanceira.saldo());
+
