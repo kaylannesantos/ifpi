@@ -6,10 +6,10 @@ atributos abaixo seriam relevantes:
 Atributo Sistema em que é
 importante
 
-Peso                        IMC
-Tipo de CNH                 Categoria
-Tipo Sanguíneo              Teste de DNA
-Habilidade destra           Escrever
-Percentual de gordura       Teste de colesterol
-Saldo em conta              Conta bancária
-Etnia                       Censo demográfico
+Peso                        Sistema clínico 
+Tipo de CNH                 Sistema do Detran 
+Tipo Sanguíneo              Sistrma interno de Teste de DNA
+Habilidade destra           Programa de digitação 
+Percentual de gordura       Sistema clínico 
+Saldo em conta              Sistema de conta bancária 
+Etnia                       Sistema cultural 
