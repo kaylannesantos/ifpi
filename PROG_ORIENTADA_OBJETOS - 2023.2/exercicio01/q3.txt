@@ -12,4 +12,4 @@ Tipo Sanguíneo              Teste de DNA
 Habilidade destra           Escrever
 Percentual de gordura       Teste de colesterol
 Saldo em conta              Conta bancária
-Etinia
+Etnia                       Censo demográfico
