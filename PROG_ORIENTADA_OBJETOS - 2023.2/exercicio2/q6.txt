@@ -1,0 +1,6 @@
+6. Poderíamos dizer que a tipagem do TypeScript é fraca por uma variável do tipo
+number aceitar tanto inteiros como ponto flutuante?
+Não, pois tipagem fraca esta relacionada a realizações de operações incompatíveis. No TypeScript,
+mesmo que no tipo number seja permitido tanto um valor inteiro como um valor flutuante,
+a tipagem estática verifica os tipos de dados durante a compilação e a tipagem forte não permite 
+as operações incompatíveis ente dados direfentes.
