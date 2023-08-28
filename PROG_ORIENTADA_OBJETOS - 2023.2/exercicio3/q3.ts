@@ -3,13 +3,13 @@ tratamento opcional. Caso esse último não seja fornecido, deve ser considerado
 valor “Sr”. Ao final, imprima uma saudação semelhante a “Sra. Sávia”. */ 
 
 function saudacao(nome: string, 
-    pronome?: string) : string {
+    pronome: string = "Sr(a)") : string {
 if (pronome) {
-return nome + " " + pronome;
+return pronome + " " + nome;
 }
 return nome;
 
 }
 
 console.log(saudacao('Alice', 'Senhorita'));//"Alice Senhorita" 
-console.log(saudacao('Alice'));//"Alice"
+console.log(saudacao('Alice'));//"Sr(a) Alice"
