@@ -1,5 +1,0 @@
-2. Qual o principal problema do uso de tipagem dinâmica?
-
-O principal problema da tipagem dinâmica é erro de runtime, já que ele só faz a inferência do tipo de dado
-durante a sua execução, dessa forma os erros que antes podiam ser descobertos na compilação, 
-só são descobertos durante a execução do programa.
