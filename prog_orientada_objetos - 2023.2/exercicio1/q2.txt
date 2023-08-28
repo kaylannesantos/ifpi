@@ -1,0 +1,4 @@
+2. De forma breve, conceitue atributos e métodos. Pesquise e exemplifique um
+exemplo de objeto que possua atributos e métodos (notação livre).
+Atributos são as características ou propiedades de um objeto, enquanto os métodos são as ações ou comportamentos que ele obejto vai realizar. 
+Por exemplo, um gato tem como atributos: idade, raça, nome; Seus métodos(ações): latir, comer, correr, dormir

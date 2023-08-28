@@ -1,0 +1,11 @@
+4. Considerando os objetos Pessoa e Conta:
+a. Seria interessante em um sistema bancário um objeto "conta" possuir uma
+"pessoa" como um atributo interno representando o titular da conta?
+Não, já que pessoa poderia ser outro objeto com atributos e métodos.
+
+
+b. Olhando no sentido inverso, seria interessante uma pessoa possuir mais de
+uma conta como atributo? Que elemento da programação estruturada melhor
+representaria o conjunto de contas de uma pessoa?
+Seria interessante ela possuir uma unica conta tendo como metodos que cada uma 
+realiza. Seu elemento na programação estruturada seria a seleção.
