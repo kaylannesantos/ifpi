@@ -14,6 +14,6 @@ function alfabeto(...letters: string[]) {
 
 }
 
-console.log(alfabeto("a ", "b "));
-console.log(alfabeto("a ", "b ", "c "));
-console.log(alfabeto("a ", "b ", "c ", "d "));
+console.log(alfabeto("a ", "b"));
+console.log(alfabeto("a ", "b ", "c"));
+console.log(alfabeto("a ", "b ", "c ", "d"));
