@@ -1,1 +1,0 @@
-q2- Não saber qual o tipo de uma variável é até que esta seja realmente atribuída em execução.
