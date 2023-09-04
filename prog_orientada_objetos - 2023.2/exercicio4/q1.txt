@@ -2,11 +2,11 @@
 ( F ) Objetos são modelos para classes;
 ( F ) Atributos de uma classe devem ser obrigatoriamente inicializados para que as
 classes compilem;
-( ) Uma variável declarada dentro de um método deve ser inicializada para que a
+( F ) Uma variável declarada dentro de um método deve ser inicializada para que a
 classe seja compilável;
-( ) Uma variável que seja uma classe declarada em um método é automaticamente
+( V ) Uma variável que seja uma classe declarada em um método é automaticamente
 inicializada com undefined;
 ( V ) Construtores são rotinas especiais que servem para inicializar e configurar os
 objetos no momento da instanciação;
 ( V ) Construtores não possuem tipo de retorno e podem ou não ter parâmetros;
-( ) Uma classe pode ter várias instâncias.
+( V ) Uma classe pode ter várias instâncias.
