@@ -13,7 +13,7 @@ console.log(c3.consultarSaldo());
 a. Qual o resultado dos dois "prints"? Justifique sua resposta.
 R-> Ambos apresentam como resultado o mesmo valor, pois ambos apontam para o mesmo objeto.
 b. O que acontece com o objeto para o qual a referência c1 apontava?
-R-> Ele é mantido, só que agora ele aponta para o mesmo objeto em que os demais estão apontando. 
+R-> Ele é mantido e sua memória é liberada, só que agora ele aponta para o mesmo objeto em que os demais estão apontando. 
 Dessa forma, quando c1 transferi 50 para c2, na verdade ele esta incrementando e decrementando o mesmo objeto. 
 */
 
