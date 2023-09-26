@@ -7,3 +7,6 @@ node_modules/
 # arquivos de configuração sensíveis
 tsconfig.json
 
+# arquivos .json
+/package.json
+
