@@ -1,9 +1,9 @@
-# Ignorar arquivos temporários
+# arquivos temporários
 *.tmp
 
-# Ignorar a pasta de dependências
+# pasta de dependências
 node_modules/
 
-# Ignorar arquivos de configuração sensíveis
+# arquivos de configuração sensíveis
 config.json
 
