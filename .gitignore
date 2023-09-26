@@ -1,12 +1,12 @@
-# arquivos temporários
+# arq. temporários
 *.tmp
 
 # pasta de dependências
 node_modules/
 
-# arquivos de configuração sensíveis
+# arq. de configuração sensíveis
 tsconfig.json
 
-# arquivos .json
+# arq. .json
 /package.json
 
