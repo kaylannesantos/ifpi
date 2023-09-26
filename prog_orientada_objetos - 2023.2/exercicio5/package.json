@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  },
+  "name": "exercicio5",
+  "version": "1.0.0",
+  "main": "q1.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/prompt-sync": "^4.2.1",
+    "tsx": "^3.13.0",
+    "typescript": "^5.2.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
