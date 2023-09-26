@@ -1,2 +1,9 @@
+# Ignorar arquivos temporários
+*.tmp
 
-KaylanneSantos/
+# Ignorar a pasta de dependências
+node_modules/
+
+# Ignorar arquivos de configuração sensíveis
+config.json
+
