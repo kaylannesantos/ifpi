@@ -5,5 +5,5 @@
 node_modules/
 
 # arquivos de configuração sensíveis
-config.json
+tsconfig.json
 
