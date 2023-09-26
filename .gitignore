@@ -4,7 +4,7 @@
 # pasta de dependências
 node_modules/
 
-# arq. de configuração sensíveis
+# arq. de configuração typescript
 tsconfig.json
 
 # arq. .json
