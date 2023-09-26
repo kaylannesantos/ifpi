@@ -47,35 +47,58 @@ class Postagem {
 class Microblog {
     postagens: Postagem[] = [];
 
+    consultarPostagem(id: number): number {
+        let indice: number = -1;
+		for (let i: number = 0; i < this.postagens.length; i++) {
+			if (this.postagens[i].id == id) {
+				indice = i;
+				break;
+			}
+		}
+		return indice;
+    }
+
     inserir (postagem: Postagem): void {//add conta
         this.postagens.push(postagem);
     }
 
     excluir (id: number): void {//remover conta
-      for (let i = 0; i < this.postagens.length; i++) {
-      if (this.postagens[i].id === id) {
-        this.postagens.pop();
-        console.log(`Postagem com ID ${id} foi excluída.`);
-        return;
-      }
-    }
-    console.log(`Postagem com ID ${id} não foi encontrada.`);
+        let indice: number = this.consultarPostagem(id);
+
+        if (indice != -1) {
+            for (let i: number = indice; i < this.postagens.length; i++) {
+                this.postagens[i] = this.postagens[i + 1];
+            }
+            this.postagens.pop();
+            console.log(`Postagem com ID ${id} foi excluída.`);
+        }
     }
 
-    postagemMaisCurtida () {
-        let postagemMaisCurtida = this.postagens[0];
-        for (let i = 0; i < this.postagens.length; i++) {
-            if (this.postagens[i].quantCurtidas > postagemMaisCurtida.quantCurtidas) {
-                postagemMaisCurtida = this.postagens[i];
-              }
-        }console.log(`Postagem com mais curtidas: ${postagemMaisCurtida.id}`);
-        return;
+    postagemMaisCurtida (): Postagem {
+        let maisCurtidas: number = -1;
+        let postagemMaisCurtida! : Postagem;
+
+        for (let postagem of this.postagens) {
+            if (postagem.quantCurtidas >= maisCurtidas) {
+                postagemMaisCurtida = postagem;
+                maisCurtidas = postagem.quantCurtidas;
+            }
+        }
+        return postagemMaisCurtida;
+    }
+
+    curtir (id: number):void {
+        let postagemProcurada = this.consultarPostagem(id);
+
+        if (postagemProcurada) {
+            this.postagens[postagemProcurada].curtir();
+        }
     }
 }
+let microblog = new Microblog();
+microblog.inserir(new Postagem(1, "Essa é a 1° postagem", 0));
+microblog.inserir(new Postagem(2, "Essa é a 2° postagem", 3));
 
-let p1: Postagem = new Postagem(1, "Primeiro Post!", 1)
-p1.curtir;
-let a: Microblog = new Microblog();
-a.inserir(new Postagem(1, "teste de postagem", 3));
-a.excluir(2);
-console.log(a.inserir)
+microblog.consultarPostagem(2);
+
+console.log(microblog.postagens);
