@@ -99,6 +99,7 @@ let microblog = new Microblog();
 microblog.inserir(new Postagem(1, "Essa é a 1° postagem", 0));
 microblog.inserir(new Postagem(2, "Essa é a 2° postagem", 3));
 
+microblog.excluir(1);
 microblog.consultarPostagem(2);
 
 console.log(microblog.postagens);
