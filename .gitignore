@@ -8,5 +8,5 @@ node_modules/
 tsconfig.json
 
 # arq. .json
-/package.json
+*.json
 
