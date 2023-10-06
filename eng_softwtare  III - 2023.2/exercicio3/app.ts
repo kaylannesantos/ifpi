@@ -22,6 +22,8 @@ do {
             break
         case "4": 
             depositar();
+        case "5": 
+            excluir();
     }
     input("\nOperação finalizada. Digite <enter>");
 } while (opcao != "0");
@@ -55,4 +57,11 @@ function depositar() {
     let valor: number = parseFloat(input('Digite o valor:'));
     b.depositar(numero, valor);
     exibirConta(numero)
+}
+
+function excluir() {
+    console.log("\Excluir conta\n");
+    let numero: string = input('Digite o número da conta:');
+    b.excluir(numero);
+    
 }
