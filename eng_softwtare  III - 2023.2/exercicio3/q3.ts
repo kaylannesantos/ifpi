@@ -102,15 +102,12 @@ class Banco {
 }
 
 let b: Banco = new Banco();
-b.inserir(new Conta("11111-1", 100));
-b.inserir(new Conta("22222-2", 150));
-b.inserir(new Conta("33333-3", 300));
 
-b.transferir("11111-1", "22222-2", 71);
+//inserir
+b.inserir(new Conta("11111-1", 100));
+//sacar
+b.sacar("11111-1", 20);
+//consultar
 console.log(b.consultar("11111-1"));
-console.log(b.consultar("22222-2"));
-console.log(b.consultar("33333-3"));
-console.log(b.getTotalDepositado());
-console.log(b.getMediaDepositada());
 
 export { Banco };

@@ -21,8 +21,7 @@ do {
             consultar();
             break
         case "4": 
-            depositar();            
-        //...
+            depositar();
     }
     input("\nOperação finalizada. Digite <enter>");
 } while (opcao != "0");
