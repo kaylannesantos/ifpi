@@ -5,22 +5,30 @@ adaptados para ter métodos de leitura e escrita, visto que os atributos que
 agora são privados. */
 
 class Conta {
-	numero: String;
-	saldo: number;
+	private _numero: String; // alterado para private
+	private _saldo: number; // alterado para private
 
-	constructor(numero: String, saldoInicial: number) {
-		this.numero = numero;
-		this.saldo = saldoInicial;
+	constructor(_numero: String, _saldoInicial: number) {
+		this._numero = _numero;
+		this._saldo = _saldoInicial;
+	}
+
+	get numero(): String {
+		return this._numero
+	}
+
+	get saldo(): number {
+		return this._saldo
 	}
 
 	sacar(valor: number): void {
 		if (this.saldo >= valor) {
-			this.saldo = this.saldo - valor;
+			this._saldo = this.saldo - valor;
 		}
 	}
 
 	depositar(valor: number): void {
-		this.saldo = this.saldo + valor;
+		this._saldo = this.saldo + valor;
 	}
 
 	transferir(contaDestino: Conta, valor: number): void {

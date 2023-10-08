@@ -5,7 +5,7 @@ c. Os demais métodos sejam públicos. */
 import { Conta } from "./q4";
 
 class Banco {
-	contas: Conta[] = [];
+	private contas: Conta[] = []; //array alterado para private
 
 	inserir(conta: Conta): void {
 		let contaConsultada = this.consultar(conta.numero);
@@ -26,7 +26,7 @@ class Banco {
 		return contaConsultada;
 	}
 
-	consultarPorIndice(numero: String): number {
+	private consultarPorIndice(numero: String): number { //método alterado para private
 		let indice: number = -1;
 		for (let i: number = 0; i < this.contas.length; i++) {
 			if (this.contas[i].numero == numero) {
@@ -105,9 +105,12 @@ let b: Banco = new Banco();
 
 //inserir
 b.inserir(new Conta("11111-1", 100));
-//sacar
-b.sacar("11111-1", 20);
+b.inserir(new Conta("22222-2", 100));
+b.inserir(new Conta("33333-3", 100));
+//sacar b.sacar("11111-1", 20);
 //consultar
 console.log(b.consultar("11111-1"));
+console.log(b.consultar("22222-2"));
+console.log(b.consultar("33333-3"));
 
 export { Banco };

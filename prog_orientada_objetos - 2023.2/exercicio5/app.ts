@@ -24,6 +24,8 @@ do {
             depositar();
         case "5": 
             excluir();
+        case "6": 
+            transferir();
     }
     input("\nOperação finalizada. Digite <enter>");
 } while (opcao != "0");
@@ -64,4 +66,14 @@ function excluir() {
     let numero: string = input('Digite o número da conta:');
     b.excluir(numero);
     
+}
+
+function transferir() {
+    console.log("\Transferir para conta\n");
+    let numeroCredito: string = input('Digite o número da conta crédito: ');
+    let numeroDedito: string = input('Digite o número da conta débito: ');
+    let valor: number = parseFloat(input('Digite o valor:'));
+    b.transferir(numeroCredito, numeroDedito,valor);
+    b.consultar(numeroCredito);
+    b.consultar(numeroDedito);
 }
