@@ -14,22 +14,36 @@ do {
                 '0 - Sair\n');
     opcao = input("Opção:");
     switch (opcao) {
+        case "0":
+            console.log("Aplicação encerrada");
+            process.exit(); //encerrar a aplicação
         case "1":
             inserir();
             break
         case "2":
             consultar();
             break
+        case "3": 
+            sacar();
+            break;
         case "4": 
             depositar();
+            break;
         case "5": 
             excluir();
+            break;
         case "6": 
             transferir();
+            break;
+        case "7": 
+            totalizacoes();
+            break;
     }
+
     input("\nOperação finalizada. Digite <enter>");
+    process.exit();
 } while (opcao != "0");
-console.log("Aplicação encerrada");
+//console.log("Aplicação encerrada");
 
 
 function inserir(): void {
@@ -76,4 +90,16 @@ function transferir() {
     b.transferir(numeroCredito, numeroDedito,valor);
     b.consultar(numeroCredito);
     b.consultar(numeroDedito);
+}
+
+function sacar() {
+    console.log("\Sacar da conta\n");
+    let numero: string = input('Digite o número da conta:');
+    let valor: number = parseFloat(input('Digite o valor:'));
+    b.sacar(numero,valor);
+}
+
+function totalizacoes() {
+    console.log("\Total de Depósitos");
+    b.getTotalDepositado;    
 }
