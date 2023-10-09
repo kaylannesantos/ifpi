@@ -5,6 +5,9 @@ c. Um construtor onde são passados os operandos e que esses inicializam os
 atributos;
 Teste a classe calculadora e seus métodos. Tente acessar os atributos
 diretamente e verifique o que acontece*/
+import PromptSync from "prompt-sync";
+const input = PromptSync();
+
 
 class Calculadora {
     private _operando1: number;
@@ -27,7 +30,7 @@ class Calculadora {
 let calculo1: Calculadora = new Calculadora(10,3);
 //calculo1._operando1; //* ele não deixa acessar o atributo, já que este está privado
 
-console.log(`Resuldado: 
+console.log(`Resuldado
 soma: ${calculo1.soma()}
 subtração: ${calculo1.subtracao()}`);
 

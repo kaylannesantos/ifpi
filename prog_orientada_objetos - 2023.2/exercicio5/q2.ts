@@ -3,6 +3,9 @@ a. Três atributos privados e definidos no construtor chamados hora, minutos e
 segundos;
 b. Métodos públicos para ler hora, minuto e segundo de forma individual;
 c. Um método público para retorne a hora no formato “hh:mm:ss”. */
+import PromptSync from "prompt-sync";
+const input = PromptSync();
+
 
 class Hora {
     private _horas: number;
@@ -10,7 +13,7 @@ class Hora {
     private _segundos: number;
 
     constructor(_horas: number, _minutos: number, _segundos: number) {
-        this._horas = _horas;
+        this._horas = this._horas;
         this._minutos = _minutos;
         this._segundos = _segundos;
     }
