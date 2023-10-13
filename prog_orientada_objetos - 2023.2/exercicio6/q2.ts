@@ -30,4 +30,5 @@ let c2: Calculadora = new Calculadora(12,5);
 
 console.log('\nFirst result: ', c1.sum());
 console.log('Second result: ', c2.sum());
- 
+
+export { Calculadora };
