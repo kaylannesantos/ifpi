@@ -1,34 +1,28 @@
-/*2. Crie uma classe Calculadora com:
-a. Dois tributos privados chamados representando dois operandos;
-b. Crie um construtor que inicializa os atributos;
-c. Crie um método que retorna a soma dos dois atributos;
-d. Teste a classe.
-*/
+/*2. Crie uma classe Hora que tenha:
+a. Três atributos privados e definidos no construtor chamados hora, minutos e
+segundos;
+b. Métodos públicos para ler hora, minuto e segundo de forma individual;
+c. Um método público para retorne a hora no formato “hh:mm:ss”. */
+import PromptSync from "prompt-sync";
+const input = PromptSync();
 
-class Calculadora {
-   
-    constructor(private _operator1: number, private _operator2: number) {
-        this._operator1 = _operator1;
-        this._operator2 = _operator2;
+
+class Hora {
+    private _horas: number;
+    private _minutos: number;
+    private _segundos: number;
+
+    constructor(_horas: number, _minutos: number, _segundos: number) {
+        this._horas = this._horas;
+        this._minutos = _minutos;
+        this._segundos = _segundos;
     }
 
-    get operator1(): number {
-        return this._operator1;
-    }
-
-    get operator2(): number {
-        return this._operator2;
-    }
-
-    sum():number {
-        return this.operator1 + this.operator2;
+    horario():string {
+        return this._horas + ":" + this._minutos + ":" + this._segundos;
     }
 }
 
-let c1: Calculadora = new Calculadora(10,3);
-let c2: Calculadora = new Calculadora(12,5);
+let h1: Hora = new Hora(10,54,25);
 
-console.log('\nFirst result: ', c1.sum());
-console.log('Second result: ', c2.sum());
-
-export { Calculadora };
+console.log(`São exatamente: ${h1.horario()}`);

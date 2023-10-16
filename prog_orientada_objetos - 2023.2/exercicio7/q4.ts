@@ -29,4 +29,3 @@ Pesquise uma biblioteca de leitura e escrita de arquivos e deixe essa e a
 próxima opção disponíveis para o usuário escolher
 d. Implemente também uma funcionalidade de gravar no mesmo arquivo o
 conteúdo do array de contas*/
-

@@ -1,28 +1,106 @@
-/*2. Crie uma classe Hora que tenha:
-a. Três atributos privados e definidos no construtor chamados hora, minutos e
-segundos;
-b. Métodos públicos para ler hora, minuto e segundo de forma individual;
-c. Um método público para retorne a hora no formato “hh:mm:ss”. */
-import PromptSync from "prompt-sync";
-const input = PromptSync();
+/*2. Crie uma implementação que simule um migroblog:
+    a. Crie uma classe Postagem e nela:
+        a. Crie os atributos:
+            1. id do tipo number, representando o identificador da
+            postagem;
+            2. texto do tipo string, representando um texto da postagem;
+            3. quantidadeCurtidas do tipo number;
+        b. Crie um método chamado curtir que incrementa a quantidade
+        curtidas;
+        c. Crie um método chamado toString que retorna a concatenação da
+        postagem com a quantidade de curtidas;
+    b. Crie uma classe Microblog e nela:
+        a. Crie um array de classes Postagem;
+        b. Crie um método que inclua uma postagem passada como
+        parâmetro no array de postagens;
+        c. Crie um método de excluir uma postagem que recebe um id
+        passado por parâmetro. Para isso, efetue uma busca pelo id nas
+        postagens do array e faça a exclusão de forma análoga à feita na
+        classe Banco;
+        d. Crie um método que retorna a postagem mais curtida;
+        e. Crie um método curtir em que se passa um id como parâmetro e a
+        classe microblog pesquisa a postagem e chama seu método curtir
+        da própria postagem;
+        f. Crie um método toString que retorna a concatenação do “toString”
+        de todas as postagens.
+*/
 
+class Postagem {
+    id: number;
+    texto: string;
+    quantidadeCurtidas: number;
 
-class Hora {
-    private _horas: number;
-    private _minutos: number;
-    private _segundos: number;
-
-    constructor(_horas: number, _minutos: number, _segundos: number) {
-        this._horas = this._horas;
-        this._minutos = _minutos;
-        this._segundos = _segundos;
+    constructor(id: number, texto: string, quantidadeCurtidas: number) {
+        this.id = id;
+        this.texto = texto;
+        this.quantidadeCurtidas = quantidadeCurtidas;
     }
 
-    horario():string {
-        return this._horas + ":" + this._minutos + ":" + this._segundos;
+    curtir() {
+        this.quantidadeCurtidas++;
     }
 }
 
-let h1: Hora = new Hora(10,54,25);
+class Microblog {
+    postagens: Postagem[] = [];
 
-console.log(`São exatamente: ${h1.horario()}`);
+    incluir(postagem: Postagem) {
+        this.postagens.push(postagem);
+    }
+
+    excluir(id: number): void {
+        let indice: number = this.consultarPorIndice(id);
+
+        if (indice != -1) {
+            for (let i: number = indice; i < this.postagens.length; i++) {
+                this.postagens[i] = this.postagens[i + 1];
+            }
+
+            this.postagens.pop();
+        }
+    }
+
+    consultarPorIndice(id: number): number {
+        let indice: number = -1;
+		for (let i: number = 0; i < this.postagens.length; i++) {
+			if (this.postagens[i].id == id) {
+				indice = i;
+				break;
+			}
+		}
+		return indice;
+    }
+
+    getPostagemMaisCurtida(): Postagem {
+        let maisCurtidas = -1;
+        let postagemMaisCurtida! : Postagem;
+
+        for (let postagem of this.postagens) {
+            if (postagem.quantidadeCurtidas >= maisCurtidas) {
+                postagemMaisCurtida = postagem;
+                maisCurtidas = postagem.quantidadeCurtidas;
+            }
+        }
+        return postagemMaisCurtida;
+    }
+
+    curtir(id: number): void {
+        let indicePostagemProcurada = this.consultarPorIndice(id);
+        
+        if (indicePostagemProcurada) {
+            this.postagens[indicePostagemProcurada].curtir();
+        }
+    }
+   
+}
+
+let microblog = new Microblog();
+microblog.incluir(new Postagem(1, "textão 1", 0));
+microblog.incluir(new Postagem(2, "textão 2", 3));
+microblog.incluir(new Postagem(3, "textão 3", 4));
+
+microblog.curtir(3);
+microblog.curtir(3);
+microblog.excluir(1);
+
+console.log(microblog.postagens);
