@@ -13,11 +13,11 @@ class CalculadoraCientifica extends Calculadora{
         super(operator1, operator2);
     }
 
-    exponeciar(): number {
+    exponenciar(): number {
         return this.operator1 ** (this.operator2);
     }
 }
 
 let cc1: CalculadoraCientifica = new CalculadoraCientifica(12,2);
 
-console.log('Result: ', cc1.exponeciar());
+console.log('Result: ', cc1.exponenciar());
