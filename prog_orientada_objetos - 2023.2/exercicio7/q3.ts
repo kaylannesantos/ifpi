@@ -13,7 +13,7 @@ class CalculadoraCientifica extends Calculadora{
         super(operator1, operator2);
     }
 
-    exponenciar(): number {
+    exponenciar(): number { //foi preciso criar métodos de leitura para os atributos privados
         return this.operator1 ** (this.operator2);
     }
 }
