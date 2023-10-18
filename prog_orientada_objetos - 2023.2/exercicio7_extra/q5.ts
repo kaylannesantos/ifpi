@@ -4,3 +4,13 @@ calcularPagamentos() que retorna um valor que represente o total de salários do
 elementos do array. Note que você deve considerar o salário apenas de
 funcionários e professores.
  */
+
+import { Pessoa } from "./q2";
+
+class FolhaPagamento {
+    pessoas: Pessoa[];
+
+    constructor(pessoas: Pessoa[]) {
+        this.pessoas = pessoas;
+    }
+}
