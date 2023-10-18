@@ -97,22 +97,23 @@ class Estoque {
         this._produtos = arrayProdutos;
     }
 
+    consultar(id: number): {
+        let produtoProcurado!: Produto;
+        for()
+
+
+    }
+
     inserir(produto: Produto): void {
         this.produtos.push(produto);
     }
 
-    reporEstoque(quantidade: number): void {
-    
-    }
-
-    darBaixaEstoque(quantidade: number): void {
-
-    }
 
 }
 
 let p1: Produto = new Produto(1, 'Fita isolante', 23, 24.50);
-p1.darBaixa(6)
+console.log(p1.quantidadeEstoque);
+p1.repor(10)
 console.log(p1.quantidadeEstoque);
 
 
