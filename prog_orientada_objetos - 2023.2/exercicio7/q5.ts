@@ -16,20 +16,20 @@ validade;
     g. Crie uma classe chamada Estoque que possui um atributo privado
 representando um array de produtos (Produto ou ProdutoPerecivel); //!
     h. Implemente métodos para inserir, consultar pelo atributo id, excluir, repor e
-dar baixa nos produtos na classe estoque;
+dar baixa nos produtos na classe estoque;//!
     i. Crie validações para não deixar serem incluídos produtos com mesmo id ou
 mesmo nome;
     j. Os métodos repor e dar baixa na classe estoque chamam os métodos da
-classe produto, para finalmente alterar a quantidade;
+classe produto, para finalmente alterar a quantidade;//!
     k. Os vários métodos da classe devem levar em conta se o produto existe,
 para isso, use o método consultar. Caso precise, crie métodos de consulta
-auxiliares;
+auxiliares;//!
     l. Implemente um método que liste todos os produtos perecíveis vencidos. */
 
 import PromptSync from "prompt-sync";
 const input = PromptSync();
 
-//PRODUTO
+//!PRODUTO
 class Produto {
     private _identificador: number;
     private _descricao: string;
@@ -71,10 +71,9 @@ class Produto {
     darBaixa(quantEstoque: number): void {
         this.quantidadeEstoque = this.quantidadeEstoque - quantEstoque;
     }
-
 }
 
-//PRODUTO PERECÍVEL
+//!PRODUTO PERECÍVEL
 class ProdutoPerecivel extends Produto {
     dataValidade: Date;
 
@@ -85,7 +84,7 @@ class ProdutoPerecivel extends Produto {
 
 }
 
-// ESTOQUE
+//!ESTOQUE
 class Estoque {
     private _produtos: Produto[] = [];
 
@@ -97,24 +96,72 @@ class Estoque {
         this._produtos = arrayProdutos;
     }
 
-    consultar(id: number): {
+    consultar(id: number): Produto {
         let produtoProcurado!: Produto;
-        for()
 
-
+        for(let produto of this.produtos){
+            if(produto.identificador == id){
+                produtoProcurado = produto;
+                break;
+            }
+        }
+        return produtoProcurado;
     }
 
     inserir(produto: Produto): void {
-        this.produtos.push(produto);
+        let produtoProcurado = this.consultar(produto.identificador);
+
+        if(produtoProcurado == null){
+            this.produtos.push(produto);
+        }
     }
 
+    excluir(id: number): void {
+        let produtoProcurado = this.consultar(id);
 
+        if (produtoProcurado.identificador == id) {
+            this.produtos.pop();
+        }
+    }
+
+    reporProduto(id: number, quantProduto: number): string  {
+        let produtoProcurado = this.consultar(id);
+
+        if (produtoProcurado) {
+            produtoProcurado.repor(quantProduto);
+            return 'Produto encontrado, reposição feita!';
+        }
+        return 'O produto informado não foi encontrado!';
+    }
+
+    darBaixaProtudo(id: number, quantProduto: number): string {
+        let produtoProcurado = this.consultar(id);
+
+        if (produtoProcurado) {
+            produtoProcurado.darBaixa(quantProduto);
+            return 'Produto encontrado, baixa de produto feita!'
+        }
+        return 'O Produto informado não foi encontrado!';
+    }
 }
 
-let p1: Produto = new Produto(1, 'Fita isolante', 23, 24.50);
-console.log(p1.quantidadeEstoque);
-p1.repor(10)
-console.log(p1.quantidadeEstoque);
+//let p1: Produto = new Produto(1, 'Fita isolante', 23, 24.50);
+//console.log(p1.quantidadeEstoque);
+//p1.repor(10)
+//console.log(p1.quantidadeEstoque);
+
+let estoque: Estoque = new Estoque();
+
+estoque.inserir(new Produto(1, 'Mamão Papaia', 5, 4.99))
+estoque.inserir(new Produto(2, 'Banana maçã', 10, 3.50))
+estoque.inserir(new Produto(3, 'Jaca', 7, 6.99))
+
+console.log(estoque.consultar(1));
+console.log(estoque.consultar(2));
+console.log(estoque.consultar(3));
+console.log(estoque.darBaixaProtudo(1, 2))
+
+console.log(estoque.produtos);
 
 
 
@@ -123,23 +170,22 @@ console.log(p1.quantidadeEstoque);
 
 
 
-/*
-    formatarData(): string {
-        let dia = this.dataValidade.getDate();
-        let mes = this.dataValidade.getMonth() + 1;
-        let ano = this.dataValidade.getFullYear();
-        return dia + "-" + mes + "-" + ano;
 
-        produtoValido(): string {
-        let dia = this.dataValidade.split('-')[0];
-        let mes = this.dataValidade.split('-')[1];
-        let ano = this.dataValidade.split('-')[2];
+    // formatarData(): string {
+        // let dia = this.dataValidade.getDate();
+        // let mes = this.dataValidade.getMonth() + 1;
+        // let ano = this.dataValidade.getFullYear();
+        // return dia + "-" + mes + "-" + ano;
 
-        let diaAtual = new Date().getDay();
-        let mesAtual = new Date().getMonth();
-        let anoAtual = new Date().getFullYear();
+        // produtoValido(): string {
+        // let dia = this.dataValidade.split('-')[0];
+        // let mes = this.dataValidade.split('-')[1];
+        // let ano = this.dataValidade.split('-')[2];
 
-        let dataAtual = dia + '-' + mes + '-' + ano;
-    }
-    }
-    */
+        // let diaAtual = new Date().getDay();
+        // let mesAtual = new Date().getMonth();
+        // let anoAtual = new Date().getFullYear();
+
+        // let dataAtual = dia + '-' + mes + '-' + ano;
+    // }
+    // }
