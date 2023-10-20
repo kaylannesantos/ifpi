@@ -38,13 +38,10 @@ class Horista extends Diarista {
     }
 }
 
-let empregado: Empregado = new Empregado;
-let diarista: Diarista = new Diarista;
-let horista: Horista = new Horista;
+//let empregado: Empregado = new Empregado;
+//let diarista: Diarista = new Diarista;
+//let horista: Horista = new Horista;
 
-
-console.log(empregado.calcularSalario().toFixed(2));
-console.log(diarista.calcularSalario().toFixed(2));
-console.log(horista.calcularSalario().toFixed(2));
-
-
+//console.log(empregado.calcularSalario().toFixed(2));
+//console.log(diarista.calcularSalario().toFixed(2));
+//console.log(horista.calcularSalario().toFixed(2));

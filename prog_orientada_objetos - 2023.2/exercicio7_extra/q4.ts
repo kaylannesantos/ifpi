@@ -25,6 +25,7 @@ class Professor extends Funcionario {
     }
 }
 
-let professor: Professor = new Professor('Maysa', 'De Sousa', '2023111', 900, 'Mestre');
+//let professor: Professor = new Professor('Maysa', 'De Sousa', '2023111', 900, 'Mestre');
+//console.log(professor.calcularSalarioPrimeiraParcela());
 
-console.log(professor.calcularSalarioPrimeiraParcela());
+export { Professor };

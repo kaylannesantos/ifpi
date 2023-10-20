@@ -6,11 +6,31 @@ funcionários e professores.
  */
 
 import { Pessoa } from "./q2";
+import { Funcionario } from "./q3";
+import { Professor } from "./q4";
 
-class FolhaPagamento {
-    pessoas: Pessoa[];
+class FolhaDePagamento {
+    pessoas: Pessoa[] = [];
 
-    constructor(pessoas: Pessoa[]) {
+    constructor(pessoas: Pessoa[]){
         this.pessoas = pessoas;
     }
+    
+
+    calcularPagamentos():number {
+        let totalSalarios: number = 0;
+        for (const pessoa of this.pessoas) {
+            if (pessoa instanceof Funcionario) {
+                totalSalarios += pessoa.salario;
+            } else if (pessoa instanceof Professor) {
+                totalSalarios += pessoa.salario;
+            }
+        } return totalSalarios;
+    }
 }
+let pessoas: Pessoa[] = [new Funcionario('João', 'Silva', '123', 3000), new Professor('Maria', 'Santos', '123', 4000.36, 'Doutor'), new Funcionario('Leonardo', 'De Almeida', '456', 3500.75)];
+
+let fp: FolhaDePagamento = new FolhaDePagamento(pessoas);
+
+
+console.log(`Total de Salarios: R$ ${fp.calcularPagamentos().toFixed(2)}`);
