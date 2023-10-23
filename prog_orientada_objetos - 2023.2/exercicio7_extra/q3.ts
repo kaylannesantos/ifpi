@@ -7,7 +7,6 @@ recebe seu salário em duas parcelas, sendo 60% na primeira parcela e
 calcularSalarioPrimeiraParcela que retornam o valor da primeira parcela do
 salário (60%) e calcularSalarioSegundaParcela que retorna o valor da
 segunda parcela do salário (40%). */
-
 import { Pessoa } from "./q2";
 
 class Funcionario extends Pessoa {

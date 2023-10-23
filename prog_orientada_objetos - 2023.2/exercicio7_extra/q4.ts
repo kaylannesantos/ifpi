@@ -7,7 +7,6 @@ da classe Professor deve retornar o valor integral do salário do professor e
 o método calcularSalarioSegundaParcela do professor deve retornar o valor
 zero.
  */
-
 import { Funcionario } from "./q3";
 
 class Professor extends Funcionario {

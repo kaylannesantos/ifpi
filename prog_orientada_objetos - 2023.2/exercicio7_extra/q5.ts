@@ -4,7 +4,6 @@ calcularPagamentos() que retorna um valor que represente o total de salários do
 elementos do array. Note que você deve considerar o salário apenas de
 funcionários e professores.
  */
-
 import { Pessoa } from "./q2";
 import { Funcionario } from "./q3";
 import { Professor } from "./q4";
@@ -16,7 +15,6 @@ class FolhaDePagamento {
         this.pessoas = pessoas;
     }
     
-
     calcularPagamentos():number {
         let totalSalarios: number = 0;
         for (const pessoa of this.pessoas) {
@@ -28,9 +26,7 @@ class FolhaDePagamento {
         } return totalSalarios;
     }
 }
-let pessoas: Pessoa[] = [new Funcionario('João', 'Silva', '123', 3000), new Professor('Maria', 'Santos', '123', 4000.36, 'Doutor'), new Funcionario('Leonardo', 'De Almeida', '456', 3500.75)];
-
+let pessoas: Pessoa[] = [new Funcionario('João', 'Silva', '123', 3000), new Professor('Maria', 'Santos', '123', 4000, 'Doutor'), new Funcionario('Leonardo', 'De Almeida', '456', 3500), new Professor('Arlindo', 'Nogueira de Sousa', '456', 5345, 'Mestre')];
 let fp: FolhaDePagamento = new FolhaDePagamento(pessoas);
-
 
 console.log(`Total de Salarios: R$ ${fp.calcularPagamentos().toFixed(2)}`);
