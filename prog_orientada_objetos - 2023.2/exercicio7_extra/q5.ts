@@ -26,6 +26,7 @@ class FolhaDePagamento {
         } return totalSalarios;
     }
 }
+
 let pessoas: Pessoa[] = [new Funcionario('João', 'Silva', '123', 3000), new Professor('Maria', 'Santos', '123', 4000, 'Doutor'), new Funcionario('Leonardo', 'De Almeida', '456', 3500), new Professor('Arlindo', 'Nogueira de Sousa', '456', 5345, 'Mestre')];
 let fp: FolhaDePagamento = new FolhaDePagamento(pessoas);
 
