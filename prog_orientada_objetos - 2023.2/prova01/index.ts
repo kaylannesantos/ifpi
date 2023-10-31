@@ -114,7 +114,7 @@ class RepositorioDePerfis{
         for (let p of this._perfis){
             if((p.idPerfil == id) || (p.nome == nome) || (p.email == email)){
                 perfilProcurado = p;
-               // break;
+                break;
             }
         }
         return perfilProcurado;
@@ -136,6 +136,7 @@ class RepositorioPostagens{
         for(let postagem of this._postagens){
             if((postagem.idPostagem == id) || (postagem.texto == texto) || (postagem.perfil == perfil)){
                 postagemProcurada = postagem;
+                break;
             }
         }
         return postagemProcurada;
@@ -143,8 +144,11 @@ class RepositorioPostagens{
 
     incluir(postagem: Postagem): void {
         if(!this.consultarPostagem(postagem.idPostagem)){
-            this._postagens.push(postagem);
-                
+            this._postagens.push(postagem);    
+        }
+
+        if(postagem.perfil){ //incompleto
+            postagem.perfil.postagens
         }
     }
 }
@@ -160,7 +164,6 @@ rperfil.incluir(perfil1);
 rperfil.incluir(perfil2);
 rperfil.incluir(perfil3);
 rperfil.incluir(perfil4);
-
 //console.log(rperfil.consultarPerfil(undefined,'maria',undefined));
 
 //Postagens
@@ -175,10 +178,4 @@ rpostagem.incluir(postagem2);
 rpostagem.incluir(postagem3);
 rpostagem.incluir(postagem4);
 
-console.log(rpostagem.consultarPostagem(undefined,undefined,undefined,perfil4));
-
-
-
-
-//postagem1.descurtir()
-//console.log(postagem1.ehPopular());
+console.log(rpostagem.consultarPostagem(3,undefined,undefined,perfil4));
