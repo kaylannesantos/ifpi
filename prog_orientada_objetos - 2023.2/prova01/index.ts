@@ -156,7 +156,7 @@ class RepositorioPostagens{
     consultarPostagem(id?: number, texto?:  string, hashtag?: string, perfil?: Perfil): Postagem {
         let postagemProcurada!: Postagem;
 
-        for(let postagem of this._postagens){
+        for(let postagem of this._postagens){ //incompleto
             if((postagem.idPostagem == id) || (postagem.texto == texto) || (postagem.perfil == perfil)){
                 postagemProcurada = postagem;
                 break;
@@ -201,4 +201,4 @@ rpostagem.incluir(postagem2);
 rpostagem.incluir(postagem3);
 rpostagem.incluir(postagem4);
 
-console.log(rperfil.consultarPerfil(undefined));
+console.log(rperfil.consultarPerfil());
