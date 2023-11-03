@@ -20,3 +20,5 @@ class RedeSocial {
     curtir(idPostagem: number): void {        
     }
 }
+
+export{ RedeSocial };

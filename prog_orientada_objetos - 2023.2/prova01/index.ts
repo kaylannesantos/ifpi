@@ -102,9 +102,29 @@ class PostagemAvancada extends Postagem{
         this.hashtags.push(hashtag);
     }
 
-    //existeHashtag(hashtag:string): boolean {}
+    existeHashtag(hashtag:string): boolean {
+        let temHashtag = false;
+        for(let h of this._hashtags){
+            if(h == hashtag){
+                temHashtag = true;
+                break;
+            }
+        }
+        return temHashtag;
+    }
+
+    decrementarVisualizacoes(): void {
+        if (this._visualizacoesRestantes > 0) {
+            this._visualizacoesRestantes--;
+        }
+    }
+
+    quantidadeDeVizualizaoes(): number{
+        return 1000 - this.visualizacoesRestantes;
+    }
 }
 
+//Repositórios
 class RepositorioDePerfis{
     private _perfis: Perfil[]=[];
 
@@ -117,11 +137,14 @@ class RepositorioDePerfis{
                 break;
             }
         }
+        if(perfilProcurado == undefined){
+            return null;
+        }
         return perfilProcurado;
     }
 
     incluir(perfil: Perfil): void {
-        if(!this.consultarPerfil(perfil.idPerfil)){
+        if(!this.consultarPerfil(perfil.idPerfil, perfil.nome, perfil.email )){
             this._perfis.push(perfil);
         }
     }
@@ -178,4 +201,4 @@ rpostagem.incluir(postagem2);
 rpostagem.incluir(postagem3);
 rpostagem.incluir(postagem4);
 
-console.log(rpostagem.consultarPostagem(3,undefined,undefined,perfil4));
+console.log(rperfil.consultarPerfil(undefined));
