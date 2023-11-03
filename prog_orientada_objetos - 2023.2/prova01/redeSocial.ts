@@ -18,7 +18,8 @@ class RedeSocial {
 
     incluir(perfil: Perfil): string {
         let perfilExsitente!: Perfil | null;
-        if(perfil.idPerfil && perfil.nome && perfil.email){
+
+        if(perfil.idPerfil && perfil.nome && perfil.email){ //incluir perfil a partir do RepositorioDePerfis
             perfilExsitente = this.repositorioDePerfis.consultarPerfil(perfil.idPerfil, perfil.nome, perfil.email);
             if(perfilExsitente == null){
                 this.repositorioDePerfis.incluirPerfil(perfil);
@@ -29,7 +30,7 @@ class RedeSocial {
         return 'Todos os atributos devem estar preenchidos!';
     }
 
-    consultar(id?: number, nome?: string, email?: string): Perfil | null {
+    consultar(id?: number, nome?: string, email?: string): Perfil | null {//consultar perfil a partir do RepositorioDePerfis
         return this.repositorioDePerfis.consultarPerfil(id, nome, email);
     }
 
