@@ -143,7 +143,7 @@ class RepositorioDePerfis{
         return perfilProcurado;
     }
 
-    incluir(perfil: Perfil): void {
+    incluirPerfil(perfil: Perfil): void {
         if(!this.consultarPerfil(perfil.idPerfil, perfil.nome, perfil.email )){
             this._perfis.push(perfil);
         }
@@ -165,7 +165,7 @@ class RepositorioPostagens{
         return postagemProcurada;
     }
 
-    incluir(postagem: Postagem): void {
+    incluirPostagem(postagem: Postagem): void {
         if(!this.consultarPostagem(postagem.idPostagem)){
             this._postagens.push(postagem);    
         }
@@ -181,12 +181,13 @@ let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
 let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kayms@gmail.com')
 let perfil3: Perfil = new Perfil(3, 'kaylanne', 'k@gmail.com')
 let perfil4: Perfil = new Perfil(4, 'maria', 'm@gmail.com')
+let perfil5: Perfil = new Perfil(5, 'joao', 'j@gmail.com')
 
 let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
-rperfil.incluir(perfil1);
-rperfil.incluir(perfil2);
-rperfil.incluir(perfil3);
-rperfil.incluir(perfil4);
+rperfil.incluirPerfil(perfil1);
+rperfil.incluirPerfil(perfil2);
+rperfil.incluirPerfil(perfil3);
+rperfil.incluirPerfil(perfil4);
 //console.log(rperfil.consultarPerfil(undefined,'maria',undefined));
 
 //Postagens
@@ -196,9 +197,11 @@ let postagem3: Postagem = new Postagem(3, 'textooo', 3, 6, new Date(), perfil3);
 let postagem4: Postagem = new Postagem(4, 'textoooo', 1, 7, new Date(), perfil4);
 
 let rpostagem: RepositorioPostagens = new RepositorioPostagens();
-rpostagem.incluir(postagem1);
-rpostagem.incluir(postagem2);
-rpostagem.incluir(postagem3);
-rpostagem.incluir(postagem4);
+rpostagem.incluirPostagem(postagem1);
+rpostagem.incluirPostagem(postagem2);
+rpostagem.incluirPostagem(postagem3);
+rpostagem.incluirPostagem(postagem4);
 
 console.log(rperfil.consultarPerfil());
+
+export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioPostagens }
