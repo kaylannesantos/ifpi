@@ -2,10 +2,10 @@ class Perfil{
     private _idPerfil: number;
     private _nome: string;
     private _email: string;
-    private _postagens: Postagem[] = [];
+    private _postagensPerfil: Postagem[] = [];
     constructor(i:number, n:string, e:string){
         this._idPerfil = i;
-        this._nome = n;
+        this._nome = n.trim();;
         this._email = e;
     }
 
@@ -22,7 +22,7 @@ class Perfil{
     }
 
     get postagens(): Postagem[] {
-        return this._postagens;
+        return this._postagensPerfil;
     }
 }
 
@@ -132,12 +132,12 @@ class RepositorioDePerfis{
         let perfilProcurado!: Perfil;
         
         for (let p of this._perfis){
-            if((p.idPerfil == id) || (p.nome == nome) || (p.email == email)){
+            if((p.idPerfil == id) && (p.nome == nome) && (p.email == email)){
                 perfilProcurado = p;
                 break;
             }
         }
-        if(perfilProcurado == undefined){
+        if(perfilProcurado == undefined){ //retorna o perfil caso seja encontrado no array, senão o método retorna null caso contrário.
             return null;
         }
         return perfilProcurado;
@@ -150,39 +150,40 @@ class RepositorioDePerfis{
     }
 }
 
-class RepositorioPostagens{
-    private _postagens: Postagem[]=[];
+class RepositorioDePostagens { //?
+    private _postagens: Postagem[] = [];
 
-    consultarPostagem(id?: number, texto?:  string, hashtag?: string, perfil?: Perfil): Postagem {
-        let postagemProcurada!: Postagem;
-
-        for(let postagem of this._postagens){ //incompleto
-            if((postagem.idPostagem == id) || (postagem.texto == texto) || (postagem.perfil == perfil)){
-                postagemProcurada = postagem;
-                break;
+    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] {
+        let postagensFiltradas: Postagem[] = [];
+    
+        for (let p of this._postagens) {
+            if ((id == undefined || p.idPostagem == id) &&
+                (texto == undefined || p.texto == texto) &&
+                (perfil == undefined || p.perfil == perfil)) {
+                if (hashtag !== undefined && p instanceof PostagemAvancada && (p as PostagemAvancada).existeHashtag(hashtag)) {
+                    postagensFiltradas.push(p);
+                } else if (hashtag == undefined) {
+                    postagensFiltradas.push(p);
+                }
             }
         }
-        return postagemProcurada;
+    
+        return postagensFiltradas;
     }
+    
 
     incluirPostagem(postagem: Postagem): void {
-        if(!this.consultarPostagem(postagem.idPostagem)){
-            this._postagens.push(postagem);    
-        }
-
-        if(postagem.perfil){ //incompleto
-            postagem.perfil.postagens
-        }
+        this._postagens.push(postagem);
+        postagem.perfil.postagens.push(postagem);
     }
 }
 
-//Perfis
+//PERFIS
 let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
-let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kayms@gmail.com')
-let perfil3: Perfil = new Perfil(3, 'kaylanne', 'k@gmail.com')
-let perfil4: Perfil = new Perfil(4, 'maria', 'm@gmail.com')
-let perfil5: Perfil = new Perfil(5, 'joao', 'j@gmail.com')
-
+let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kay@gmail.com')
+let perfil3: Perfil = new Perfil(3, 'alessandra', 'a@gmail.com')
+let perfil4: Perfil = new Perfil(4, 'kaylanne', 'k@gmail.com')
+//Repositorio de Perfis
 let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
 rperfil.incluirPerfil(perfil1);
 rperfil.incluirPerfil(perfil2);
@@ -190,18 +191,17 @@ rperfil.incluirPerfil(perfil3);
 rperfil.incluirPerfil(perfil4);
 //console.log(rperfil.consultarPerfil(undefined,'maria',undefined));
 
-//Postagens
+//POSTAGENS
 let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
 let postagem2: Postagem = new Postagem(2, 'textoo', 7, 4, new Date(), perfil2);
 let postagem3: Postagem = new Postagem(3, 'textooo', 3, 6, new Date(), perfil3);
 let postagem4: Postagem = new Postagem(4, 'textoooo', 1, 7, new Date(), perfil4);
-
-let rpostagem: RepositorioPostagens = new RepositorioPostagens();
+//Repositorio de Postagens
+let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
 rpostagem.incluirPostagem(postagem1);
 rpostagem.incluirPostagem(postagem2);
 rpostagem.incluirPostagem(postagem3);
 rpostagem.incluirPostagem(postagem4);
+//console.log(rpostagem.consultarPostagem());
 
-console.log(rperfil.consultarPerfil());
-
-export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioPostagens }
+export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens }
