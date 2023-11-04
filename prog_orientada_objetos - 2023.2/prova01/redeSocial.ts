@@ -1,4 +1,4 @@
-import { Perfil, Postagem, RepositorioDePerfis, RepositorioDePostagens } from "./index";
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens } from "./index";
 
 class RedeSocial {
     private _repositorioDePerfis: RepositorioDePerfis;
@@ -57,6 +57,10 @@ class RedeSocial {
             return 'Postagem encontrada, descurtida com sucesso!';
         }
         return 'Postagem não encontrada!';
+    }
+
+    decrementar(postagem: PostagemAvancada): void {
+        postagem.decrementarVisualizacoes();
     }
 }
 let redeSocial: RedeSocial = new RedeSocial();
