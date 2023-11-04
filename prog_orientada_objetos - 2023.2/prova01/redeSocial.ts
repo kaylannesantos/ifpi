@@ -41,33 +41,66 @@ class RedeSocial {
     }       
 */
     // FUNÇÕES DA PÁGINA
-    curtir(idPost: number): string {
+    curtir(idPost: number): void {
         let postagemProcurada!: Postagem;
         if (postagemProcurada.idPostagem == idPost) {
             postagemProcurada.curtir();     
-            return 'Postagem encontrada, curtida com sucesso!';
         }
-        return 'Postagem não encontrada!';
     }
 
-    descurtir(idPost: number): string {//deu certo(?)
+    descurtir(idPost: number): void {
         let postagemProcurada!: Postagem;
         if (postagemProcurada.idPostagem == idPost) {
             postagemProcurada.curtir();     
-            return 'Postagem encontrada, descurtida com sucesso!';
         }
-        return 'Postagem não encontrada!';
     }
 
     decrementar(postagem: PostagemAvancada): void {
         postagem.decrementarVisualizacoes();
     }
+
+    exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
+        let postagensFiltradas: PostagemAvancada [] = [];
+        
+        let result = this._repositorioDePostagens.consultarPostagem(undefined, undefined, hashtag, undefined);//como instanciar ????????
+
+        if (typeof result === 'string') {
+            console.log(result);
+            return postagensFiltradas;
+        }
+
+        for(let postagem of result){
+            if (postagem instanceof PostagemAvancada && postagem.existeHashtag(hashtag)){
+                postagem.decrementarVisualizacoes();
+
+                if (postagem.visualizacoesRestantes > 0){
+                    postagensFiltradas.push(postagem);
+                }
+            }
+        }
+        return postagensFiltradas;
+    }
 }
 let redeSocial: RedeSocial = new RedeSocial();
-let rperfil: RepositorioDePerfis = new RepositorioDePerfis()
-let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+
+let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
+let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com');
+rperfil.incluirPerfil(perfil1);
+rperfil.consultarPerfil(1);
+
 let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
 let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
-console.log(rpostagem.incluirPostagem(postagem1));
+rpostagem.incluirPostagem(postagem1);
+rpostagem.consultarPostagem(1);
+
+let pa: PostagemAvancada = new PostagemAvancada(1, 'texto', 8, 5, new Date(), perfil1)
+pa.adicionarHashtag('#ola mundo!');
+redeSocial.exibirPostagensPorHashtag('');
+
+//let rperfil: RepositorioDePerfis = new RepositorioDePerfis()
+//let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+//let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
+//let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
+//console.log(rpostagem.incluirPostagem(postagem1));
 
 export{ RedeSocial };

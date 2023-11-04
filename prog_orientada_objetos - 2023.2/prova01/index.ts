@@ -220,6 +220,9 @@ rpostagem.incluirPostagem(postagem1);
 rpostagem.incluirPostagem(postagem2);
 rpostagem.incluirPostagem(postagem3);
 rpostagem.incluirPostagem(postagem4);
-console.log(rpostagem.consultarPostagem(1));
+//console.log(rpostagem.consultarPostagem(1));
+
+let pa: PostagemAvancada = new PostagemAvancada(1, 'texto', 8, 5, new Date(), perfil1)
+pa.adicionarHashtag('#ola mundo!')
 
 export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens }
