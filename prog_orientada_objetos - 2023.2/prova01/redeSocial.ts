@@ -83,9 +83,9 @@ class RedeSocial {
     //modo 3
     incluirPostagem(postagem: Postagem): string {
         if (this.validaPostagem(postagem)) {
-            const postagemExiste = this.repositorioDePostagens.consultarPostagem(postagem.idPostagem);
+            let postagemProcurada = this.repositorioDePostagens.consultarPostagem(postagem.idPostagem);
     
-            if (postagemExiste === null) {
+            if (postagemProcurada === null) {
                 this.repositorioDePostagens.incluirPostagem(postagem);
                 return 'Postagem incluída com sucesso!';
             } else {
