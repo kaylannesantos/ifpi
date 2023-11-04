@@ -124,6 +124,29 @@ class PostagemAvancada extends Postagem{
     }
 }
 
+class Hashtag{
+    private _texto: string;
+    private _contador: number = 0;
+
+    constructor(texto: string) {
+        this._texto = texto;
+    }
+
+    get textoHashtag(): string {
+        return this._texto;
+    }
+    get contadorHashtag(): number {
+        return this._contador;
+    }
+    set contadorHashtag(novoContador: number) { // permite além de leitura, atribuição ao contadorHashtag
+        this.contadorHashtag = novoContador;
+    }
+
+    incrementarContador(): void {
+        this.contadorHashtag ++;
+    }
+}
+
 //Repositórios
 class RepositorioDePerfis{
     private _perfis: Perfil[]=[];

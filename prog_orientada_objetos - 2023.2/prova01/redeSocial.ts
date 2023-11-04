@@ -62,7 +62,7 @@ class RedeSocial {
     exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
         let postagensFiltradas: PostagemAvancada [] = [];
         
-        let result = this._repositorioDePostagens.consultarPostagem(undefined, undefined, hashtag, undefined);//como instanciar ????????
+        let result = this._repositorioDePostagens.consultarPostagem(undefined, undefined, hashtag, undefined);//como instanciar ?????
 
         if (typeof result === 'string') {
             console.log(result);
