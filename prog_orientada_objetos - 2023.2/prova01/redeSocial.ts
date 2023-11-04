@@ -3,16 +3,16 @@ import { Perfil, Postagem, RepositorioDePerfis, RepositorioDePostagens } from ".
 class RedeSocial {
     private _repositorioDePerfis: RepositorioDePerfis;
     private _repositorioDePostagens: RepositorioDePostagens;
-
-    /*constructor(repositorioDePerfis: RepositorioDePerfis, repositorioDePostagens: RepositorioDePostagens) {
+/*
+    constructor(repositorioDePerfis: RepositorioDePerfis, repositorioDePostagens: RepositorioDePostagens) {
         this._repositorioDePerfis = repositorioDePerfis;
         this._repositorioDePostagens = repositorioDePostagens;
-    }*/
-
+    }
+*/
     get repositorioDePerfis(): RepositorioDePerfis {
         return this._repositorioDePerfis;
     }
-    get respositorioDePostagens(): RepositorioDePostagens {
+    get repositorioDePostagens(): RepositorioDePostagens {
         return this._repositorioDePostagens;
     }
 
@@ -40,12 +40,13 @@ class RedeSocial {
 
     //POSTAGEM 
     consultarPostagem(id: number, texto: string, hashtag: string | undefined, perfil:  Perfil){
-        if(!this.respositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil)){
+        if(!this.repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil)){
             return 'Postagem não encontrada!'
         }
 
-        return this.respositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
+        return this.repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
+/*
     // modo 1
     incluirPostagem(postagem: Postagem): string {
         let postagemProcurada!: null;
@@ -78,14 +79,30 @@ class RedeSocial {
         }
         return 'Todos os atributos devem estar preenchidos!';
     }
-
+*/
+    //modo 3
+    incluirPostagem(postagem: Postagem): string {
+        if (this.validaPostagem(postagem)) {
+            const postagemExiste = this.repositorioDePostagens.consultarPostagem(postagem.idPostagem);
+    
+            if (postagemExiste === null) {
+                this.repositorioDePostagens.incluirPostagem(postagem);
+                return 'Postagem incluída com sucesso!';
+            } else {
+                return 'Já existe uma postagem com o mesmo ID!';
+            }
+        } else {
+            return 'Todos os atributos da postagem devem estar preenchidos!';
+        }
+    }
+    
     private validaPostagem(postagem: Postagem): boolean {
         return (
             postagem.idPostagem != undefined && 
             postagem.texto != undefined &&
             postagem.perfil != undefined
         );
-    }        
+    }       
 
     // FUNÇÕES DA PÁGINA
     curtir(idPost: number): string {
@@ -106,26 +123,11 @@ class RedeSocial {
         return 'Postagem não encontrada!';
     }
 }
-
-let rs: RedeSocial = new RedeSocial()
-
-let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com');
-let perfil2: Perfil = new Perfil(1, 'kaylanne', 'kayms@gmail.com');
-
-console.log(rs.incluir(perfil1));
-console.log(rs.incluir(perfil2)); // o id já existe
-
+let redeSocial: RedeSocial = new RedeSocial();
+let rperfil: RepositorioDePerfis = new RepositorioDePerfis()
+let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
 let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
-let rpostagem: RepositorioDePostagens= new RepositorioDePostagens();
-rpostagem.incluirPostagem(postagem1);
-
-
-console.log(rs.descurtir(1));
-
-
-
-
-
-
+console.log(rpostagem.incluirPostagem(postagem1));
 
 export{ RedeSocial };
