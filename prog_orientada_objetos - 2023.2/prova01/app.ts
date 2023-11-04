@@ -19,7 +19,7 @@ class App{
 
         do {
             console.log('\nBem Vindo\n Digite uma opção: ');
-            console.log('1 - Consultar Perfil    2 - Incçluir Perfil      3 - Consultar Postagem\n' +
+            console.log('1 - Consultar Perfil    2 - Incluir Perfil      3 - Consultar Postagem\n' +
                         '4 - Incluir Postagem    5 - Curtir Postagem      6 - Descurtir Postagem\n' +
                         '0 - Sair\n');
 
