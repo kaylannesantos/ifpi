@@ -1,8 +1,10 @@
+import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excessoes";
+
 class Perfil{
     private _idPerfil: number;
     private _nome: string;
     private _email: string;
-    private _postagensDoPerfil: Postagem[] = []; // alterar para _postagens (?)
+    private _postagensDoPerfil: Postagem[] = [];
     constructor(i:number, n:string, e:string){
         this._idPerfil = i;
         this._nome = n;
@@ -26,7 +28,6 @@ class Perfil{
     }
 }
 
-//POSTAGEM
 class Postagem{
     private _idPostagem: number;
     private _texto: string;
@@ -34,12 +35,9 @@ class Postagem{
     private _descurtidas: number = 0;
     private _data: Date = new Date();
     private _perfil: Perfil;
-    constructor(i:number, t:string, /*c:number, d:number, dt:Date,*/ p:Perfil){
+    constructor(i:number, t:string, p:Perfil){
         this._idPostagem = i;
         this._texto = t;
-        //this._curtidas = c;
-        //this._descurtidas = d;
-        //this._data = dt;
         this._perfil = p;
     }
 
@@ -80,32 +78,23 @@ class Postagem{
     }
 }
 
-//POSTAGEM AVANÇADA
 class PostagemAvancada extends Postagem{
     private _hashtags: string[] = [];
     private _visualizacoesRestantes: number = 1000;
-    private _repositorioDeHashtags: RepositorioDeHashtags; //! Atributo do Repositório de Hashtags 
-    constructor(i:number, t:string, /*c:number, d:number, dt:Date,*/ p:Perfil, repositorioHashtgs: RepositorioDeHashtags){
-        super(i, t, /*c, d, dt,*/ p);
-        this._repositorioDeHashtags = repositorioHashtgs;
+    constructor(i:number, t:string, p:Perfil){
+        super(i, t, p);
     }
 
     get hashtags(): string[] {
         return this._hashtags;
     }
+
     get visualizacoesRestantes(): number {
         return this._visualizacoesRestantes;
-    }
-    set visualizacoesRestantes(visualRestantes: number) {
-        this._visualizacoesRestantes = visualRestantes;
-    }
-    get repositorioDeHashtags(): RepositorioDeHashtags { //!hashtags
-        return this._repositorioDeHashtags;
     }
 
     adicionarHashtag(hashtag:string): void{
         this.hashtags.push(hashtag);
-        this._repositorioDeHashtags.incluirHashtag(hashtag); //! inclui a hashtag tanto em PostagemAvancada como em repositorioDeHashtags
     }
 
     existeHashtag(hashtag:string): boolean {
@@ -119,7 +108,7 @@ class PostagemAvancada extends Postagem{
         return temHashtag;
     }
 
-    decrementarVisualizacoes(): void {
+    decrementarVisualizacoes(): void { 
         if (this._visualizacoesRestantes > 0) {
             this._visualizacoesRestantes--;
         }
@@ -130,76 +119,104 @@ class PostagemAvancada extends Postagem{
     }
 }
 
-//!HASHTAG (criação da classe hashtag)
-class Hashtag{
-    private _texto: string;
-    private _contador: number = 0;
-
-    constructor(texto: string) {
-        this._texto = texto;
-    }
-
-    get textoHashtag(): string {
-        return this._texto;
-    }
-    get contadorHashtag(): number {
-        return this._contador;
-    }
-    set contadorHashtag(novoContador: number) { //! permite além de leitura, atribuição ao contadorHashtag
-        this.contadorHashtag = novoContador;
-    }
-
-    incrementarContador(): void {
-        this.contadorHashtag ++;
-    }
-}
-
-//REPOSITÓRIO DE PERFIL
 class RepositorioDePerfis {
     private _perfis: Perfil[] = [];
 
-    consultarPerfil(id?: number, nome?: string, email?: string): Perfil{ // resolver o problema do undefined
-        let perfilProcurado!: Perfil ;
+    consultarPerfil(id?: number, nome?: string, email?: string): Perfil {
+        let perfilProcurado!: Perfil;
+        try {
+            const perfilProcurado0 = this._perfis.find(p =>
+                (id === undefined || p.idPerfil === id) &&
+                (nome === undefined || p.nome === nome) &&
+                (email === undefined || p.email === email)
+            );
 
-        for(let p of this._perfis){
-            if((id == undefined || p.idPerfil == id) &&
-                (nome == undefined || p.nome == nome) && 
-                (email == undefined || p.email == email)){
-                    perfilProcurado = p
+            if (!perfilProcurado0) {
+                throw new PerfilNaoEncontradoError('Perfil não encontrado!');
             }
-        } 
+
+            perfilProcurado = perfilProcurado0;
+        } catch (e: any) {
+            if (e instanceof AplicacaoError) {
+                console.log(e.message);
+            }
+        }
 
         return perfilProcurado;
     }
 
     incluirPerfil(perfil: Perfil){
-        if(perfil.idPerfil && 
-            perfil.nome && 
-            perfil.email){
-            let perfilExiste = this._perfis.find(
-                p =>
+        try {
+            if (perfil.idPerfil && perfil.nome && perfil.email) {
+                const perfilExiste = this._perfis.find(p =>
                     (p.idPerfil === perfil.idPerfil) ||
                     (p.nome === perfil.nome) ||
                     (p.email === perfil.email)
-            )
+                );
 
-            if(perfilExiste){ 
-                return 'Perfil já existente!';                
+                if (perfilExiste) {
+                    throw new PerfilExistenteError('O perfil já existe!');
+                }
+            } else {
+                throw new AtributoVazioError('Os atributos precisam ser preenchidos!');
+            }
+
+            this._perfis.push(perfil);
+            console.log('Perfil incluído com sucesso!');
+        } catch (e:any){
+                if(e instanceof AplicacaoError){
+                    console.log(e.message);
             } 
-        } else {
-            return 'Todos os atributos devem estar preenchidos!';
+        }
+    }
+
+    exibirPostagensPorPerfil(id: number): Postagem[]{
+        let postagensFiltradas: Postagem[] = [];
+        let perfilProcurado = this.consultarPerfil(id);
+
+        for(let postagem of perfilProcurado.postagensDoPerfil){
+            if (postagem instanceof PostagemAvancada){
+                if (postagem.visualizacoesRestantes > 0){
+                    postagensFiltradas.push(postagem);
+                    postagem.decrementarVisualizacoes();
+                }
+            } else {
+                postagensFiltradas.push(postagem);
+            }
         }
 
-        this._perfis.push(perfil);
-        return 'Perfil incluído com sucesso!'; 
+        return postagensFiltradas;
+    }
+
+    exibirTodosOsPerfis(): string{
+        let perfis: string = '';
+
+        for(let p of this._perfis){
+            perfis += `
+            Id: ${p.idPerfil}
+            Nome: ${p.nome}
+            Email: ${p.email}
+            `
+        }
+
+        return perfis;
+    }
+
+    exibirPorPerfil(idPerfil: number): Postagem | string{ // criado exibição por perfil
+        let perfilProcurado = this.consultarPerfil(idPerfil);
+
+        if(perfilProcurado.idPerfil == idPerfil){
+            return `Id: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
+        }
+        return 'Postagem não encontrada!'
+
     }
 }
 
-//REPOSITÓRIO DE POSTAGENS
 class RepositorioDePostagens {
     private _postagens: Postagem[] = [];
 
-    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] | string {
+    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[]{
         let postagensFiltradas: Postagem[] = [];
     
         for (let p of this._postagens) {
@@ -214,79 +231,126 @@ class RepositorioDePostagens {
             }
         }
     
-        if(postagensFiltradas.length == 0){
-            return 'Postagem não encontrada!'
+        try{
+            if(postagensFiltradas.length == 0){
+                throw new PostagemNaoEncontradaError('Postagem não encontrada!');
+            }
+        } catch (e: any) {
+            if (e instanceof AplicacaoError) {
+                console.log(e.message);
+            }
         }
 
         return postagensFiltradas;
     }
 
-    incluirPostagem(postagem: Postagem): string {
-        if (postagem.idPostagem &&   
-            postagem.texto.trim() &&
-            postagem.perfil) {
-            let postagemExiste = this.consultarPostagem(postagem.idPostagem);
-            //let postagemExiste = this._postagens.find(p => p.idPostagem === postagem.idPostagem); // colocar isso no consultar
-    
-            if (postagemExiste.length == 1) {
-                return 'Já existe uma postagem com o mesmo ID!';
-            } 
-        } else {
-            return 'Todos os atributos da postagem devem estar preenchidos!';
+    consultarPostagemPorId(idPost: number): Postagem{
+        let postagemProcurada!: Postagem;
+
+        for(let p of this._postagens){
+            if(p.idPostagem == idPost){
+                postagemProcurada = p
+            }
         }
+
+        try{
+            if(!postagemProcurada){
+                throw new PostagemNaoEncontradaError('Postagem não encontrada!');
+            }
+        } catch (e: any) {
+            if (e instanceof AplicacaoError) {
+                console.log(e.message);
+            }
+        }
+
+        return postagemProcurada;
+    }
+
+    incluirPostagem(postagem: Postagem){
+        try{
+            if (postagem.idPostagem && postagem.texto.trim() && postagem.perfil) {
+                let postagemExiste = this.consultarPostagem(postagem.idPostagem);
         
-        this._postagens.push(postagem)
-        postagem.perfil.postagensDoPerfil.push(postagem);
-        return'Postagem incluída com sucesso!';
+                if (postagemExiste.length == 1) {
+                    throw new PostagemJaExisteError('Já existe uma postagem com o mesmo id!');
+                } 
+            } else {
+                throw new AtributoVazioError('Todos os atributos da postagem devem estar preenchidos!');
+            }
+
+            this._postagens.push(postagem)
+            postagem.perfil.postagensDoPerfil.push(postagem);
+            console.log('Postagem incluída com sucesso!');
+        } catch (e: any) {
+            if (e instanceof AplicacaoError) {
+                console.log(e.message);
+            }
+        }
     }  
 
-    exibirPostagem(texto: string): string{
+    curtir(idPost: number): void {
+        let postagemProcurada = this.consultarPostagemPorId(idPost)
+        if (postagemProcurada.idPostagem == idPost) {
+            postagemProcurada.curtir();     
+        }
+    }
+
+    descurtir(idPost: number): void {
+        let postagemProcurada = this.consultarPostagemPorId(idPost)
+        if (postagemProcurada.idPostagem == idPost) {
+            postagemProcurada.descurtir();     
+        }
+    }
+
+    exibirTodasPostagens(): string{
         let postagens: string = '';
+
         for(let p of this._postagens){
-            if(texto == p.texto){
-                postagens += `Texto: ${p.texto}
-                              Perfil: ${p.perfil}`
-            }
+            postagens += `
+            Id: ${p.idPostagem}
+            Texto: ${p.texto}
+            Curtidas: ${p.curtidas}
+            Descurtidas: ${p.descurtidas}
+            `
         }
 
         return postagens;
     }
-}
 
-//!REPOSITÓRIO DE HASHTAG (criação do repositório de hashtags)
-class RepositorioDeHashtags{
-    private _hashtags: Hashtag[] = [];
+    exibirPorPostagem(idPostagem: number): Postagem | string{ // criada exibição por postagem
+        let postagemProcurada = this.consultarPostagemPorId(idPostagem);
 
-    incluirHashtag(texto: string): void {
-        let hashtag = this._hashtags.find( h => h.textoHashtag == texto); //procura se a hashtag já existe na lista _hashtags
-
-        if (hashtag) { //verifica se a hashtag já existe na lista
-            hashtag.incrementarContador();
+        if(postagemProcurada.idPostagem == idPostagem){
+            return `ID: ${postagemProcurada.idPostagem},\nTexto: ${postagemProcurada.texto},\nCurtidas: ${postagemProcurada.curtidas},\nDescurtidas: ${postagemProcurada.descurtidas}`;
         }
-        this._hashtags.push(new Hashtag(texto));
-    }
+        return 'Postagem não encontrada!'
 
-    hashtagMaisPopular(): Hashtag | null{
-        if(this._hashtags.length == 0){
-            return null;
-        }
-
-        let hashtagMaisPopular = this._hashtags[0];// primeira hashtag => mais popular
-
-        for(let i = 1; i < this._hashtags.length; i++){
-            let hashtagAtual = this._hashtags[i];
-
-            if(hashtagAtual.contadorHashtag > hashtagMaisPopular.contadorHashtag){
-                hashtagMaisPopular = hashtagAtual;
-            }
-        }
-        return hashtagMaisPopular;
-/*
-        return this._hashtags.reduce((maxHashtag, hashtagAtual) => { // .reduce vai iterar sobre cada hashtag existente, comparando a anterior com a atual
-            return hashtagAtual.contadorHashtag > maxHashtag.contadorHashtag ? hashtagAtual : maxHashtag; //Para cada iteração, o código compara a contagem contadorHashtag
-        }, this._hashtags[0]);
-*/
     }
 }
 
-export { Perfil, Postagem, PostagemAvancada, Hashtag, RepositorioDePerfis, RepositorioDePostagens, RepositorioDeHashtags }
+//------------------------PERFIS
+let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kay@gmail.com')
+
+//console.log(rperfil.consultarPerfil(1));
+
+//------------------------POSTAGENS
+let postagem1: Postagem = new Postagem(1, 'texto',perfil1);
+let postagem2: Postagem = new Postagem(2, 'textoo',perfil2);
+
+//console.log(rpostagem.consultarPostagem(1));
+
+let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
+let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
+
+rperfil.incluirPerfil(perfil1);
+rperfil.incluirPerfil(perfil2);
+
+rpostagem.incluirPostagem(postagem1);
+rpostagem.incluirPostagem(postagem2);
+
+console.log(rperfil.exibirPorPerfil(1));
+console.log(rpostagem.exibirPorPostagem(1));
+
+
+export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens }
