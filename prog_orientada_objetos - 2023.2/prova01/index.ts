@@ -2,10 +2,10 @@ class Perfil{
     private _idPerfil: number;
     private _nome: string;
     private _email: string;
-    private _postagensPerfil: Postagem[] = [];
+    private _postagensDoPerfil: Postagem[] = []; // alterar para _postagens (?)
     constructor(i:number, n:string, e:string){
         this._idPerfil = i;
-        this._nome = n.trim(); // retira os espaços
+        this._nome = n;
         this._email = e;
     }
 
@@ -21,8 +21,8 @@ class Perfil{
         return this._email;
     }
 
-    get postagens(): Postagem[] {
-        return this._postagensPerfil;
+    get postagensDoPerfil(): Postagem[] {
+        return this._postagensDoPerfil;
     }
 }
 
@@ -30,16 +30,16 @@ class Perfil{
 class Postagem{
     private _idPostagem: number;
     private _texto: string;
-    private _curtidas: number;
-    private _descurtidas: number;
-    private _data: Date;
+    private _curtidas: number = 0;
+    private _descurtidas: number = 0;
+    private _data: Date = new Date();
     private _perfil: Perfil;
-    constructor(i:number, t:string, c:number, d:number, dt:Date, p:Perfil){
+    constructor(i:number, t:string, /*c:number, d:number, dt:Date,*/ p:Perfil){
         this._idPostagem = i;
         this._texto = t;
-        this._curtidas = c;
-        this._descurtidas = d;
-        this._data = dt;
+        //this._curtidas = c;
+        //this._descurtidas = d;
+        //this._data = dt;
         this._perfil = p;
     }
 
@@ -85,8 +85,8 @@ class PostagemAvancada extends Postagem{
     private _hashtags: string[] = [];
     private _visualizacoesRestantes: number = 1000;
     private _repositorioDeHashtags: RepositorioDeHashtags; //! Atributo do Repositório de Hashtags 
-    constructor(i:number, t:string, c:number, d:number, dt:Date, p:Perfil, repositorioHashtgs: RepositorioDeHashtags){
-        super(i, t, c, d, dt, p);
+    constructor(i:number, t:string, /*c:number, d:number, dt:Date,*/ p:Perfil, repositorioHashtgs: RepositorioDeHashtags){
+        super(i, t, /*c, d, dt,*/ p);
         this._repositorioDeHashtags = repositorioHashtgs;
     }
 
@@ -99,7 +99,7 @@ class PostagemAvancada extends Postagem{
     set visualizacoesRestantes(visualRestantes: number) {
         this._visualizacoesRestantes = visualRestantes;
     }
-    get repositorioDeHashtags(): RepositorioDeHashtags {
+    get repositorioDeHashtags(): RepositorioDeHashtags { //!hashtags
         return this._repositorioDeHashtags;
     }
 
@@ -183,8 +183,6 @@ class RepositorioDePerfis {
                     (p.email === perfil.email)
             )
 
-            //let perfilExiste = this.consultarPerfil(perfil.idPerfil, perfil.nome, perfil.email)
-
             if(perfilExiste){ 
                 return 'Perfil já existente!';                
             } 
@@ -197,7 +195,7 @@ class RepositorioDePerfis {
     }
 }
 
-//REPOSITÓRIO DE POSTAGEM
+//REPOSITÓRIO DE POSTAGENS
 class RepositorioDePostagens {
     private _postagens: Postagem[] = [];
 
@@ -238,7 +236,7 @@ class RepositorioDePostagens {
         }
         
         this._postagens.push(postagem)
-        postagem.perfil.postagens.push(postagem);
+        postagem.perfil.postagensDoPerfil.push(postagem);
         return'Postagem incluída com sucesso!';
     }  
 
@@ -272,73 +270,23 @@ class RepositorioDeHashtags{
         if(this._hashtags.length == 0){
             return null;
         }
+
+        let hashtagMaisPopular = this._hashtags[0];// primeira hashtag => mais popular
+
+        for(let i = 1; i < this._hashtags.length; i++){
+            let hashtagAtual = this._hashtags[i];
+
+            if(hashtagAtual.contadorHashtag > hashtagMaisPopular.contadorHashtag){
+                hashtagMaisPopular = hashtagAtual;
+            }
+        }
+        return hashtagMaisPopular;
+/*
         return this._hashtags.reduce((maxHashtag, hashtagAtual) => { // .reduce vai iterar sobre cada hashtag existente, comparando a anterior com a atual
             return hashtagAtual.contadorHashtag > maxHashtag.contadorHashtag ? hashtagAtual : maxHashtag; //Para cada iteração, o código compara a contagem contadorHashtag
         }, this._hashtags[0]);
+*/
     }
 }
-
-//------------------------PERFIS
-let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
-let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kay@gmail.com')
-let perfil3: Perfil = new Perfil(3, 'alessandra', 'a@gmail.com')
-let perfil4: Perfil = new Perfil(4, 'kaylanne', 'k@gmail.com')
-let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
-rperfil.incluirPerfil(perfil1);
-rperfil.incluirPerfil(perfil2);
-rperfil.incluirPerfil(perfil3);
-rperfil.incluirPerfil(perfil4);
-//console.log(rperfil.consultarPerfil(1));
-
-//------------------------POSTAGENS
-let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
-let postagem2: Postagem = new Postagem(2, 'textoo', 7, 4, new Date(), perfil2);
-let postagem3: Postagem = new Postagem(3, 'textooo', 3, 6, new Date(), perfil3);
-let postagem4: Postagem = new Postagem(4, 'textoooo', 1, 7, new Date(), perfil4);
-let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
-rpostagem.incluirPostagem(postagem1);
-rpostagem.incluirPostagem(postagem2);
-rpostagem.incluirPostagem(postagem3);
-rpostagem.incluirPostagem(postagem4);
-//console.log(rpostagem.consultarPostagem(1));
-
-//!------------------------HASHTAGS
-let rHashtag: RepositorioDeHashtags = new RepositorioDeHashtags();
-let h1: Hashtag = new Hashtag('#fluminense Ganhou!');
-let h2: Hashtag = new Hashtag('#fluminense!');
-rHashtag.incluirHashtag('#fluminense Ganhou!');
-rHashtag.incluirHashtag('#fluminense!');
-console.log(rHashtag.hashtagMaisPopular());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 export { Perfil, Postagem, PostagemAvancada, Hashtag, RepositorioDePerfis, RepositorioDePostagens, RepositorioDeHashtags }

@@ -16,7 +16,7 @@ class RedeSocial {
     get repositorioDePostagens(): RepositorioDePostagens {
         return this._repositorioDePostagens;
     }
-    get reposirotioDeHashtags(): RepositorioDeHashtags{  // getter De Hashtag
+    get reposirotioDeHashtags(): RepositorioDeHashtags{  //! getter De Hashtag
         return this._repositorioDeHastags;
     }
 
@@ -85,7 +85,7 @@ private validaPostagem(postagem: Postagem): boolean {
         let postagensFiltradas: Postagem[] = [];
         let perfilProcurado = this.consultarPerfil(id);
 
-        for(let postagem of perfilProcurado.postagens){
+        for(let postagem of perfilProcurado.postagensDoPerfil){
             if (postagem instanceof PostagemAvancada){
                 if (postagem.visualizacoesRestantes > 0){
                     postagensFiltradas.push(postagem);
@@ -117,22 +117,50 @@ private validaPostagem(postagem: Postagem): boolean {
     }
 
     exibirHashtgsMaisPopulares(): Hashtag | null { //! método que retorna a hashtag mais popular
-        return this._repositorioDeHastags.hashtagMaisPopular()
+        return this._repositorioDeHastags.hashtagMaisPopular();
     }
 }
 let redeSocial: RedeSocial = new RedeSocial();
+//------------------------PERFIS
+let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kay@gmail.com')
+let perfil3: Perfil = new Perfil(3, 'alessandra', 'a@gmail.com')
+let perfil4: Perfil = new Perfil(4, 'kaylanne', 'k@gmail.com')
+
+//console.log(rperfil.consultarPerfil(1));
+
+//------------------------POSTAGENS
+let postagem1: Postagem = new Postagem(1, 'texto',perfil1);
+let postagem2: Postagem = new Postagem(2, 'textoo',perfil2);
+let postagem3: Postagem = new Postagem(3, 'textooo',perfil3);
+let postagem4: Postagem = new Postagem(4, 'textoooo',perfil4);
+
+//console.log(rpostagem.consultarPostagem(1));
+
+//!------------------------HASHTAGS
+let h1: Hashtag = new Hashtag('#fluminense Ganhou!');
+let h2: Hashtag = new Hashtag('#fluminense!');
+
 
 let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
-let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com');
-rperfil.incluirPerfil(perfil1);
-rperfil.consultarPerfil(1);
-
 let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
-let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
-rpostagem.incluirPostagem(postagem1);
-rpostagem.consultarPostagem(1);
+let rHashtag: RepositorioDeHashtags = new RepositorioDeHashtags();
 
-console.log(redeSocial.exibirPostagensPopulares());
+rperfil.incluirPerfil(perfil1);
+rperfil.incluirPerfil(perfil2);
+rperfil.incluirPerfil(perfil3);
+rperfil.incluirPerfil(perfil4);
+
+rpostagem.incluirPostagem(postagem1);
+rpostagem.incluirPostagem(postagem2);
+rpostagem.incluirPostagem(postagem3);
+rpostagem.incluirPostagem(postagem4);
+
+rHashtag.incluirHashtag('#fluminense Ganhou!');
+rHashtag.incluirHashtag('#fluminense!');
+
+console.log(redeSocial.exibirHashtgsMaisPopulares());
+
 
 
 
