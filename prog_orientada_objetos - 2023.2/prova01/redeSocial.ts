@@ -1,8 +1,9 @@
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens } from "./index";
+import { Perfil, Postagem, PostagemAvancada, Hashtag, RepositorioDePerfis, RepositorioDePostagens, RepositorioDeHashtags } from "./index";
 
 class RedeSocial {
     private _repositorioDePerfis: RepositorioDePerfis;
     private _repositorioDePostagens: RepositorioDePostagens;
+    private _repositorioDeHastags: RepositorioDeHashtags; // Hashtag
 /*
     constructor(repositorioDePerfis: RepositorioDePerfis, repositorioDePostagens: RepositorioDePostagens) {
         this._repositorioDePerfis = repositorioDePerfis;
@@ -15,30 +16,30 @@ class RedeSocial {
     get repositorioDePostagens(): RepositorioDePostagens {
         return this._repositorioDePostagens;
     }
-
-    incluirPerfil(perfil: Perfil): string | Perfil | null{  // com problema
-        return this.repositorioDePerfis.consultarPerfil(perfil.idPerfil, perfil.nome, perfil.email);
+    get reposirotioDeHashtags(): RepositorioDeHashtags{  // getter De Hashtag
+        return this._repositorioDeHastags;
     }
 
-    consultarPerfil(id?: number, nome?: string, email?: string): Perfil | string | null {  //consultar perfil a partir do RepositorioDePerfis
-        return this.repositorioDePerfis.consultarPerfil(id, nome, email);
+    incluirPerfil(perfil: Perfil): string | Perfil | undefined{  
+        return this._repositorioDePerfis.incluirPerfil(perfil);
     }
-
+    consultarPerfil(id?: number | undefined, nome?: string | undefined, email?: string | undefined): Perfil {  
+        return this._repositorioDePerfis.consultarPerfil(id, nome, email);
+    }
     incluirPostagem(postagem: Postagem): string{
         return this._repositorioDePostagens.incluirPostagem(postagem);
     }
-
     consultarPostagem(id?: number | undefined, texto?: string | undefined, hashtag?: string | undefined, perfil?:  Perfil | undefined): Postagem[] | string {
         return this._repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
 /*
-    private validaPostagem(postagem: Postagem): boolean {
-        return (
-            postagem.idPostagem != undefined && 
-            postagem.texto != undefined &&
-            postagem.perfil != undefined
-        );
-    }       
+private validaPostagem(postagem: Postagem): boolean {
+    return (
+        postagem.idPostagem != undefined && 
+        postagem.texto != undefined &&
+        postagem.perfil != undefined
+    );
+}       
 */
     // FUNÇÕES DA PÁGINA
     curtir(idPost: number): void {
@@ -80,6 +81,44 @@ class RedeSocial {
         }
         return postagensFiltradas;
     }
+    exibirPostagensPorPerfil(id: number): Postagem[]{
+        let postagensFiltradas: Postagem[] = [];
+        let perfilProcurado = this.consultarPerfil(id);
+
+        for(let postagem of perfilProcurado.postagens){
+            if (postagem instanceof PostagemAvancada){
+                if (postagem.visualizacoesRestantes > 0){
+                    postagensFiltradas.push(postagem);
+                    postagem.decrementarVisualizacoes();
+                }
+            } else {
+                postagensFiltradas.push(postagem);
+            }
+        }
+
+        return postagensFiltradas;
+    }
+
+    exibirPostagem(texto: string): string {
+        return this.exibirPostagem.call(this, texto); // Chama a função no arquivo index.ts
+    }
+
+    exibirPostagensPopulares(): PostagemAvancada[] { // fazer testes
+        let postagensPopulares: PostagemAvancada[] = [];
+        let postagens = this._repositorioDePostagens.consultarPostagem() as PostagemAvancada[]; //downcast => Postagem = PostagemAvancada
+
+        for(let postagem of postagens){
+            if(postagem.ehPopular() && postagem.visualizacoesRestantes > 0) {
+                postagensPopulares.push(postagem);
+            }
+        }
+        return postagensPopulares;
+
+    }
+
+    exibirHashtgsMaisPopulares(): Hashtag | null { //! método que retorna a hashtag mais popular
+        return this._repositorioDeHastags.hashtagMaisPopular()
+    }
 }
 let redeSocial: RedeSocial = new RedeSocial();
 
@@ -93,14 +132,17 @@ let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
 rpostagem.incluirPostagem(postagem1);
 rpostagem.consultarPostagem(1);
 
-let pa: PostagemAvancada = new PostagemAvancada(1, 'texto', 8, 5, new Date(), perfil1)
-pa.adicionarHashtag('#ola mundo!');
-redeSocial.exibirPostagensPorHashtag('');
+console.log(redeSocial.exibirPostagensPopulares());
 
-//let rperfil: RepositorioDePerfis = new RepositorioDePerfis()
-//let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
-//let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
-//let postagem1: Postagem = new Postagem(1, 'texto', 8, 5, new Date(), perfil1);
-//console.log(rpostagem.incluirPostagem(postagem1));
+
+
+
+
+
+
+
+
+
+
 
 export{ RedeSocial };

@@ -1,14 +1,13 @@
+import prompt from "prompt-sync";
+let input = prompt();
+
 import { RedeSocial } from "./redeSocial";
-import PromptSync from "prompt-sync";
-const input = PromptSync();
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens } from "./index";
 
-
-class App{
-    private _redeSocial: RedeSocial;
-
-    constructor(redeSocial: RedeSocial){
-        this._redeSocial = redeSocial;
-    }
+class App {
+    private _redeSocial: RedeSocial = new RedeSocial;
+    private _idPerfilAnterior: number = 0;
+    private _IdPostagemAnterior: number = 0;
 
     get redeSocial(): RedeSocial {
         return this._redeSocial;
@@ -18,12 +17,12 @@ class App{
         let opcao: string = '';
 
         do {
-            console.log('\nBem Vindo\n Digite uma opção: ');
+            console.log('\nBem Vindo \nDigite uma opção: ');
             console.log('1 - Consultar Perfil    2 - Incluir Perfil      3 - Consultar Postagem\n' +
-                        '4 - Incluir Postagem    5 - Curtir Postagem      6 - Descurtir Postagem\n' +
+                        '4 - Incluir Postagem    5 - Avaliar Postagens\n' +
                         '0 - Sair\n');
 
-            opcao = input("Opção:");
+            opcao = input("Opção: ");
             
             switch (opcao) {
                 case "1":
@@ -39,10 +38,7 @@ class App{
                     this.incluirPostagem();
                     break;
                 case "5":
-                    this.curtirPostagem();
-                    break;
-                case "6":
-                    this.descurtirPostagem();
+                    this.avaliarPostagem();
                     break;
                 case "0": console.log('Aplicação encerrada!');
                     break;
@@ -52,24 +48,228 @@ class App{
                     break;
             }
         } while (opcao != "0");
-        console.log("Aplicação encerrada");
     }
 
     consultarPerfil(): void {
+        console.log('\nCONSULTAR PERFIL');
+        let nomePerfil = input('Nome do perfil procurado: ');
+        console.log(this.redeSocial.consultarPerfil(undefined, nomePerfil));
     }
 
     incluirPerfil(): void {
+        console.log('\nCADASTRAR PERFIL');
+        let idPerfil = ++this._idPerfilAnterior;
+        let nome: string = input('Nome do seu perfil: ');
+        let email: string = input('Digite seu email: ');
+
+        let novoPerfil: Perfil = new Perfil(idPerfil, nome, email)
+        console.log(this.redeSocial.incluirPerfil(novoPerfil));
     }
 
-    consultarPostagem(): void {
+    consultarPostagem(): void{
+        let opcao: string = '';
+
+        do {
+            console.log('\nDigite uma opção: ');
+            console.log('1 - Consultar por texto    2 - Consultar por Hashtag \n' +
+                        '3 - Consultar por perfil   4 - Consultar por id\n' +
+                        '0 - Voltar\n');
+
+            opcao = input("Opção: ");
+            
+            switch (opcao) {
+                case "1":
+                    this.consultarPorTexto();
+                    break;
+                case "2":
+                    this.consultarPorHashtag();
+                    break;
+                case "3": 
+                    this.consultarPorPerfil();
+                    break;
+                case "4": 
+                    this.consultarPorId();
+                    break;
+                case "0": console.log('Voltando à pagina inicial!');
+                    break;
+                default:
+                    console.log("Opção inválida. Tente novamente.");
+                    break;
+            }
+        } while (opcao != "0");
+    }
+
+    consultarPorTexto(){
+        console.log('\nCONSULTAR POSTAGEM POR TEXTO');
+        let texto: string = input('Texto da postagem: ');
+        let postagens = this.redeSocial.consultarPostagem(undefined, texto);
+
+        //console.log(this.redeSocial.exibirPostagem(texto));
+        console.log(postagens);
+    }
+
+    consultarPorHashtag(){
+        console.log('\nCONSULTAR POSTAGEM POR HASHTAG');
+        let hashtag: string = input('Hashtag a ser consultada: ');
+        let postagens = this.redeSocial.exibirPostagensPorHashtag(hashtag);
+
+        console.log(postagens);
+    }
+
+    consultarPorPerfil(){
+        console.log('\nCONSULTAR POSTAGEM POR PERFIL');
+        let nome: string = input('Nome do perfil que deseja ver as postagens: ');
+        let perfil = this.redeSocial.consultarPerfil(undefined, nome);
+        let postagens = this.redeSocial.exibirPostagensPorPerfil(perfil.idPerfil)
+
+        console.log(postagens);
+    }
+
+    consultarPorId(){
+        console.log('\nCONSULTAR POSTAGEM POR ID');
+        let idPostagemStr: string = input('Id da postagem: ');
+        let idPostagem: number = parseFloat(idPostagemStr)
+        let postagem = this.redeSocial.consultarPostagem(idPostagem);
+
+        console.log(postagem);
     }
 
     incluirPostagem(): void {
+        console.log('\nINCLUIR POSTAGEM');
+        let idPostagem = ++this._IdPostagemAnterior;
+        let nomePerfil: string = input('Qual seu nome de perfil? ');
+        let texto: string = input('O que voce esta pensando? ');
+        let temHashtag: string = input('Deseja adicionar hashtag? (s/n) ');
+
+        let perfil = this._redeSocial.consultarPerfil(undefined, nomePerfil);
+
+        if(temHashtag == 'n'){
+            let novaPostagem: Postagem = new Postagem(idPostagem, texto, perfil);   
+            console.log(this.redeSocial.incluirPostagem(novaPostagem));       
+        } else if (temHashtag == 's') {
+            let quantidadeStr = input('Quantas hashtags deseja adicionar? ');
+            let quantidade: number = parseFloat(quantidadeStr);
+
+            let novaPostagem: PostagemAvancada = new PostagemAvancada(idPostagem, texto, perfil);
+            console.log(this.redeSocial.incluirPostagem(novaPostagem)); 
+
+            for(let i=1; i<=quantidade; i++){
+                let hashtag = input('Adicione uma hashtag: ');
+                novaPostagem.adicionarHashtag(hashtag);
+            }
+        }        
     }
 
-    curtirPostagem(): void {
+    avaliarPostagem(): void {
+        let opcao: string = '';
+
+        do {
+            console.log('nDigite uma opção: ');
+            console.log('1 - Avaliar por texto    2 - Avaliar por Hashtag \n' +
+                        '3 - Avaliar por perfil   4 - Avaliar por id \n' +
+                        '0 - Voltar\n');
+
+            opcao = input("Opção: ");
+            
+            switch (opcao) {
+                case "1":
+                    this.avaliarPorTexto();
+                    break;
+                case "2":
+                    this.avaliarPorHashtag();
+                    break;
+                case "3": 
+                    this.avaliarPorPerfil();
+                    break;
+                case "4": 
+                    this.avaliarPorId();
+                    break;
+                case "0": console.log('Voltando à pagina inicial!');
+                    break;
+                default:
+                    console.log("Opção inválida. Tente novamente.");
+                    break;
+            }
+        } while (opcao != "0");
     }
 
-    descurtirPostagem(): void {
+    avaliarPorTexto(): void {
+        console.log('\nAVALIAR POSTAGENS POR TEXTO');
+        let texto: string = input('Texto da postagem: ');
+        let postagens = this.redeSocial.consultarPostagem(undefined, texto);
+
+        let avaliacao = input('Voce deseja curtir ou descurtir a(s) postagem(ens)? (c/d) ')
+        for (let p of postagens) {
+            if(p instanceof Postagem){
+                if (avaliacao === 'c') {
+                    this.redeSocial.curtir(p.idPostagem);
+                } else {
+                    this.redeSocial.descurtir(p.idPostagem);
+                }
+            }
+            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso!`);
+        }
+
+        console.log(postagens);
+    }
+
+    avaliarPorHashtag(): void{
+        console.log('\nAVALIAR POSTAGENS POR HASHTAG');
+        let hashtag: string = input('Hashtag a ser avaliada: ');
+        let postagens = this.redeSocial.exibirPostagensPorHashtag(hashtag);
+
+        let avaliacao = input('Voce deseja curtir ou descurtir a(s) postagem(ens)? (c/d) ')
+        for (let p of postagens) {
+            if(p instanceof PostagemAvancada){
+                if (avaliacao === 'c') {
+                    this.redeSocial.curtir(p.idPostagem);
+                } else {
+                    this.redeSocial.descurtir(p.idPostagem);
+                }
+            }
+            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso!`);
+        }
+
+        console.log(postagens);
+    }
+
+    avaliarPorPerfil(): void{
+        console.log('\nAVALIAR POSTAGENS POR PERFIL');
+        let nome: string = input('Nome do perfil que deseja avaliar as postagens: ');
+        let perfil = this.redeSocial.consultarPerfil(undefined, nome);
+        let postagens = this.redeSocial.exibirPostagensPorPerfil(perfil.idPerfil);
+
+        let avaliacao = input('Voce deseja curtir ou descurtir a(s) postagem(ens)? (c/d) ')
+        for (let p of postagens) {
+            if(p instanceof PostagemAvancada){
+                if (avaliacao === 'c') {
+                    this.redeSocial.curtir(p.idPostagem);
+                } else {
+                    this.redeSocial.descurtir(p.idPostagem);
+                }
+            }
+            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso!`);
+        }
+
+        console.log(postagens);
+    }
+
+    avaliarPorId(): void{
+        console.log('\nAVALIAR POSTAGEM POR ID');
+        let idPostagemStr: string = input('Id da postagem: ');
+        let idPostagem: number = parseFloat(idPostagemStr)
+        let postagem = this.redeSocial.consultarPostagem(idPostagem);
+
+        let avaliacao = input('Voce deseja curtir ou descurtir a(s) postagem(ens)? (c/d) ')
+        if (avaliacao === 'c') {
+            this.redeSocial.curtir(idPostagem);
+        } else {
+            this.redeSocial.descurtir(idPostagem);
+        }
+
+        console.log(postagem);
     }
 }
+
+const meuApp: App = new App();
+meuApp.menu();
