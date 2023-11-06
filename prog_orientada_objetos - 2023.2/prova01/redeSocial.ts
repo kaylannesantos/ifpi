@@ -72,6 +72,47 @@ class RedeSocial {
     exibirPerfis(): string{
         return this.repositorioDePerfis.exibirTodosOsPerfis();
     }
+
+    exibirPostagensPopulares(): PostagemAvancada[] { // fazer testes
+        let postagensPopulares: PostagemAvancada[] = [];
+        let postagens = this._repositorioDePostagens.consultarPostagem() as PostagemAvancada[]; //downcast => Postagem = PostagemAvancada
+
+        for (const postagem of postagens) {
+            if (postagem.ehPopular() && postagem.visualizacoesRestantes > 0) {
+                postagensPopulares.push(postagem);
+                postagem.decrementarVisualizacoes();
+            }
+        }
+        return postagensPopulares;
+
+    }
 }
+let rs: RedeSocial = new RedeSocial();
+let perfil1: Perfil = new Perfil(1, 'alessandra', 'ale@gmail.com')
+let perfil2: Perfil = new Perfil(2, 'kaylanne', 'kay@gmail.com')
+
+let postagem1: Postagem = new Postagem(1, 'texto',perfil1);
+let postagem2: Postagem = new Postagem(2, 'textoo',perfil2);
+
+let rperfil: RepositorioDePerfis = new RepositorioDePerfis();
+let rpostagem: RepositorioDePostagens = new RepositorioDePostagens();
+
+rperfil.incluirPerfil(perfil1);
+rperfil.incluirPerfil(perfil2);
+
+rpostagem.incluirPostagem(postagem1);
+rpostagem.incluirPostagem(postagem2);
+
+rpostagem.curtir(1);
+rpostagem.curtir(1);
+rpostagem.curtir(1);
+rpostagem.descurtir(1);
+rpostagem.descurtir(1);
+rpostagem.descurtir(2);
+rpostagem.curtir(2);
+rpostagem.curtir(2);
+
+console.log(rs.exibirPostagensPopulares());
+
 
 export{ RedeSocial };
