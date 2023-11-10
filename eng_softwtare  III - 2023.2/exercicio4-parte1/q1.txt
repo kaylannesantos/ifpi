@@ -1,0 +1,16 @@
+1. Por que o uso do nome próprio Liskov?
+-> Porque foi por meio de BarBara Liskov que se chegou a definição para o conceito de subtipo na orientação a objetos.
+
+2. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
+->
+
+3. Cite um exemplo onde a herança pode ser usada de forma conveniente, porém
+deixa uma impressão de que está sendo mal aplicada.
+->
+
+4. Cite um exemplo onde a herança pode ser usada de forma conveniente, porém
+deixa futuras expansões comprometidas ou com problemas de design
+->
+
+5. Nos exemplos que você citou, a composição seria mais aplicável? Refaça-os
+->
