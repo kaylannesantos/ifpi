@@ -1,5 +1,6 @@
 1. Por que o uso do nome próprio Liskov?
--> Porque foi por meio de BarBara Liskov que se chegou a definição para o conceito de subtipo na orientação a objetos.
+-> Porque foi por meio de BarBara Liskov juntamente com Jeannette Wing, 
+que se chegou a definição para o conceito de subtipo na orientação a objetos.
 
 2. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
 ->
@@ -7,10 +8,118 @@
 3. Cite um exemplo onde a herança pode ser usada de forma conveniente, porém
 deixa uma impressão de que está sendo mal aplicada.
 ->
+class Shape {
+    protected width: number = 0;
+    protected height: number = 0;
+
+    public setwidth(w: number) {
+        this.width = w;
+    }
+    public setheight(h: number) {
+        this.height = h;
+    }
+
+    public getArea(): number {
+        return this.width * this.height;
+    }
+
+}
+
+class Rectangle extends Shape{
+
+}
+
+class Square extends Shape{//violação de contrato segundo o LSP, já que uma classe derivada não pode violar o contrato estabelecido pela classe base
+    public setwidth(w: number) {
+        this.width = w;
+        this.height = w;
+    }
+
+    public setheight(h: number) {
+        this.height = h;
+        this.width = h;
+    }
+}
 
 4. Cite um exemplo onde a herança pode ser usada de forma conveniente, porém
 deixa futuras expansões comprometidas ou com problemas de design
-->
+-> Neste exemplo as subclasses herdam de 'Arquivo' mas criam um método 'gerar' especifico para cada subclasse. 
+public class Arquivo
+{
+// outros métodos...
+}
+
+public class ArquivoWord : Arquivo
+{
+   public void GerarDocX()
+   {
+       // codigo para geracao do arquivo
+   }
+}
+
+public class ArquivoPdf : Arquivo
+{
+   public void GerarPdf()
+   {
+       // codigo para geracao do arquivo
+   }
+}
 
 5. Nos exemplos que você citou, a composição seria mais aplicável? Refaça-os
-->
+->Arquivo
+class Arquivo {
+}
+class ArquivoWord {
+    arquivo: Arquivo;
+    public arquivoWord(arquivo: Arquivo):Arquivo {
+        return this.arquivo = arquivo;
+    }
+    public gerarDocx() {
+        // código para geração do arquivo
+    }
+}
+class ArquivoPdf {
+    arquivo: Arquivo;
+    public arquivoPdf(arquivo: Arquivo): Arquivo {
+        return this.arquivo = arquivo
+    }
+    public gerarPdf() {
+        // código para geração do arquivo
+    }
+}
+
+->Forma 
+class Shape {
+    protected width: number = 0;
+    protected height: number = 0;
+    public setwidth(w: number) {
+        this.width = w;
+    }
+    public setheight(h: number) {
+        this.height = h;
+    }
+    public getArea(): number {
+        return this.width * this.height;
+    }
+}
+class Rectangle {
+    private shape: Shape;
+    constructor(shape: Shape) {
+        this.shape = shape;
+    }
+}
+class Square {
+    private shappe: Shape;
+    constructor(shape: Shape) {
+        this.shappe = shape;
+    }
+
+    public setWidth(w: number) {
+        this.shappe.setwidth(w);
+        this.shappe.setheight(w)
+    }
+    public setHeight(h: number) {
+        this.shappe.setheight(h);
+        this.shappe.setheight(h);
+    }
+}
