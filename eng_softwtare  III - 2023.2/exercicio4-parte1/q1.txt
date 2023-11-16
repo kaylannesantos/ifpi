@@ -1,9 +1,11 @@
 1. Por que o uso do nome próprio Liskov?
 -> Porque foi por meio de BarBara Liskov juntamente com Jeannette Wing, 
-que se chegou a definição para o conceito de subtipo na orientação a objetos.
+que se chegou a definição para o conceito de subtipo na orientação a objetos,
+onde objetos da classe base devem ser subtituiveis por objetos da classe derivada de forma que não afete a execução do programa.
 
 2. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
-->
+-> Por exemplo usando formas, tenho uma classe retangulo que tenha como atributos altura e largura. Cria-se uma classe quadrado que herda de retangulo, onde a diferença de atributos é que quadrado
+todos os seus lados iguais. Aplicando o LSP na classe quadrado ela deve manter a invariante da classe retangulo.
 
 3. Cite um exemplo onde a herança pode ser usada de forma conveniente, porém
 deixa uma impressão de que está sendo mal aplicada.
@@ -46,7 +48,6 @@ deixa futuras expansões comprometidas ou com problemas de design
 -> Neste exemplo as subclasses herdam de 'Arquivo' mas criam um método 'gerar' especifico para cada subclasse. 
 public class Arquivo
 {
-// outros métodos...
 }
 
 public class ArquivoWord : Arquivo
