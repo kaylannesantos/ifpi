@@ -2,7 +2,7 @@ Exercício 08 – Pesquisa exploratória
 
 1) Identifique pelo menos 3 “erros” que acontecem quando você está programando
 com TypeScript que levam à parada brusca da execução de código.
-->Erros de sintaxe
+->Declarar mais uma variavel com mesmo nome no mesmo bloco, chamar uma variavel que não existe e erros de sintaxe.
 
 2) O que é uma exceção em programação e como ela se diferencia de um erro
 comum?
@@ -43,8 +43,8 @@ try {
 6) Quais são os tipos comuns de exceções que podem ser encontradas em
 aplicações TypeScript?
 ->
-Error: para erros em tempo de execução.Ex: quando o erro ocoore durante a execução de um programa;
-TyError: quando um operador ou argumento passado para a função é de um tipo diferente do esperado. Ex: quando atribuimos uma 'string' a uma variavel do tipo 'number';
+Error: para erros em tempo de execução.Ex: quando o erro ocorre durante a execução de um programa;
+TypeError: quando um operador ou argumento passado para a função é de um tipo diferente do esperado. Ex: quando atribuimos uma 'string' a uma variavel do tipo 'number';
 RangeError: Esta exceção é lançada quando um valor está fora do intervalo permitido. Ex: quando se tenta criar um array com um numero muito grande de elementos;
 ReferenceError: quando tenta-se usar uma variavel que não foi definida. Ex: quando chamamos uma variavel que não foi definida;
 SyntaxError: quando se há um erro de sintaxe. Ex: quando esquecemos de fechar um parêntese ou chave.
