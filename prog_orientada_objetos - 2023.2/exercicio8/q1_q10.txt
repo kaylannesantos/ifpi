@@ -54,7 +54,8 @@ SyntaxError: quando se há um erro de sintaxe. Ex: quando esquecemos de fechar u
 
 8) Como o tratamento de exceções em TypeScript ajuda a melhorar a robustez e a
 segurança de uma aplicação?
-->
+->Proporcionando códigos mais limpos e de estrutura organizada, garante que o programa lide com situações imprevistas de forma controlada e evita que erros inesperados 
+interrompa abruptamente a execução do programa de forma segura.
 
 9) Existem diferenças significativas no tratamento de exceções entre TypeScript e
 JavaScript?
@@ -65,4 +66,5 @@ JavaScript?
 
 
 10) Como você pode testar e depurar eficientemente exceções em TypeScript?
-->
+-> Por meio do Visual Studio Code que possui suporte integrado para depuração de typescript. Dessa forma, é só colocar pontos de interrupção nos locais relevantes 
+para examinar o estado do código e realizar testes unitários.
