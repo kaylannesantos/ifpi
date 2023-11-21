@@ -1,9 +1,9 @@
-/*class ValorInvalidoError extends Error {
+class ValorInvalidoError extends Error {
     message: string
     constructor(message: string){
         super(message);
     }
-}*/
+}
 
 class Cliente {
     private _nome: string;
@@ -43,7 +43,7 @@ class Conta{
 
     sacar(valor:number):void{
         if (valor > this.saldo) {
-            throw Error('Saldo insuficiente!');
+            throw new ValorInvalidoError('Saldo insuficiente!');
         }
         this.saldo -= valor;
     }
