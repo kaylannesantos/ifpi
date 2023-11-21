@@ -25,31 +25,6 @@ class Perfil implements Publicavel{
 
 }
 
-class Postagem implements Publicavel{ //obs:Postagem tenha uma coleção de reações e comentários
-    private _id: number; //mudei de string para number
-    private _autor: Perfil;
-    private _conteudo: string;
-
-    constructor(id: number, autor: Perfil, conteudo: string) {
-        this._id = id;
-        this._autor = autor;
-        this._conteudo = conteudo;
-    }
-
-    get id(): number { return this._id; }
-    get autor():Perfil{ return this._autor; }
-    get conteudo():string{ return this._conteudo; }
-
-    exibir(): void {
-        console.log('POST!');
-        console.log(`Usuário: ${this.autor.nameUser}\nPostagem: ${this.conteudo}`);
-    }
-
-    getAutor(): Perfil {
-        return this.autor;
-    }
-}
-
 class Reacao implements Publicavel {
     private _tipoReacao: string;
     private _postagem: Postagem;
@@ -63,7 +38,7 @@ class Reacao implements Publicavel {
     get postagem():Postagem{ return this._postagem};
 
     exibir(): void {
-        console.log(`Usuário: ${this.postagem.autor}\nPostagem: ${this.postagem.conteudo}\nReação: ${this.tipoReacao}`);
+        console.log(`Usuário: ${this.postagem.autor.nameUser}\nPostagem: ${this.postagem.conteudo}\nReação: ${this.tipoReacao}`);
     }
     getAutor(): Perfil {
         return this.postagem.autor;
@@ -80,12 +55,55 @@ class Comentario implements Publicavel{
     get postagemOriginal():Postagem{ return this._postagemOriginal}
 
     exibir(): void {
-        console.log(`Autor: ${this.postagemOriginal.autor}\n Post(${this.postagemOriginal.id}): ${this.postagemOriginal.conteudo}`);
+        console.log(`Autor: ${this.postagemOriginal.autor.nameUser}\n Post(${this.postagemOriginal.id}): ${this.postagemOriginal.conteudo}`);
         
     }
 
     getAutor(): Perfil {
         return this.postagemOriginal.autor;
+    }
+}
+
+class Postagem implements Publicavel{
+    private _id: number; //mudei de string para number
+    private _autor: Perfil;
+    private _conteudo: string;
+    private _reacoes: Reacao[]=[];
+    private _comentarios: Comentario[]=[];
+
+    constructor(id: number, autor: Perfil, conteudo: string) {
+        this._id = id;
+        this._autor = autor;
+        this._conteudo = conteudo;
+    }
+
+    get id(): number { return this._id; }
+    get autor():Perfil{ return this._autor; }
+    get conteudo():string{ return this._conteudo; }
+    get reacoes():Reacao[]{ return this._reacoes}
+    get comentarios():Comentario[]{ return this._comentarios}
+
+    addReacao(reacao:Reacao):void{
+        this.reacoes.push(reacao);
+    }
+
+    addComentario(comentario:Comentario){
+        this.comentarios.push(comentario);
+    }
+
+    exibir(): void {//!Reação e Comentário esá retornando vázio
+        console.log(`Post(${this.id}):`);
+        console.log(`Usuário(${this.id}): ${this.autor.nameUser}\nPostagem: ${this.conteudo}`);
+
+        console.log('Reação: ' + this.reacoes.map(reacao => reacao.exibir()));
+        //this.reacoes.forEach(reacao => reacao.exibir());
+
+        console.log('Comentario: ' + this.comentarios.map(comentario => comentario.exibir()));
+        //this.comentarios.forEach(comentario => comentario.exibir());
+    }
+
+    getAutor(): Perfil {
+        return this.autor;
     }
 }
 
@@ -101,6 +119,10 @@ let r1: Reacao = new Reacao('Feliz :)', post1)
 let r2: Reacao = new Reacao('Triste :(', post2)
 let r3: Reacao = new Reacao('Sei lá :|', post3)
 
-console.log(r1.exibir());
-console.log(r1.getAutor());
+let c1: Comentario = new Comentario(post1)
+let c2: Comentario = new Comentario(post2)
+let c3: Comentario = new Comentario(post3)
 
+post1.exibir();
+post2.exibir();
+post3.exibir();
