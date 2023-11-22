@@ -95,11 +95,11 @@ class Postagem implements Publicavel{
         console.log(`Post(${this.id}):`);
         console.log(`Usuário(${this.id}): ${this.autor.nameUser}\nPostagem: ${this.conteudo}`);
 
-        console.log('Reação: ' + this.reacoes.map(reacao => reacao.exibir()));
-        //this.reacoes.forEach(reacao => reacao.exibir());
+        //console.log('Reação: ' + this.reacoes);
+        this.reacoes.forEach(reacao => reacao.exibir());
 
-        console.log('Comentario: ' + this.comentarios.map(comentario => comentario.exibir()));
-        //this.comentarios.forEach(comentario => comentario.exibir());
+        //console.log('Comentario: ' + this.comentarios.map(comentario => comentario.exibir()));
+        this.comentarios.forEach(comentario => comentario.exibir());
     }
 
     getAutor(): Perfil {
@@ -123,6 +123,6 @@ let c1: Comentario = new Comentario(post1)
 let c2: Comentario = new Comentario(post2)
 let c3: Comentario = new Comentario(post3)
 
-post1.exibir();
-post2.exibir();
-post3.exibir();
+r1.exibir();
+r2.exibir();
+r3.exibir();
