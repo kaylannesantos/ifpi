@@ -30,9 +30,9 @@ class Quadrado extends Retangulo {
     }
 }
 
-//let r: Retangulo = new Retangulo(2,3);
+let r: Retangulo = new Retangulo(2,3);
 //console.log(r.getArea()) // 6
-//let q: Quadrado = new Quadrado(2);
+let q: Quadrado = new Quadrado(2);
 //console.log(q.getArea()) // NaN
 
 interface Area{
@@ -67,5 +67,6 @@ class QuadradoSolucao implements Area{
 
 let rsolucao: RetanguloSolucao = new RetanguloSolucao(2,3);
 console.log(rsolucao.calcularArea()) // 6
+
 let qsolucao: QuadradoSolucao = new QuadradoSolucao(2);
 console.log(qsolucao.calcularArea()) // 4 
