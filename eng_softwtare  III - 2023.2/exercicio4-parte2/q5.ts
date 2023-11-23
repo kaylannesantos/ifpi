@@ -119,7 +119,7 @@ class Postagem implements Publicavel{
         this.comentarios.push(comentario);
     }
 
-    exibir(): void {//!Reação e Comentário está retornando vázio
+    exibir(): void {
         console.log(`-------Post(${this.id})-------`);
         // console.log(`Comentário do Usuário(${this.autor.nameUser}) na postagem(${this.id}) ${this.conteudo}:${this.comentarios.map(comentario => comentario.exibir())} , (reação: ).\n`);
         console.log(
