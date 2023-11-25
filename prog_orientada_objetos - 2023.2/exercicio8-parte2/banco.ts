@@ -104,6 +104,5 @@ let b: Banco = new Banco();
 
 b.inserir(new Conta("111", 100));
 b.inserir(new Conta("222", 100));
-b.inserir(new Conta("333", 100));
 
 export { Banco };

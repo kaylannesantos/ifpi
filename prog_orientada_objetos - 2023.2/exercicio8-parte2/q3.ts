@@ -1,5 +1,5 @@
 /*3) Implemente como nos slides o lançamento da exceção no método sacar e realize
-um teste para saques que deixariam o saldo negativo. */
+um teste para saques que deixariam o saldo negativo. 
 
 class Conta {
     private _numero: string;
@@ -37,3 +37,5 @@ c2.sacar(3.50);
 console.log('Conta 2: ', c2.saldo);
 c3.sacar(2);
 console.log('Conta 3: ', c3.saldo);
+
+*/
