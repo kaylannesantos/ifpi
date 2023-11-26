@@ -1,26 +1,33 @@
-import { Conta } from "./conta";
+import { Conta, Poupanca } from "./conta";
+import { ContaInexistenteError, PoupancaInvalidaError } from "./excecoes";
 
-class Banco {
-    contas: Conta[] = []
+export class Banco {
+    private _contas: Conta[] = []
 
-    consultar(numero: string): Conta{
+    get contas():Conta[]{
+        return this._contas;
+    }
+
+    consultar(numero: string): Conta{ // Incompleta !!!
         let contaProcurada!: Conta;
 
-        for (let conta of this.contas){
-            if (conta.numero == numero) {
-                contaProcurada = conta;
-                break;
+        try {
+            for (let conta of this.contas){
+                if (conta.numero == numero) {
+                    contaProcurada = conta;
+                    break;
+                }
+            }
+            if (contaProcurada) {
+                return contaProcurada;
+            }
+            throw new ContaInexistenteError("Conta inexistente!");
+        } catch (error:any) {
+            if (error instanceof ContaInexistenteError) {
+                console.log(error.message);
             }
         }
         return contaProcurada;
-
-        /*for (let i: number = 0; i < this.contas.length; i++) {
-            if (this.contas[i].numero == numero) {
-                contaProcurada = this.contas[i];
-                break;
-            }
-        }
-        return contaProcurada;*/
     }
 
     consultarPorIndice(numero: string): number {
@@ -76,14 +83,12 @@ class Banco {
         }
     }
 
-    transferir(numContaOrigem: string, numContaDestino: string, valor:number){//numeroCredito:string, numeroDebito:string
-        //let contaCredito: Conta = this.consultar(numeroCredito);
-        //let contaDebito: Conta = this.consultar(numeroDebito);
-        let contaOrigem: Conta = this.consultar(numContaOrigem);
-        let contaDestino: Conta = this.consultar(numContaDestino);
+    transferir(numCredito: string, numDebito: string, valor:number){
+        let contaDebito: Conta = this.consultar(numDebito);
+        let contaCredito: Conta = this.consultar(numCredito);
 
-        if(contaOrigem != null && contaDestino != null){
-            contaOrigem.transferir(contaDestino, valor);
+        if(contaCredito != null && contaDebito != null){
+            contaDebito.transferir(contaCredito, valor);
         }
     }
 
@@ -91,12 +96,38 @@ class Banco {
         return this.contas.length;
     }
 
-    valorTotal():number{
+    saldoTotal():number{
         let saldoTotal: number = 0;
         for (let conta of this.contas){
             saldoTotal += conta.saldo;
         }
         return saldoTotal;
+    }
+
+    saldoMedia():number{
+        let totalContas = this.totalContas();
+        let totalSaldo = this.saldoTotal();
+
+        return totalSaldo / totalContas;
+    }
+
+    renderJuros(num:string):void{
+        let conta: Conta = this.consultar(num);
+
+        try { // questão 12 - cria-se a exceção PoupancaInvalidaError para que, caso a conta não seja poupança, a exceção seja lançada
+            if (conta instanceof Poupanca) {
+                conta.renderJuros();
+            }
+            throw new PoupancaInvalidaError('Poupança inválida!');
+        } catch (error:any) {
+            if (error instanceof PoupancaInvalidaError) {
+                console.log(error.message);
+            }
+        }
+
+        if (conta instanceof Poupanca){
+            conta.renderJuros();
+        }
     }
 
 }
@@ -105,4 +136,7 @@ let b: Banco = new Banco();
 b.inserir(new Conta("111", 100));
 b.inserir(new Conta("222", 100));
 
-export { Banco };
+//b.sacar('111',150);
+
+console.log(b.consultar('333'));
+

@@ -1,33 +1,33 @@
 //exceção q7
-class AplicacaoError extends Error{
+export class AplicacaoError extends Error{
     constructor(message: string) {
         super(message);
     }
 }
 
 //exceção q7
-class ContaInexistenteError extends AplicacaoError{
+export class ContaInexistenteError extends AplicacaoError{
     constructor(message:string) {
         super(message);
     }
 }
 
 //exceção q7
-class SaldoInsuficienteError extends AplicacaoError{
+export class SaldoInsuficienteError extends AplicacaoError{
     constructor(message) {
         super(message);
     }
 }
 
 //exceção q10
-class ValorInvalidoError extends AplicacaoError{ // herda de AplicacaoError ou de AplicacaoException???
+export class ValorInvalidoError extends AplicacaoError{
     constructor(message:string) {
         super(message);
     }
 }
 
 //exceção q12
-class PoupancaInvalidaError extends AplicacaoError{
+export class PoupancaInvalidaError extends AplicacaoError{
     constructor(message:string) {
         super(message);
     }

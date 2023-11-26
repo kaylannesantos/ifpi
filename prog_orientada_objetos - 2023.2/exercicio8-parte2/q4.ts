@@ -1,5 +1,6 @@
 /*4) Crie duas contas e teste o método transferir de modo que a conta a ser debitada
 não possua saldo suficiente. Explique o que ocorreu */
+import { AplicacaoError, SaldoInsuficienteError } from "./excecoes";
 
 class Conta {
     private _numero: string;
@@ -30,14 +31,19 @@ class Conta {
 
     sacar(valor: number): void {
         if (this.saldo < valor) {
-            throw new Error("Saldo insuficiente!");
+            throw new SaldoInsuficienteError("Saldo insuficiente!");
         }
         this.saldo -= valor;
     }
 
     transferir(contaDestino: Conta, valor: number): void {
-        this.sacar(valor);
-        contaDestino.depositar(valor);
+        try {
+            this.sacar(valor);
+            contaDestino.depositar(valor); 
+        } catch (error:any) {
+            console.error(error.message)
+        }
+
     }
 }
 
