@@ -32,3 +32,9 @@ export class PoupancaInvalidaError extends AplicacaoError{
         super(message);
     }
 }
+
+export class ContaCadastradaError extends AplicacaoError{
+    constructor(message:string) {
+        super(message);
+    }
+}

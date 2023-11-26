@@ -1,5 +1,5 @@
 import { Conta, Poupanca } from "./conta";
-import { ContaInexistenteError, PoupancaInvalidaError } from "./excecoes";
+import { ContaInexistenteError, PoupancaInvalidaError, ContaCadastradaError } from "./excecoes";
 
 export class Banco {
     private _contas: Conta[] = []
@@ -8,16 +8,17 @@ export class Banco {
         return this._contas;
     }
 
-    consultar(numero: string): Conta{ // Incompleta !!!
+    consultar(numero: string): Conta{
         let contaProcurada!: Conta;
 
-        try {
-            for (let conta of this.contas){
-                if (conta.numero == numero) {
-                    contaProcurada = conta;
-                    break;
-                }
+        for (let conta of this.contas){
+            if (conta.numero == numero) {
+                contaProcurada = conta;
+                break;
             }
+        }
+        /*
+        try {
             if (contaProcurada) {
                 return contaProcurada;
             }
@@ -27,6 +28,8 @@ export class Banco {
                 console.log(error.message);
             }
         }
+        */
+
         return contaProcurada;
     }
 

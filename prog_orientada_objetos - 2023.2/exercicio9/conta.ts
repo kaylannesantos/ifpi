@@ -1,11 +1,11 @@
-import { AplicacaoError, SaldoInsuficienteError, ValorInvalidoError } from "./excecoes";
+import { ValorInvalidoError } from "./excecoes";
 
 export class Conta {
     private _numero: string;
     private _saldo: number;
 
     constructor(numero: string, saldo: number) {// questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
-        if (saldo < 0) {
+        if (saldo <= 0) {
             throw new ValorInvalidoError("Valor inválido!");
         }
         this._numero = numero;
@@ -43,7 +43,6 @@ export class Conta {
     depositar(valor: number): void {//questão 06 lançar exceções em sacar e depositar
         this.validarValor(valor); // q11 chamar método validarValor
         this.saldo += valor;
-
         /*
         try {
             if (valor < 0 ) {
@@ -61,7 +60,6 @@ export class Conta {
     sacar(valor: number): void {//questão 06 lançar exceções em sacar e depositar
         this.validarValor(valor);// q11 chamar método validarValor
         this.saldo -= valor;
-
         /*
         try {
             if (this.saldo < valor) {
@@ -116,7 +114,7 @@ export class ContaImposto extends Conta {
     }
 }
 
-
+/*
 try {
     let c1: Conta = new Conta("1", 100);
     let c2: Conta = new Conta("2", 200);
@@ -127,3 +125,4 @@ try {
         console.log(error.message);
     }
 }
+*/

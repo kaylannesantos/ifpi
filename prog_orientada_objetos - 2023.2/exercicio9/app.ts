@@ -1,6 +1,7 @@
 import { Banco } from "./banco";
 import { Conta } from "./conta";
 import prompt from "prompt-sync"; 
+import { AplicacaoError, ValorInvalidoError, SaldoInsuficienteError, PoupancaInvalidaError, ContaInexistenteError, ContaCadastradaError } from "./excecoes";
 
 let input = prompt();
 let banco: Banco = new Banco();
@@ -13,35 +14,59 @@ do {
                 '7 - Exibir Conta    8 - Totalizações\n' +
                 '0 - Sair\n');
     opcao = input("Opção:");
-    switch (opcao) { 
-        case '0':
+
+    try { // questao 14 - tratamento de exceções no menu do app.ts
+        switch (opcao) { 
+            case '0':
+                break;
+            case "1":
+                inserir();
+                break
+            case "2":
+                consultar();
+                break
+            case '3':
+                sacar();
+                break;
+            case "4": 
+                depositar();   
+                break;
+            case '5': 
+                excluir();
+                break;
+            case '6': 
+                transferir();
+                break;
+        }
+        //input("\nOperação finalizada. Digite <enter>");
+        if (opcao == '0') {
             break;
-        case "1":
-            inserir();
-            break
-        case "2":
-            consultar();
-            break
-        case '3':
-            sacar();
-            break;
-        case "4": 
-            depositar();   
-            break;
-        case '5': 
-            excluir();
-            break;
-        case '6': 
-            transferir();
-            break;
-    }
-    //input("\nOperação finalizada. Digite <enter>");
-    if (opcao == '0') {
-        break;
+        }
+    } catch (error:any) {
+        if (error instanceof AplicacaoError) {
+            console.log(error.message);
+        }
+        if (error instanceof ValorInvalidoError) {
+            console.log(error.message);
+        }
+        if (error instanceof SaldoInsuficienteError) {
+            console.log(error.message);
+        }
+        if (error instanceof PoupancaInvalidaError) {
+            console.log(error.message);
+        }
+        if (error instanceof ContaInexistenteError) {
+            console.log(error.message);
+        }
+        if (error instanceof ContaCadastradaError) {
+            console.log(error.message);
+        }
+        //... outros
+    } finally {
+        console.log("Operação finalizada.");
     }
 } while (opcao != "0");
-console.log("Aplicação encerrada!");
-
+  
 
 function inserir(): void {
     console.log("\nCadastrar conta\n");
@@ -88,8 +113,6 @@ function sacar() {
 
 function transferir() {
     console.log("\nTransferência entre contas\n");
-    //let numeroCredito: string = input("Digite o número da conta crédito: ");
-    //let numeroDebito: string = input("Digite o número da conta débito: ")
     let numContaOrigem: string = input("Digite o número da conta de origem: ");
     let numContaDestino: string = input("Digite o número da conta de destino: ");
     let valor: number = parseFloat(input("Digite o valor: "));
