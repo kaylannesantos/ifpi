@@ -23,7 +23,7 @@ export class Banco {
         for (let conta of this.contas){
             if (conta.numero == numero) {
                 contaProcurada = conta; 
-                break;
+                //break;
             }
         }
 
@@ -31,7 +31,7 @@ export class Banco {
             if (!contaProcurada) {
                 throw new ContaInexistenteError("Conta inexistente!");
             }
-            return contaProcurada;
+            //return contaProcurada;
         } catch (error:any) {
             if (error instanceof ContaInexistenteError) {
                 console.log(error.message);
@@ -50,7 +50,7 @@ export class Banco {
             }
         }
         try {
-            if (indiceProcurado) {
+            if (indiceProcurado == -1) {
                 return indiceProcurado;
             }
             throw new ContaInexistenteError('Conta inexistente!');
