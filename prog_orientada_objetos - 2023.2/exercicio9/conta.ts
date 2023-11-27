@@ -4,12 +4,9 @@ export class Conta {
     private _numero: string;
     private _saldo: number;
 
-    constructor(numero: string, saldo: number) {// questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
-        if (saldo <= 0) {
-            throw new ValorInvalidoError("Valor inválido!");
-        }
+    constructor(numero: string, saldo: number) {
         this._numero = numero;
-        this._saldo = saldo;
+        this._saldo = saldo; //!questao 10 - alterar o construtor para que o saldo inicial seja atribuído com método depositar
     }
 
     get numero():string{
@@ -26,9 +23,10 @@ export class Conta {
         return this.saldo;
     }
 
-    private validarValor(valor:number):number{ //questao 11 - cria-se um método de validação de valor, caso ele seja <= 0 seja lançada uma exceção
+    //OK!
+    private validarValor(valor:number):number{ //questao 11 - cria-se um método de validação de valor, caso ele seja menor ou igual a 0 seja lançada uma exceção 
         try {
-            if (valor <= 0) {
+            if (valor <= 0) { 
                 throw new ValorInvalidoError('Valor inválido!');
             }
             return valor;
@@ -40,28 +38,22 @@ export class Conta {
         return valor;
     }
     
+    //OK!
     depositar(valor: number): void {//questão 06 lançar exceções em sacar e depositar
-        this.validarValor(valor); // q11 chamar método validarValor
-        this.saldo += valor;
-        /*
         try {
-            if (valor < 0 ) {
-                throw new ValorInvalidoError("Valor inválido!");// questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
-            }
+            this.validarValor(valor); //refatorado:  questão 11 - chamar método validarValor
             this.saldo += valor;
         } catch (error:any) {
             if (error instanceof ValorInvalidoError) {
                 console.log(error.message);
             }
         }
-        */
     }
 
+    //OK!
     sacar(valor: number): void {//questão 06 lançar exceções em sacar e depositar
-        this.validarValor(valor);// q11 chamar método validarValor
-        this.saldo -= valor;
-        /*
         try {
+            this.validarValor(valor); //refatorado: questão 11 chamar método validarValor
             if (this.saldo < valor) {
                 throw new ValorInvalidoError("Saldo insuficiente!"); // questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
             }
@@ -71,17 +63,15 @@ export class Conta {
                 console.log(error.message)
             }
         }
-        */
-
     }
 
-    transferir(contaDestino: Conta, valor: number): void {
+    transferir(contaDestino: Conta, valor: number): void { //OK!
         this.sacar(valor);
         contaDestino.depositar(valor); 
     }
 }
 
-export class Poupanca extends Conta{
+export class Poupanca extends Conta{ // OK!
     private _taxajuros: number;
     constructor(numero: string, saldo:number, txJuros:number) {
         super(numero,saldo);
@@ -92,11 +82,11 @@ export class Poupanca extends Conta{
         return this._taxajuros;
     }
     renderJuros():void{
-        this.depositar(this.saldo * (this.taxaJuros/100))
+        this.depositar(this.saldo * (this.taxaJuros/100));
     }
 }
 
-export class ContaImposto extends Conta {
+export class ContaImposto extends Conta { // OK!
     private _taxaDesconto: number;
 
     constructor(numero: string, saldo: number, txDesconto: number) {
@@ -113,13 +103,12 @@ export class ContaImposto extends Conta {
         super.sacar(valorTotal);
     }
 }
-
 /*
 try {
-    let c1: Conta = new Conta("1", 100);
-    let c2: Conta = new Conta("2", 200);
-    c1.sacar(1);
-    console.log(c1.consultarSaldo());
+    let c1: Conta = new Conta("1", 0);
+    let c2: Conta = new Conta("2", 200); 
+    c1.sacar(50);
+    console.log(c1.saldo);
 } catch (error:any) {
     if (error instanceof ValorInvalidoError) {
         console.log(error.message);

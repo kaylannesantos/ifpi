@@ -1,7 +1,7 @@
 import { Banco } from "./banco";
 import { Conta } from "./conta";
 import prompt from "prompt-sync"; 
-import { AplicacaoError, ValorInvalidoError, SaldoInsuficienteError, PoupancaInvalidaError, ContaInexistenteError, ContaCadastradaError } from "./excecoes";
+import { AplicacaoError, ValorInvalidoError, SaldoInsuficienteError, PoupancaInvalidaError, ContaInexistenteError} from "./excecoes";
 
 let input = prompt();
 let banco: Banco = new Banco();
@@ -11,7 +11,7 @@ do {
     console.log('\n-------Digite uma opção------');
     console.log('1 - Cadastrar       2 - Consultar saldo       3 - Sacar\n' +
                 '4 - Depositar       5 - Excluir               6 - Transferir\n' +
-                '7 - Exibir Conta    8 - Totalizações\n' +
+                '7 - Totalizações\n' +
                 '0 - Sair\n');
     opcao = input("Opção:");
 
@@ -37,8 +37,10 @@ do {
             case '6': 
                 transferir();
                 break;
+            case '7':
+                saldoTotal();
+                break;
         }
-        //input("\nOperação finalizada. Digite <enter>");
         if (opcao == '0') {
             break;
         }
@@ -56,9 +58,6 @@ do {
             console.log(error.message);
         }
         if (error instanceof ContaInexistenteError) {
-            console.log(error.message);
-        }
-        if (error instanceof ContaCadastradaError) {
             console.log(error.message);
         }
         //... outros
@@ -119,4 +118,9 @@ function transferir() {
     banco.transferir(numContaOrigem, numContaDestino, valor);
     banco.consultar(numContaOrigem);
     banco.consultar(numContaDestino);    
+}
+
+function saldoTotal(){
+    console.log("\n--------Totalizações--------\n");
+    banco.saldoTotal();
 }
