@@ -1,14 +1,10 @@
-1) Enumere os 3 tipos mais comuns de tratamento de erros e exemplifique com
+1)Enumere os 3 tipos mais comuns de tratamento de erros e exemplifique com
 códigos seus ou pesquisados na internet.
-
-->Os três tipos são: 
--Desconsiderar a operação; 
--Exibir mensagem de erro; e 
--Retornar um código de erro*/
-
-R-> Desconsiderar a operação:  ficamos em dúvida quanto ao método se ele esta funcionando ou não
-```
-Typescript
+</br>
+2) Explique por que cada um dos 3 métodos acima possui limitações de uso.
+</br>
+1. Desconsiderar a operação:  ficamos em dúvida quanto ao método se ele esta funcionando ou não
+```typescript
 class Calculadora1 {
     private _operando1: number;
     private _operando2: number;
@@ -26,7 +22,8 @@ class Calculadora1 {
 }
 ```
 
-Exibir mensagem de erro - a mensagem fica restrita somente a interface texto do terminal, caso estivesse em uma interface gráfica a mensagem não seria notada
+2. Exibir mensagem de erro: a mensagem fica restrita somente a interface texto do terminal, caso estivesse em uma interface gráfica a mensagem não seria notada
+```typescript
 class Calculadora2 {
     private _operando1: number;
     private _operando2: number;
@@ -44,8 +41,10 @@ class Calculadora2 {
         return 'Valor inválido!';
     }
 }
+```
 
-Retornar um código de erro - nesse caso é necessário associar o valor ao retorno do erro e executar testes para saber o que houve
+3. Retornar um código de erro: nesse caso é necessário associar o valor ao retorno do erro e executar testes para saber o que houve
+```typescript
 class Calculadora3 {
     private _operando1: number;
     private _operando2: number;
@@ -63,3 +62,4 @@ class Calculadora3 {
         return false;
     }
 }
+```
