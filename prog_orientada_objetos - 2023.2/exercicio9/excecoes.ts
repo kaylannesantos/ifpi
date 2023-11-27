@@ -33,7 +33,7 @@ export class PoupancaInvalidaError extends AplicacaoError{
     }
 }
 
-export class ContaCadastradaError extends AplicacaoError{
+export class ContaJaCadastradaError extends AplicacaoError{ // questão 13 - verificar se conta já esta cadastrada
     constructor(message:string) {
         super(message);
     }
