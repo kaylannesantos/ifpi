@@ -21,6 +21,8 @@ interfaces com métodos não correlatos devem ser segregadas (ISP)?
 7. Cite um exemplo em que uma mudança em uma dependência, por exemplo, banco de dados, ou mecanismo de autenticação ou conexão via sockets poderia impactar uma implementação de outros módulos.
 
 8.Estude o conteúdo do link abaixo e explique como o DIP se aplicaria: 
+
+
 https://pt.stackoverflow.com/questions/101692como-funciona-o-padr%C3%A3orepository
 
 9. Você acha que esse princípio deveria ser um dos primeiros em um eventual “check-list” de princípios SOLID a aplicarmos?
