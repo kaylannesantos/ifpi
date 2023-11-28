@@ -134,10 +134,4 @@ export class Banco {
 
 }
 
-let b: Banco = new Banco();
-
-b.inserir(new Conta("111", 100));
-b.inserir(new Conta('222', 100));
-//b.inserir(new Conta('111', 100));
-console.log(b.exibirConta('111'));
 

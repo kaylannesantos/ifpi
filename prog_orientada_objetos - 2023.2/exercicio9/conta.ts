@@ -85,9 +85,3 @@ export class ContaImposto extends Conta {
         super.sacar(valorTotal);
     }
 }
-/*
-let c1: Conta = new Conta("1", 0);
-let c2: Conta = new Conta("2", 200); 
-c1.sacar(50);
-console.log(c1.saldo);
-*/
