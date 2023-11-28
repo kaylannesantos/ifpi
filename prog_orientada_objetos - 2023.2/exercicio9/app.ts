@@ -11,7 +11,7 @@ do {
     console.log('\n-------Digite uma opção------');
     console.log('1 - Cadastrar       2 - Consultar saldo       3 - Sacar\n' +
                 '4 - Depositar       5 - Excluir               6 - Transferir\n' +
-                '0 - Sair\n');
+                '7 - Render Juros    8 - Exibir Conta          0 - Sair\n');
     opcao = input("Opção:");
 
     try { // questao 14 - tratamento de exceções no menu do app.ts
@@ -36,13 +36,22 @@ do {
             case '6': 
                 transferir();
                 break;
-            case ' ':
-                throw new Error('Dados inválidos, tente novamente.');
+            case '7':
+                renderJuros();
+                break;
+            case '8': 
+                mostrarConta();
+                break;
+            case '':
+                throw new Error("Dado inválido, selecione uma das opções.");
             case null:
-                throw new Error("Dados inválidos, tente novamente.");
-            case 'a':
-                throw new Error(('Dados inválidos, tente novamente.'));
+                throw new Error("Dado inválido, selecione uma das opções.");
+            default: 
+            throw new Error("Dado inválido, selecione uma das opções.");
         }
+        if (opcao.length == 1) {
+            throw new Error("Dado inválido, selecione uma das opções.");                
+        }   
     } catch (error:any) {
         if (error instanceof AplicacaoError) {
             console.log(error.message);
@@ -62,6 +71,11 @@ function inserir(): void {
     let conta: Conta;
     conta = new Conta(numero, 0);
     banco.inserir(conta);
+    let opcao: string = input('Deseja depositar agora na sua conta?(s/n) ');
+    if (opcao == 's') {
+        let valor: number = parseFloat(input('Digite o valor:'));
+        banco.depositar(numero,valor);
+    }
     exibirConta(numero);
 }
 
@@ -69,12 +83,18 @@ function exibirConta(numero: string): void {
     console.log(`Número: ${banco.consultar(numero).numero} - Saldo: ${banco.consultar(numero).saldo}`);
 }
 
+function mostrarConta(){
+    console.log("\n--------Exibir conta--------\n");
+    let numero: string = input('Digite o número da conta: ');
+    exibirConta(numero);
+}
+
 function consultar() {
     console.log("\n--------Consultar conta--------\n");
     let numero: string = input('Digite o número da conta: ');
-    let conta: Conta = banco.consultar(numero)
+    let conta: Conta = banco.consultar(numero);
 
-    exibirConta(conta.numero)
+    exibirConta(conta.numero);
 }
 function depositar() {
     console.log("\n--------Depositar em conta--------\n");
@@ -106,4 +126,10 @@ function transferir() {
     banco.transferir(numContaOrigem, numContaDestino, valor);
     banco.consultar(numContaOrigem);
     banco.consultar(numContaDestino);    
+}
+
+function renderJuros() {
+    console.log("\n--------Transferência entre contas--------\n");
+    let numero: string = input('Digite o número da conta: ');
+    banco.renderJuros(numero);    
 }
