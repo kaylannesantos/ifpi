@@ -49,9 +49,9 @@ do {
             default: 
             throw new Error("Dado inválido, selecione uma das opções.");
         }
-        if (opcao.length == 1) {
-            throw new Error("Dado inválido, selecione uma das opções.");                
-        }   
+        //if (opcao.length == 1) {
+        //    throw new Error("Dado inválido, selecione uma das opções.");                
+        //}   
     } catch (error:any) {
         if (error instanceof AplicacaoError) {
             console.log(error.message);
