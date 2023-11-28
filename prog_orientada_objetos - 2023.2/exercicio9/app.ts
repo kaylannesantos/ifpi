@@ -1,7 +1,7 @@
 import { Banco } from "./banco";
 import { Conta } from "./conta";
 import prompt from "prompt-sync"; 
-import { AplicacaoError, ValorInvalidoError, SaldoInsuficienteError, PoupancaInvalidaError, ContaInexistenteError} from "./excecoes";
+import { AplicacaoError} from "./excecoes";
 
 let input = prompt();
 let banco: Banco = new Banco();
@@ -11,7 +11,6 @@ do {
     console.log('\n-------Digite uma opção------');
     console.log('1 - Cadastrar       2 - Consultar saldo       3 - Sacar\n' +
                 '4 - Depositar       5 - Excluir               6 - Transferir\n' +
-                '7 - Totalizações\n' +
                 '0 - Sair\n');
     opcao = input("Opção:");
 
@@ -37,30 +36,19 @@ do {
             case '6': 
                 transferir();
                 break;
-            case '7':
-                saldoTotal();
-                break;
-        }
-        if (opcao == '0') {
-            break;
+            case ' ':
+                throw new Error('Dados inválidos, tente novamente.');
+            case null:
+                throw new Error("Dados inválidos, tente novamente.");
+            case 'a':
+                throw new Error(('Dados inválidos, tente novamente.'));
         }
     } catch (error:any) {
         if (error instanceof AplicacaoError) {
             console.log(error.message);
-        }
-        if (error instanceof ValorInvalidoError) {
+        } else if (error instanceof Error){
             console.log(error.message);
         }
-        if (error instanceof SaldoInsuficienteError) {
-            console.log(error.message);
-        }
-        if (error instanceof PoupancaInvalidaError) {
-            console.log(error.message);
-        }
-        if (error instanceof ContaInexistenteError) {
-            console.log(error.message);
-        }
-        //... outros
     } finally {
         console.log("Operação finalizada.");
     }
@@ -68,7 +56,7 @@ do {
   
 
 function inserir(): void {
-    console.log("\nCadastrar conta\n");
+    console.log("\n--------Cadastrar conta--------\n");
     let numero: string = input('Digite o número da conta: ');
 
     let conta: Conta;
@@ -82,14 +70,14 @@ function exibirConta(numero: string): void {
 }
 
 function consultar() {
-    console.log("\Consultar conta\n");
+    console.log("\n--------Consultar conta--------\n");
     let numero: string = input('Digite o número da conta: ');
     let conta: Conta = banco.consultar(numero)
 
     exibirConta(conta.numero)
 }
 function depositar() {
-    console.log("\Depositar em conta\n");
+    console.log("\n--------Depositar em conta--------\n");
     let numero: string = input('Digite o número da conta:');
     let valor: number = parseFloat(input('Digite o valor:'));
     banco.depositar(numero, valor);
@@ -97,13 +85,13 @@ function depositar() {
 }
 
 function excluir() {
-    console.log("\nExcluir conta\n");
-    let numero: string = input("Digite o nhúmero da conta: ");
+    console.log("\n--------Excluir conta--------\n");
+    let numero: string = input("Digite o número da conta: ");
     banco.excluir(numero);    
 }
 
 function sacar() {
-    console.log("\Sacar da conta\n");
+    console.log("\n--------Sacar da conta--------\n");
     let numero: string = input("Digite o número da conta: ");
     let valor: number = parseFloat(input("Digite o valor: "));
     banco.sacar(numero,valor);
@@ -111,16 +99,11 @@ function sacar() {
 }
 
 function transferir() {
-    console.log("\nTransferência entre contas\n");
+    console.log("\n--------Transferência entre contas--------\n");
     let numContaOrigem: string = input("Digite o número da conta de origem: ");
     let numContaDestino: string = input("Digite o número da conta de destino: ");
     let valor: number = parseFloat(input("Digite o valor: "));
     banco.transferir(numContaOrigem, numContaDestino, valor);
     banco.consultar(numContaOrigem);
     banco.consultar(numContaDestino);    
-}
-
-function saldoTotal(){
-    console.log("\n--------Totalizações--------\n");
-    banco.saldoTotal();
 }

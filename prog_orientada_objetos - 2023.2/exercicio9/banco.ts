@@ -17,7 +17,8 @@ export class Banco {
         return false;
     }
 
-    consultar(numero: string): Conta{ //! questão 08 - se a conta não existir, lançar exceção ContaInexistente
+    //OK
+    consultar(numero: string): Conta{ // questão 08 - se a conta não existir, lançar exceção ContaInexistente
         let contaProcurada!: Conta;
 
         for (let conta of this.contas){
@@ -26,45 +27,65 @@ export class Banco {
                 //break;
             }
         }
+        if (!contaProcurada) {
+            throw new ContaInexistenteError("Conta inexistente.");
+        }
+        return contaProcurada;
 
+        /*
         try {
             if (!contaProcurada) {
                 throw new ContaInexistenteError("Conta inexistente!");
             }
-            //return contaProcurada;
         } catch (error:any) {
             if (error instanceof ContaInexistenteError) {
                 console.log(error.message);
             }
         }        
        return contaProcurada;
+       */
     }
 
+    //OK
     consultarPorIndice(numero: string): number {//! questão 08 - se a conta não existir, lançar exceção ContaInexistente
         let indiceProcurado: number = -1;
 
         for (let i: number = 0; i < this.contas.length; i++) {
             if (this.contas[i].numero == numero) {
                 indiceProcurado = i;
-                break;
+                //break;
+            }
+        }
+        if (indiceProcurado == -1) {
+            throw new ContaInexistenteError('Conta inexistente.');
+        }
+        return indiceProcurado;
+
+
+        /*
+        for (let i: number = 0; i < this.contas.length; i++) {
+            if (this.contas[i].numero == numero) {
+                indiceProcurado = i;
+                //break;
             }
         }
         try {
             if (indiceProcurado == -1) {
-                return indiceProcurado;
+                throw new ContaInexistenteError('Conta inexistente.');
             }
-            throw new ContaInexistenteError('Conta inexistente!');
         } catch (error:any) {
             if (error instanceof ContaInexistenteError) {
                 console.log(error.message);
             }
         }
         return indiceProcurado;
+        */
     }
 
-    inserir(conta: Conta): void { //! questão 13 - criar validação para caso já exista uma conta com mesmo número - Chamar o consultar, se a exceção for lançada, incluir conta( consultar a conta dentro do try e incluir conta no catch)
+    //OK
+    inserir(conta: Conta): void { //questão 13 - criar validação para caso já exista uma conta com mesmo número - Chamar o consultar, se a exceção for lançada, incluir conta( consultar a conta dentro do try e incluir conta no catch)
         if (this.existeConta(conta.numero)) {
-            throw new AplicacaoError('A conta já existe!: ' + conta.numero);
+            throw new AplicacaoError('A conta já existe: ' + conta.numero);
         }
         this.contas.push(conta);
         /* 
@@ -79,7 +100,7 @@ export class Banco {
                 console.log(error.message);
             }
         }
-     
+        ///////////////////////////////////
         if (!this.consultar(conta.numero)) {
             this.contas.push(conta);
         }
@@ -101,6 +122,7 @@ export class Banco {
         }
     }
 
+    //OK
     alterar(conta: Conta): void { // questão 09 - remover ifs/elses, pois caso  haja exceção do método consultar estes não sejam executados
         let indiceProcurado: number = this.consultarPorIndice(conta.numero);
         this.contas[indiceProcurado] = conta;
@@ -111,6 +133,7 @@ export class Banco {
         */
     }
 
+    //OK
     sacar(numero: string, valor: number): void {// questão 09 - remover ifs/elses, pois caso  haja exceção do método consultar estes não sejam executados
         let indiceProcurado: number = this.consultarPorIndice(numero);
         let conta: Conta = this.contas[indiceProcurado];
@@ -124,6 +147,7 @@ export class Banco {
         */
     }
 
+    //OK
     depositar(numero:string, valor:number){// questão 09 - remover ifs/elses, pois caso  haja exceção do método consultar estes não sejam executados
         let conta: Conta = this.consultar(numero)
         conta.depositar(valor);
@@ -135,6 +159,7 @@ export class Banco {
         */
     }
 
+    //OK
     transferir(numCredito: string, numDebito: string, valor:number){// questão 09 - remover ifs/elses, pois caso  haja exceção do método consultar estes não sejam executados
         let contaDebito: Conta = this.consultar(numDebito);
         let contaCredito: Conta = this.consultar(numCredito);
@@ -166,21 +191,25 @@ export class Banco {
         return totalSaldo / totalContas;
     }
 
+    //OK
     renderJuros(numero:string):void{// questão 09 - remover ifs/elses, pois caso  haja exceção do método consultar estes não sejam executados
         let conta: Conta = this.consultar(numero);
+        if (conta instanceof Poupanca) {
+            conta.renderJuros();
+        }
+        throw new PoupancaInvalidaError('Poupança inválida.');
 
+        /*
         try { // questão 12 - cria-se a exceção PoupancaInvalidaError para que, caso a conta não seja poupança, a exceção seja lançada
             if (conta instanceof Poupanca) {
                 conta.renderJuros();
             }
-            throw new PoupancaInvalidaError('Poupança inválida!');
+            throw new PoupancaInvalidaError('Poupança inválida.');
         } catch (error:any) {
             if (error instanceof PoupancaInvalidaError) {
                 console.log(error.message);
             }
         }
-
-        /*
         if (conta instanceof Poupanca){
             conta.renderJuros();
         }
@@ -188,13 +217,11 @@ export class Banco {
     }
 
 }
+
 let b: Banco = new Banco();
 
 b.inserir(new Conta("111", 100));
 b.inserir(new Conta('222', 100));
-b.renderJuros('222')
-console.log(b.saldoTotal());
-
-
-
+b.inserir(new Conta('333', 100));
+console.log(b.consultarPorIndice('333'));
 
