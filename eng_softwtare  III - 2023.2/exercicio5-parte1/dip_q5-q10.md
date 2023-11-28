@@ -1,4 +1,5 @@
 ### Dependency Invertion Principle (DIP)
+
 5. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
 
 6. O que você entende por programar para Interfaces?
