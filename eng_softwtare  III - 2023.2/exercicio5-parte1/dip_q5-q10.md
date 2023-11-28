@@ -7,11 +7,9 @@
 de dados, ou mecanismo de autenticação ou conexão via sockets poderia impactar
 uma implementação de outros módulos.
 
-8.Estude o conteúdo do link abaixo e explique como o DIP se aplicaria:
-https://pt.stackoverflow.com/questions/101692/como-funciona-o-padr%C3%A3orepository
+8.Estude o conteúdo do link abaixo e explique como o DIP se aplicaria: https://pt.stackoverflow.com/questions/101692como-funciona-o-padr%C3%A3orepository
 
-9. Você acha que esse princípio deveria ser um dos primeiros em um eventual
-“check-list” de princípios SOLID a aplicarmos?
+9. Você acha que esse princípio deveria ser um dos primeiros em um eventual “check-list” de princípios SOLID a aplicarmos?
 
 10. Numa visão geral, considera que se começarmos pelos 4 primeiros princípios
 SOLID, fatalmente o DIP já estaria implementado?
