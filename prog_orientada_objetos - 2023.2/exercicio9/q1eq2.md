@@ -24,7 +24,7 @@ class Calculadora1 {
 
 ```
 
-2. Exibir mensagem de erro: a mensagem fica restrita somente a interface texto do terminal, caso estivesse em uma interface gráfica a mensagem não seria notada
+2. <strong>Exibir mensagem de erro</strong>: a mensagem fica restrita somente a interface texto do terminal, caso estivesse em uma interface gráfica a mensagem não seria notada.
 ```typescript
 class Calculadora2 {
     private _operando1: number;
@@ -45,7 +45,7 @@ class Calculadora2 {
 }
 ```
 
-3. Retornar um código de erro: nesse caso é necessário associar o valor ao retorno do erro e executar testes para saber o que houve
+3. <strong>Retornar um código de erro</strong>: nesse caso é necessário associar o valor ao retorno do erro e executar testes para saber o que houve.
 ```typescript
 class Calculadora3 {
     private _operando1: number;
