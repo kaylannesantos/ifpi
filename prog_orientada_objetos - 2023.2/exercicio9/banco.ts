@@ -1,5 +1,5 @@
 import { Conta, Poupanca } from "./conta";
-import { ContaInexistenteError, PoupancaInvalidaError, AplicacaoError } from "./excecoes";
+import { ContaInexistenteError, PoupancaInvalidaError, ContaJaCadastradaError } from "./excecoes";
 
 export class Banco {
     private _contas: Conta[] = []
@@ -49,7 +49,7 @@ export class Banco {
 
     inserir(conta: Conta): void { //questão 13 - criar validação para caso já exista uma conta com mesmo número - Chamar o consultar. Se a exceção for lançada, incluir conta( consultar a conta dentro do try e incluir conta no catch)
         if (this.existeConta(conta.numero)) {
-            throw new AplicacaoError('Essa conta já existe: ' + conta.numero + '.');
+            throw new ContaJaCadastradaError('Essa conta já existe: ' + conta.numero + '.');
         }
         this.contas.push(conta);
     }
