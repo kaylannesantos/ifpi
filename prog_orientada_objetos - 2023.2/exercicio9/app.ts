@@ -99,6 +99,7 @@ function consultar() {
 function depositar() {
     console.log("\n--------Depositar em conta--------\n");
     let numero: string = input('Digite o número da conta:');
+    banco.consultar(numero);
     let valor: number = parseFloat(input('Digite o valor:'));
     banco.depositar(numero, valor);
     exibirConta(numero)
