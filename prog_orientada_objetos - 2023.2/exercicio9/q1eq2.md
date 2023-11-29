@@ -4,7 +4,7 @@ códigos seus ou pesquisados na internet.
 2) Explique por que cada um dos 3 métodos acima possui limitações de uso.
 </br>
 
-1. Desconsiderar a operação:  ficamos em dúvida quanto ao método se ele esta funcionando ou não.
+1. <strong>Desconsiderar a operação</strong>:  ficamos em dúvida quanto ao método se ele esta funcionando ou não.
 ```typescript
 class Calculadora1 {
     private _operando1: number;
