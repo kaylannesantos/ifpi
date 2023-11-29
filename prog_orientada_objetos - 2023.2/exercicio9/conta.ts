@@ -23,9 +23,9 @@ export class Conta {
         return this.saldo;
     }
 
-    private validarValor(valor:number):number{ //questao 11 - cria-se um método de validação de valor, caso ele seja menor ou igual a 0 seja lançada uma exceção 
+    private validarValor(valor:number):number{ //Refatorado: questao 11 - cria-se um método de validação de valor, caso ele seja menor ou igual a 0 seja lançada uma exceção 
         if (valor <= 0) { 
-            throw new ValorInvalidoError('Valor inválido!'); // questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
+            throw new ValorInvalidoError('Valor inválido, tente novamente.'); // questao 10 criar uma exceção ValorInvalidoError para valores menor que zero
         }
         return valor;
     }

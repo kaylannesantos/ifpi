@@ -8,7 +8,7 @@ export class Banco {
         return this._contas;
     }
 
-    private existeConta(numero:string): boolean{
+    private existeConta(numero:string):boolean{
         for (let conta of this.contas) {
             if (conta.numero == numero) {
                 return true;
@@ -17,7 +17,7 @@ export class Banco {
         return false;
     }
 
-    consultar(numero: string): Conta{ // questão 08 - se a conta não existir, lançar exceção ContaInexistente
+    consultar(numero: string):Conta{ // questão 08 - se a conta não existir, lançar exceção ContaInexistente
         let contaProcurada!: Conta;
 
         for (let conta of this.contas){
@@ -49,7 +49,7 @@ export class Banco {
 
     inserir(conta: Conta): void { //questão 13 - criar validação para caso já exista uma conta com mesmo número - Chamar o consultar. Se a exceção for lançada, incluir conta( consultar a conta dentro do try e incluir conta no catch)
         if (this.existeConta(conta.numero)) {
-            throw new AplicacaoError('A conta já existe: ' + conta.numero + '.');
+            throw new AplicacaoError('Essa conta já existe: ' + conta.numero + '.');
         }
         this.contas.push(conta);
     }
@@ -113,7 +113,7 @@ export class Banco {
         if (conta instanceof Poupanca) {
             conta.renderJuros();
         }
-        throw new PoupancaInvalidaError('Poupança inválida.');
+        throw new PoupancaInvalidaError('Poupança inválida, tente novamente.');
     }
 
     exibirContas():string{
