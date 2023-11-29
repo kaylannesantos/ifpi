@@ -37,10 +37,11 @@ export class Conta {
         this.saldo += valor;
     }
 
+    //questão 03 - implementar como nos slides o lançamento da exceção no método sacar
     sacar(valor: number): void {//questão 06 lançar exceções em sacar e depositar
-        this.validarValor(valor); //refatorado: questão 11 chamar método validarValor
+        this.validarValor(valor); //Refatorado: questão 11 - chamar método validarValor
         if (this.saldo < valor) {
-            throw new SaldoInsuficienteError("Saldo insuficiente.");
+            throw new SaldoInsuficienteError("Saldo insuficiente."); 
         }
         this.saldo -= valor;
     }
