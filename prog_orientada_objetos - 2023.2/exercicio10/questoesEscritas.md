@@ -28,6 +28,4 @@ abstract class FiguraGeometrica {
 let figuras: FiguraGeometrica[] = new Array();
 ```
 
-### Interface
-
 

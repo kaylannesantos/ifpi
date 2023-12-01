@@ -2,7 +2,11 @@
 receba uma forma geométrica como parâmetro e retorna um inteiro como
 resultado. Implemente em cada uma das classes do exemplo anterior a interface
 retornando -1, 0 e 1 caso a área da forma seja menor, igual ou maior que a
-passada via parâmetro.  */
+passada via parâmetro. 
+9. Crie uma classe para testar os exemplos anteriores. Instancie várias formas
+diferentes. Pegue duas formas chame em uma delas o método comparar
+passando a outra como parâmetro e exiba o resultado. Repita para outras formas.
+*/
 
 interface IComparavel{
     comparar(formaGeometrica: FiguraGeometrica):number;
@@ -31,10 +35,16 @@ class Quadrado implements FiguraGeometrica, IComparavel{
     }
 
     comparar(formaGeometrica: FiguraGeometrica): number {
+        if (this.area() < formaGeometrica.area()) {
+            return -1;
+        } else if (this.area() == formaGeometrica.area()) {
+            return 0;
+        }
+        return 1;
     }
 }
 
-class Triangulo {
+class Triangulo implements FiguraGeometrica{
     private _base:number;
     private _altura:number;
 
@@ -56,9 +66,18 @@ class Triangulo {
     perimetro(): number {
         return this.base * 3;
     }
+
+    comparar(formaGeometrica: FiguraGeometrica): number {
+        if (this.area() < formaGeometrica.area()) {
+            return -1;
+        } else if (this.area() == formaGeometrica.area()) {
+            return 0;
+        }
+        return 1;
+    }
 }
 
-class Circulo {
+class Circulo implements FiguraGeometrica{
     private _raio:number;
     private _pi: number = 3.14;
 
@@ -79,18 +98,59 @@ class Circulo {
     perimetro(): number {
         return this.pi * this.raio * 2;
     }
+
+    comparar(formaGeometrica: FiguraGeometrica): number {
+        if (this.area() < formaGeometrica.area()) {
+            return -1;
+        } else if (this.area() == formaGeometrica.area()) {
+            return 0;
+        }
+        return 1;
+    }
 }
+
+class TestarFormas{
+    executar(){
+        let q1: Quadrado = new Quadrado(7);
+        let q2: Quadrado = new Quadrado(7);
+        let t1: Triangulo = new Triangulo(4, 5);
+        let t2: Triangulo = new Triangulo(3,9);
+        let c1: Circulo = new Circulo(12);
+        let c2: Circulo = new Circulo(34);
+        
+        console.log(`Quadrado`);
+        console.log(q1.comparar(q2));
+        console.log(`Triangulo`);
+        console.log(t1.comparar(t2));
+        console.log(`Circulo`);
+        console.log(c1.comparar(c2));
+    }
+}
+let tf: TestarFormas = new TestarFormas();
+tf.executar();
+/*
+let q1: Quadrado = new Quadrado(4);
+let q2: Quadrado = new Quadrado(4);
+
+let t1: Triangulo = new Triangulo(2, 6);
+let t2: Triangulo = new Triangulo(5, 7);
+
+let c1: Circulo = new Circulo(4);
+let c2: Circulo = new Circulo(9);
+
 console.log('QUADRADO');
-let q: Quadrado = new Quadrado(6);
-console.log('Área: ', q.area());
-console.log('Perímetro: ', q.perimetro());
+console.log('Área: ', q1.area());
+console.log('Perímetro: ', q1.perimetro());
+console.log('O valor é: ', q1.comparar(t1));
 
 console.log('\nTRIANGULO');
-let t: Triangulo = new Triangulo(2, 6);
-console.log('Área: ', t.area());
-console.log('Perímetro: ', t.perimetro());
+console.log('Área: ', t1.area());
+console.log('Perímetro: ', t1.perimetro());
+console.log('O valor é: ', t1.comparar(q2));
+
 
 console.log('\nCIRCULO');
-let c: Circulo = new Circulo(4);
-console.log('Área: ', c.area());
-console.log('Perímetro: ', c.perimetro());
+console.log('Área: ', c1.area());
+console.log('Perímetro: ', c1.perimetro());
+console.log('O valor é: ', t1.comparar(c1));
+*/
