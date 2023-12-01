@@ -111,19 +111,22 @@ class Circulo implements FiguraGeometrica{
 
 class TestarFormas{
     executar(){
-        let q1: Quadrado = new Quadrado(7);
+        let q1: Quadrado = new Quadrado(8);
         let q2: Quadrado = new Quadrado(7);
         let t1: Triangulo = new Triangulo(4, 5);
         let t2: Triangulo = new Triangulo(3,9);
         let c1: Circulo = new Circulo(12);
         let c2: Circulo = new Circulo(34);
-        
-        console.log(`Quadrado`);
-        console.log(q1.comparar(q2));
-        console.log(`Triangulo`);
-        console.log(t1.comparar(t2));
-        console.log(`Circulo`);
-        console.log(c1.comparar(c2));
+
+        let resultado = q1.comparar(q2);
+
+        if (resultado === -1) {
+            console.log("A primeira forma é menor que a segunda.");
+        } else if (resultado === 0) {
+            console.log("As formas são iguais em tamanho.");
+        } else {
+            console.log("A primeira forma é maior que a segunda.");
+        }
     }
 }
 let tf: TestarFormas = new TestarFormas();
