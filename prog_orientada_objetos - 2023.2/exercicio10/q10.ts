@@ -82,4 +82,4 @@ let sv: SeguroDeVida = new SeguroDeVida();
 console.log('Valor Seguro de Vida:R$',sv.calculaTributos().toFixed(2));
 
 let testes: Testes = new Testes();
-testes.executar();
+testes.executar(); 
