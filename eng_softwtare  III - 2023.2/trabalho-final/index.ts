@@ -1,5 +1,6 @@
 import {AutenticacaoInvalidaError, PublicacaoJaCadastradaError, PublicacaoNaoEncontradaError, UsuarioJaCadastradoError, UsuarioNaoEncontradoError, ValorInvalidoError} from "./excecoes"
 
+//Princípio da Responsabilidade Única (SRP) - a classe Usuário deve ter somente uma responsabilidade
 abstract class Usuario{
     private _nome: string;
     private _nomeDeUsuario: string;
@@ -54,6 +55,7 @@ class Autor extends Usuario{
     }
 }
 
+//Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas para diferenntes tipos de usuário
 interface IUser{
     cadastrar(usuario: Usuario): void;
     excluir(nomeUsuario: string, senha: number): void;
