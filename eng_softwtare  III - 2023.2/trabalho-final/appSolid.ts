@@ -1,9 +1,9 @@
 import prompt from "prompt-sync";
-import {Usuario, User, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
+import {Usuario, UsersList, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
 import {AplicacaoError, ValorInvalidoError, UsuarioNaoEncontradoError} from "./excecoes";
 
 let input = prompt();
-let u: User = new User;
+let u: UsersList = new UsersList;
 let b: Biblioteca = new Biblioteca;
 
 let opcao: string = '';

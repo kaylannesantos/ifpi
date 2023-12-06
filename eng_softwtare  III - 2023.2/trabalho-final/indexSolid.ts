@@ -1,11 +1,8 @@
-//PENDÊNCIAS -> Autenticação do Usuário
-
-
 import {AutenticacaoInvalidaError, PublicacaoJaCadastradaError, PublicacaoNaoEncontradaError, UsuarioJaCadastradoError, UsuarioNaoEncontradoError, ValorInvalidoError} from "./excecoes"
 
 //Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas
 interface IAutenticacao{
-    autentica(nomeUsuario: string, senha:number);
+    autenticar(nomeUsuario: string, senha:number, usuario: Usuario);
 }
 interface IValidacao{
     validarValor(valor: number): boolean;
@@ -23,7 +20,7 @@ export class Usuario {
     private _nome: string;
     private _nomeDeUsuario: string;
     private _senha: number;
-    private _validacao: Validacao = new Validacao(); 
+    private _validacao: IValidacao = new Validacao(); //Princípio de Inversão de Dependência (DIP)
 
     constructor(nome:string, nomeUsuario:string, senha:number){
         this._nome = nome;
@@ -42,25 +39,11 @@ export class Usuario {
     get senha():number{
         return this._senha;
     }
-    autentica(user:string, senha:number){ //!Verificar lógica: autenticação dentro ou fora de usuário?
-        if(user != this._nomeDeUsuario || senha != this._senha){
-            throw new AutenticacaoInvalidaError('Senha ou usuário incorreto(s).');
-        }
-    }
 }
 
-export class Autenticacao implements IAutenticacao{
-    private _usuario: Usuario;
-
-    constructor(usuario:Usuario) {
-        this._usuario = usuario;
-    }
-    get usuario():Usuario{
-        return this._usuario;
-    }
-
-    autentica(nomeUsuario:string, senha:number){
-        if(nomeUsuario != nomeUsuario || senha != senha){
+export class Autenticacao implements IAutenticacao{    
+    autenticar(nomeUsuario:string, senha:number, usuario: Usuario ){
+        if(nomeUsuario != usuario.nomeUsuario || senha != usuario.senha){
             throw new AutenticacaoInvalidaError('Usuário ou Senha incorreto(s).');
         }
     }
@@ -95,9 +78,9 @@ export class Autor extends Usuario{
     }
 }
 
-export class User implements IUser{
+export class UsersList implements IUser{
     private _usuarios: Usuario[] = [];
-    //private _autenticacao: IAutenticacao = new Autenticacao; // !Princípio da Inversão de Dependência (DIP)
+    private _autenticador: IAutenticacao = new Autenticacao;//Princípio de Inversão de Dependência (DIP)
 
     cadastrar(usuario: Usuario): void{
         try{
@@ -145,7 +128,8 @@ export class User implements IUser{
 
     excluir(nomeUsuario: string, senha: number): void{
         let indice: number = this.consultarPorIndice(nomeUsuario);
-        this._usuarios[indice].autentica(nomeUsuario, senha);
+        let usuario: Usuario = this._usuarios[indice];
+        this._autenticador.autenticar(nomeUsuario, senha, usuario);
 
         for(let i=indice; i<this._usuarios.length; i++){
             this._usuarios[i] = this._usuarios[i+1];
@@ -175,7 +159,8 @@ export class User implements IUser{
 
     verificar(nomeUsuario: string, senha: number): string{
         let indice: number = this.consultarPorIndice(nomeUsuario);
-        this._usuarios[indice].autentica(nomeUsuario, senha);
+        let usuario: Usuario = this._usuarios[indice];
+        this._autenticador.autenticar(nomeUsuario, senha, usuario);
 
         let usuarioProcurado: Usuario = this.consultarCadastro(nomeUsuario);
         let tipo: string = ''
@@ -205,7 +190,7 @@ export class Publicacao{
     private _autor: string;
     private _resumo: string;
     private _qtdPaginas: number;
-    private _validacao: Validacao = new Validacao();
+    private _validacao: IValidacao = new Validacao(); // alterado - aplicação do Princípio de Inversão de Dependência (DIP)
 
     constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number){
         this._id = id;
@@ -237,6 +222,7 @@ export class Publicacao{
     }
 }
 
+//Princípio Aberto/Fechado (OCP) - as classes Leitor e Autor extendidas para que sejam fechadas para modificações e abertas para extensão
 export class Livro extends Publicacao{
     private _genero: string;
 
@@ -324,7 +310,9 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         return lista;
     }
 }
-let user = new User();
+/*
+let user = new UsersList();
+
 let b :Biblioteca = new Biblioteca();
 
 let a1: Artigo = new Artigo(1, 'mar e sol', 'desconhecido', '...', 4, 'sol, mar');
@@ -335,10 +323,12 @@ b.publicar(a1);
 
 console.log(b.listarPublicacoes());
 
-/*
+
+let a: Autenticacao = new Autenticacao();
+
 user.cadastrar(new Usuario('maria','eumaria',123));
 user.cadastrar(new Usuario('jose','eujose',123));
 console.log(user.listarUsuarios());
-user.excluir('eumaria', 122);
+user.excluir('eumaria', 1);
 console.log(user.listarUsuarios());
 */
