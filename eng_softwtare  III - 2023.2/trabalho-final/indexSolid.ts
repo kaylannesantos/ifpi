@@ -83,14 +83,14 @@ export class Validacao implements IValidacao {
 }
 
 //Princípio Aberto/Fechado (OCP) - as classes Leitor e Autor extendidas para que sejam fechadas para modificações e abertas para extensão
-class Leitor extends Usuario{
-    constructor(nome:string, nomeUsuario:string, senha:number, moedas:number){
+export class Leitor extends Usuario{
+    constructor(nome:string, nomeUsuario:string, senha:number){
         super(nome, nomeUsuario, senha);
     }
 }
 
-class Autor extends Usuario{
-    constructor(nome:string, nomeUsuario:string, senha:number, caixa:number){
+export class Autor extends Usuario{
+    constructor(nome:string, nomeUsuario:string, senha:number){
         super(nome, nomeUsuario, senha);
     }
 }
@@ -199,7 +199,7 @@ interface IBiblioteca{ //não foi alterado
 }
 
 //Princípio da Responsabilidade Única (SRP) - a classe Usuário deve ter somente uma responsabilidade
-class Publicacao{
+export class Publicacao{
     private _id: number;
     private _titulo: string;
     private _autor: string;
@@ -237,7 +237,7 @@ class Publicacao{
     }
 }
 
-class Livro extends Publicacao{
+export class Livro extends Publicacao{
     private _genero: string;
 
     constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, genero:string){
@@ -246,7 +246,7 @@ class Livro extends Publicacao{
     }
 }
 
-class Artigo extends Publicacao{
+export class Artigo extends Publicacao{
     private _palavrasChave: string;
 
     constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, palavras:string){
@@ -255,7 +255,7 @@ class Artigo extends Publicacao{
     }
 }
 
-class Biblioteca implements IBiblioteca{ //não foi alterado
+export class Biblioteca implements IBiblioteca{ //não foi alterado
     private _publicacoes: Publicacao[] = [];
 
     publicar(publicacao: Publicacao): void{

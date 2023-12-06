@@ -1,5 +1,5 @@
 import prompt from "prompt-sync";
-import {Usuario, User, Autenticacao, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
+import {Usuario, User, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
 import {AplicacaoError, ValorInvalidoError, UsuarioNaoEncontradoError} from "./excecoes";
 
 let input = prompt();
@@ -31,9 +31,9 @@ function cadastrar(){
     }
 
     if (tipo == 'l'){
-        usuario = new Leitor(nome, nomeUsuario, senha, 0);
+        usuario = new Leitor(nome, nomeUsuario, senha);
     } else if(tipo == 'a'){
-        usuario = new Autor(nome, nomeUsuario, senha, 0);
+        usuario = new Autor(nome, nomeUsuario, senha);
     }
 
     u.cadastrar(usuario);
