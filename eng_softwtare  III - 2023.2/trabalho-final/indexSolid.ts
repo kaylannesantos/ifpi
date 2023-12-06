@@ -54,7 +54,7 @@ export class Validacao implements IValidacao {
         if (isNaN(valor) || valor < 0) {
             throw new ValorInvalidoError(`O valor ${valor} não é válido. Por favor, verifique os campos preenchidos.`);
         } else if (valor.toString().length != 4) {
-            throw new ValorInvalidoError(`A senha possui um número de digitos inválidos. Por favor, verifique o campo preenchido e tente novamente.`);
+            throw new ValorInvalidoError(`A senha com número de digitos inválidos. Por favor, verifique o campo preenchido e tente novamente.`);
         }
         return true;
     }
