@@ -1,5 +1,5 @@
 import prompt from "prompt-sync";
-import {Usuario, User, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./index";
+import {Usuario, User, Autenticacao, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
 import {AplicacaoError, ValorInvalidoError, UsuarioNaoEncontradoError} from "./excecoes";
 
 let input = prompt();

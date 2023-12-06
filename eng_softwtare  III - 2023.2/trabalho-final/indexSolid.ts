@@ -1,57 +1,15 @@
-import {AplicacaoError, AutenticacaoInvalidaError, PublicacaoJaCadastradaError, PublicacaoNaoEncontradaError, UsuarioJaCadastradoError, UsuarioNaoEncontradoError, ValorInvalidoError} from "./excecoes"
+//PENDÊNCIAS -> Autenticação do Usuário
 
-abstract class Usuario{
-    private _nome: string;
-    private _nomeDeUsuario: string;
-    private _senha: number;
 
-    constructor(nome:string, nomeUsuario:string, senha:number){
-        this._nome = nome;
-        this._nomeDeUsuario = nomeUsuario;
-        this._senha = senha;
-        this.validarEntrada(nome); this.validarEntrada(nomeUsuario);
-        this.validarValor(senha);
-    }
+import {AutenticacaoInvalidaError, PublicacaoJaCadastradaError, PublicacaoNaoEncontradaError, UsuarioJaCadastradoError, UsuarioNaoEncontradoError, ValorInvalidoError} from "./excecoes"
 
-    get nomeUsuario(){
-        return this._nomeDeUsuario;
-    }
-
-    get nome(){
-        return this._nome;
-    }
-
-    public autentica(user:string, senha:number){
-        if(user != this._nomeDeUsuario || senha != this._senha){
-            throw new AutenticacaoInvalidaError('Senha ou usuário incorreto(s)!');
-        }
-    }
-
-    private validarValor(valor: number): boolean{
-        if (isNaN(valor) || valor < 0){
-            throw new ValorInvalidoError(`\nO valor ${valor} não é válido! Por favor, verifique os campos preenchidos.`);
-        }
-        return true;
-    }
-
-    private validarEntrada(valor: string): boolean{
-        if(!valor){
-            throw new ValorInvalidoError('\nNão são aceitos valores vazios! Por favor, verifique os campos preenchidos.');
-        }
-        return true;
-    }
+//Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas
+interface IAutenticacao{
+    autentica(nomeUsuario: string, senha:number);
 }
-
-class Leitor extends Usuario{
-    constructor(nome:string, nomeUsuario:string, senha:number){
-        super(nome, nomeUsuario, senha);
-    }
-}
-
-class Autor extends Usuario{
-    constructor(nome:string, nomeUsuario:string, senha:number){
-        super(nome, nomeUsuario, senha);
-    }
+interface IValidacao{
+    validarValor(valor: number): boolean;
+    validarEntrada(valor: string): boolean;
 }
 
 interface IUser{
@@ -60,13 +18,91 @@ interface IUser{
     listarUsuarios(): string;
 }
 
-class User implements IUser{
+//Princípio da Responsabilidade Única (SRP) - a classe Usuário deve ter somente uma responsabilidade
+export class Usuario {
+    private _nome: string;
+    private _nomeDeUsuario: string;
+    private _senha: number;
+    private _validacao: Validacao = new Validacao(); 
+
+    constructor(nome:string, nomeUsuario:string, senha:number){
+        this._nome = nome;
+        this._nomeDeUsuario = nomeUsuario;
+        this._senha = senha;
+        this._validacao.validarEntrada(nome);
+        this._validacao.validarEntrada(nomeUsuario);
+        this._validacao.validarValor(senha);
+    }
+    get nome():string{
+        return this._nome;
+    }
+    get nomeUsuario():string{
+        return this._nomeDeUsuario;
+    }
+    get senha():number{
+        return this._senha;
+    }
+    autentica(user:string, senha:number){ //!Verificar lógica: autenticação dentro ou fora de usuário?
+        if(user != this._nomeDeUsuario || senha != this._senha){
+            throw new AutenticacaoInvalidaError('Senha ou usuário incorreto(s).');
+        }
+    }
+}
+
+export class Autenticacao implements IAutenticacao{
+    private _usuario: Usuario;
+
+    constructor(usuario:Usuario) {
+        this._usuario = usuario;
+    }
+    get usuario():Usuario{
+        return this._usuario;
+    }
+
+    autentica(nomeUsuario:string, senha:number){
+        if(nomeUsuario != nomeUsuario || senha != senha){
+            throw new AutenticacaoInvalidaError('Usuário ou Senha incorreto(s).');
+        }
+    }
+}
+
+export class Validacao implements IValidacao {
+    validarValor(valor: number): boolean {
+        if (isNaN(valor) || valor < 0) {
+            throw new ValorInvalidoError(`O valor ${valor} não é válido. Por favor, verifique os campos preenchidos.`);
+        }
+        return true;
+    }
+
+    validarEntrada(valor: string): boolean {
+        if (!valor) {
+            throw new ValorInvalidoError('Não são aceitos valores vazios. Por favor, verifique os campos preenchidos.');
+        }
+        return true;
+    }
+}
+
+//Princípio Aberto/Fechado (OCP) - as classes Leitor e Autor extendidas para que sejam fechadas para modificações e abertas para extensão
+class Leitor extends Usuario{
+    constructor(nome:string, nomeUsuario:string, senha:number, moedas:number){
+        super(nome, nomeUsuario, senha);
+    }
+}
+
+class Autor extends Usuario{
+    constructor(nome:string, nomeUsuario:string, senha:number, caixa:number){
+        super(nome, nomeUsuario, senha);
+    }
+}
+
+export class User implements IUser{
     private _usuarios: Usuario[] = [];
+    //private _autenticacao: IAutenticacao = new Autenticacao; // !Princípio da Inversão de Dependência (DIP)
 
     cadastrar(usuario: Usuario): void{
         try{
             this.consultarCadastro(usuario.nomeUsuario);
-            throw new UsuarioJaCadastradoError(`\nO user ${usuario.nomeUsuario} já existe! Por favor, tente outro nome.`)
+            throw new UsuarioJaCadastradoError(`\nO user ${usuario.nomeUsuario} já existe. Por favor, tente outro nome.`)
         } catch(e: any){
             if(e instanceof UsuarioJaCadastradoError){
                 throw e;
@@ -84,7 +120,7 @@ class User implements IUser{
         }
 
         if(!usuarioProcurado){
-            throw new UsuarioNaoEncontradoError(`Usuário ${nomeUsuario} não foi encontrado!`)
+            throw new UsuarioNaoEncontradoError(`Usuário ${nomeUsuario} não foi encontrado.`)
         }
 
         return usuarioProcurado;
@@ -101,7 +137,7 @@ class User implements IUser{
         }
 
         if(indiceProcurado == -1){
-            throw new UsuarioNaoEncontradoError(`User ${nomeUsuario} não foi encontrado!`)
+            throw new UsuarioNaoEncontradoError(`User ${nomeUsuario} não foi encontrado.`)
         }
 
         return indiceProcurado;
@@ -131,7 +167,7 @@ class User implements IUser{
             lista = lista + 
             '\nNome: ' + this._usuarios[i].nome  + 
             ' - User: ' + this._usuarios[i].nomeUsuario +
-            ' - Cadastro de: ' + tipoCadastro;
+            ' - Cadastro de: ' + (tipoCadastro ? tipoCadastro : 'desconhecido.');
         }
 
         return lista;
@@ -155,12 +191,21 @@ class User implements IUser{
     }
 }
 
-abstract class Publicacao{
+//Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas
+interface IBiblioteca{ //não foi alterado
+    publicar(publicacao: Publicacao): void;
+    excluir(id: number): void;
+    listarPublicacoes(): string;
+}
+
+//Princípio da Responsabilidade Única (SRP) - a classe Usuário deve ter somente uma responsabilidade
+class Publicacao{
     private _id: number;
     private _titulo: string;
     private _autor: string;
     private _resumo: string;
     private _qtdPaginas: number;
+    private _validacao: Validacao = new Validacao();
 
     constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number){
         this._id = id;
@@ -168,8 +213,11 @@ abstract class Publicacao{
         this._autor = autor;
         this._resumo = resumo;
         this._qtdPaginas = qtdPaginas;
-        this.validarValor(id); this.validarValor(qtdPaginas);
-        this.validarEntrada(titulo); this.validarEntrada(autor); this.validarEntrada(resumo);
+        this._validacao.validarValor(id);
+        this._validacao.validarValor(qtdPaginas);
+        this._validacao.validarEntrada(titulo);
+        this._validacao.validarEntrada(autor);
+        this._validacao.validarEntrada(resumo);
     }
 
     get id(){
@@ -186,20 +234,6 @@ abstract class Publicacao{
 
     get resumo(){
         return this._resumo;
-    }
-
-    private validarValor(valor: number): boolean{
-        if (isNaN(valor) || valor < 0){
-            throw new ValorInvalidoError(`\nO valor ${valor} não é válido! Por favor, verifique os campos preenchidos.`);
-        }
-        return true;
-    }
-
-    private validarEntrada(valor: string): boolean{
-        if(!valor){
-            throw new ValorInvalidoError('\nNão são aceitos valores vazios! Por favor, verifique os campos preenchidos.');
-        }
-        return true;
     }
 }
 
@@ -221,13 +255,7 @@ class Artigo extends Publicacao{
     }
 }
 
-interface IBiblioteca{
-    publicar(publicacao: Publicacao): void;
-    excluir(id: number): void;
-    listarPublicacoes(): string;
-}
-
-class Biblioteca implements IBiblioteca{
+class Biblioteca implements IBiblioteca{ //não foi alterado
     private _publicacoes: Publicacao[] = [];
 
     publicar(publicacao: Publicacao): void{
@@ -288,7 +316,7 @@ class Biblioteca implements IBiblioteca{
         for(let i=0; i<this._publicacoes.length; i++){
             lista = lista + 
             '\nId: ' + this._publicacoes[i].id  + 
-            ' - Título: ' + this._publicacoes[i].titulo +
+            ' - Título: ' + this._publicacoes[i].titulo + ' ' + 
             ' - Autor: ' + this._publicacoes[i]. autor +
             ' - Resumo: ' + this._publicacoes[i].resumo;
         }
@@ -296,5 +324,21 @@ class Biblioteca implements IBiblioteca{
         return lista;
     }
 }
+let user = new User();
+let b :Biblioteca = new Biblioteca();
 
-export {Usuario, User, Leitor, Autor, Publicacao, Artigo, Livro, Biblioteca};
+let a1: Artigo = new Artigo(1, 'mar e sol', 'desconhecido', '...', 4, 'sol, mar');
+let l1: Livro = new Livro(2, 'sol e mar', 'ninguém', '...', 10, 'poesia');
+
+b.publicar(l1);
+b.publicar(a1);
+
+console.log(b.listarPublicacoes());
+
+/*
+user.cadastrar(new Usuario('maria','eumaria',123));
+user.cadastrar(new Usuario('jose','eujose',123));
+console.log(user.listarUsuarios());
+user.excluir('eumaria', 122);
+console.log(user.listarUsuarios());
+*/
