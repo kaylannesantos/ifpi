@@ -16,7 +16,7 @@ function cadastrar(){
 
     let nome: string = input('Digite seu nome completo: ')
     let nomeUsuario: string = input('Digite o nome do seu user: ');
-    let senhaStr: string = input('Escolha uma senha (ela deve ser formada apenas por números): ');
+    let senhaStr: string = input('Escolha uma senha (ela deve ser formada apenas por números de quatro dígitos): ');
 
     let senha: number = parseInt(senhaStr);
 
