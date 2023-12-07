@@ -93,7 +93,7 @@ export class Autor extends Usuario{
 
 export class UsersList implements IUser{
     private _usuarios: Usuario[] = [];
-    private _autenticador: IAutenticacao = new Autenticacao;//Princípio de Inversão de Dependência (DIP)
+    private _autenticador: IAutenticacao = new Autenticacao();//Princípio de Inversão de Dependência (DIP)
 
     cadastrar(usuario: Usuario): void{
         try{
@@ -190,7 +190,7 @@ export class UsersList implements IUser{
 }
 
 //Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas
-interface IBiblioteca{ //não foi alterado
+interface IBiblioteca{ 
     publicar(publicacao: Publicacao): void;
     excluir(id: number): void;
     listarPublicacoes(): string;
@@ -240,10 +240,6 @@ export class Publicacao{
     get conteudo(){
         return this._conteudo;
     }
-
-    public contarPalavras(): number {
-        return this.conteudo.split(" ").length;
-    }
 }
 
 //Princípio Aberto/Fechado (OCP) - as classes Leitor e Autor extendidas para que sejam fechadas para modificações e abertas para extensão
@@ -253,11 +249,6 @@ export class Livro extends Publicacao{
     constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, conteudo: string, genero:string){
         super(id, titulo, autor, resumo, qtdPaginas, conteudo);
         this._genero = genero;
-    }
-
-    // Principio de Substituição de Liskov
-    public contarPalavras(): number {
-        return 0;
     }
 }
 
@@ -269,18 +260,19 @@ export class Artigo extends Publicacao{
         this._palavrasChave = palavras;
     }
 
+    // Principio de Substituição de Liskov
     public contarPalavras(): number {
         return this.conteudo.split(" ").length;
     }
 }
 
-export class Biblioteca implements IBiblioteca{ //não foi alterado
+export class Biblioteca implements IBiblioteca{
     private _publicacoes: Publicacao[] = [];
 
     publicar(publicacao: Publicacao): void{
         try{
             this.consultarPublicacao(publicacao.id);
-            throw new PublicacaoJaCadastradaError(`A publicação de id ${publicacao.id} já está cadastrada.`);
+            throw new PublicacaoJaCadastradaError(`A publicação de id ${publicacao.id} já está cadastrada!`);
         } catch(e:any){
             if(e instanceof PublicacaoJaCadastradaError){
                 throw e;
@@ -298,7 +290,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         }
 
         if(!publicacaoProcurada){
-            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada.`)
+            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada!`)
         }
 
         return publicacaoProcurada;
@@ -313,7 +305,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         }
 
         if(indiceProcurado == -1){
-            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada.`)
+            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada!`)
         }
 
         return indiceProcurado;
@@ -334,7 +326,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         for(let i=0; i<this._publicacoes.length; i++){
             lista = lista + 
             '\nId: ' + this._publicacoes[i].id  + 
-            ' - Título: ' + this._publicacoes[i].titulo +
+            ' - Título: ' + this._publicacoes[i].titulo + ' ' + 
             ' - Autor: ' + this._publicacoes[i]. autor +
             ' - Resumo: ' + this._publicacoes[i].resumo;
         }
