@@ -11,8 +11,8 @@ let opcao: string = '';
 do{
     try{
         console.log('\nSeja bem vindo!');
-        console.log('1 - Cadastrar    2 - Consultar Cadastro    3 - Excluir Cadastro\n' +
-        '4 - Listar Usuários    5 - Ações    0 - Sair');
+        console.log('1 - Cadastrar        2 - Consultar Cadastro    3 - Excluir Cadastro\n' +
+                    '4 - Listar Usuários  5 - Ações                 0 - Sair');
         
         opcao = input('\nDigite uma opção: ');
         switch (opcao) {
@@ -231,7 +231,7 @@ function acoes(){
                 if(e instanceof AplicacaoError) {
                     console.log(e.message);
                 } else {
-                    console.log("Erro não inesperado, contate o administrador.");
+                    console.log("Erro inesperado, contate o administrador.");
                 }
             }
             input('\nOperação finalizada.');
