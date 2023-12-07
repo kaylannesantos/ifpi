@@ -2,11 +2,13 @@ import {AutenticacaoInvalidaError, PublicacaoJaCadastradaError, PublicacaoNaoEnc
 
 //Princípio da Segregação de Interface (ISP) - criar interfaces mais específicas
 interface IAutenticacao{
-    autenticar(nomeUsuario: string, senha:number, usuario: Usuario);
+    autenticar(nomeUsuario: string, senha:number, usuario: Usuario): void;
 }
+
 interface IValidacao{
     validarValor(valor: number): boolean;
     validarEntrada(valor: string): boolean;
+    validarSenha(senha:number): boolean;
 }
 
 interface IUser{
@@ -26,9 +28,11 @@ export class Usuario {
         this._nome = nome;
         this._nomeDeUsuario = nomeUsuario;
         this._senha = senha;
+
         this._validacao.validarEntrada(nome);
         this._validacao.validarEntrada(nomeUsuario);
         this._validacao.validarValor(senha);
+        this._validacao.validarSenha(senha);
     }
     get nome():string{
         return this._nome;
@@ -42,7 +46,7 @@ export class Usuario {
 }
 
 export class Autenticacao implements IAutenticacao{    
-    autenticar(nomeUsuario:string, senha:number, usuario: Usuario ){
+    autenticar(nomeUsuario:string, senha:number, usuario: Usuario ): void {
         if(nomeUsuario != usuario.nomeUsuario || senha != usuario.senha){
             throw new AutenticacaoInvalidaError('Usuário ou Senha incorreto(s).');
         }
@@ -53,8 +57,6 @@ export class Validacao implements IValidacao {
     validarValor(valor: number): boolean {
         if (isNaN(valor) || valor < 0) {
             throw new ValorInvalidoError(`O valor ${valor} não é válido. Por favor, verifique os campos preenchidos.`);
-        } else if (valor.toString().length != 4) {
-            throw new ValorInvalidoError(`A senha com número de digitos inválidos. Por favor, verifique o campo preenchido e tente novamente.`);
         }
         return true;
     }
@@ -62,6 +64,15 @@ export class Validacao implements IValidacao {
     validarEntrada(valor: string): boolean {
         if (!valor) {
             throw new ValorInvalidoError('Não são aceitos valores vazios. Por favor, verifique os campos preenchidos.');
+        } else if (!isNaN(Number(valor))) {
+            throw new ValorInvalidoError('Valores inválidos. Por favor, verifique os campos preenchidos.');
+        }
+        return true;
+    }
+
+    validarSenha(valor:number):boolean{
+        if (valor.toString().length != 4) {
+            throw new ValorInvalidoError(`A senha contém número de digitos inválidos. Por favor, verifique o campo preenchido e tente novamente.`);
         }
         return true;
     }
@@ -192,14 +203,17 @@ export class Publicacao{
     private _autor: string;
     private _resumo: string;
     private _qtdPaginas: number;
+    private _conteudo: string;
     private _validacao: IValidacao = new Validacao(); // alterado - aplicação do Princípio de Inversão de Dependência (DIP)
 
-    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number){
+    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, conteudo: string){
         this._id = id;
         this._titulo = titulo;
         this._autor = autor;
         this._resumo = resumo;
         this._qtdPaginas = qtdPaginas;
+        this._conteudo = conteudo; 
+
         this._validacao.validarValor(id);
         this._validacao.validarValor(qtdPaginas);
         this._validacao.validarEntrada(titulo);
@@ -222,24 +236,41 @@ export class Publicacao{
     get resumo(){
         return this._resumo;
     }
+
+    get conteudo(){
+        return this._conteudo;
+    }
+
+    public contarPalavras(): number {
+        return this.conteudo.split(" ").length;
+    }
 }
 
 //Princípio Aberto/Fechado (OCP) - as classes Leitor e Autor extendidas para que sejam fechadas para modificações e abertas para extensão
 export class Livro extends Publicacao{
     private _genero: string;
 
-    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, genero:string){
-        super(id, titulo, autor, resumo, qtdPaginas);
+    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, conteudo: string, genero:string){
+        super(id, titulo, autor, resumo, qtdPaginas, conteudo);
         this._genero = genero;
+    }
+
+    // Principio de Substituição de Liskov
+    public contarPalavras(): number {
+        return 0;
     }
 }
 
 export class Artigo extends Publicacao{
     private _palavrasChave: string;
 
-    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, palavras:string){
-        super(id, titulo, autor, resumo, qtdPaginas);
+    constructor(id:number, titulo:string, autor:string, resumo:string, qtdPaginas:number, conteudo: string, palavras:string){
+        super(id, titulo, autor, resumo, qtdPaginas, conteudo);
         this._palavrasChave = palavras;
+    }
+
+    public contarPalavras(): number {
+        return this.conteudo.split(" ").length;
     }
 }
 
@@ -249,7 +280,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
     publicar(publicacao: Publicacao): void{
         try{
             this.consultarPublicacao(publicacao.id);
-            throw new PublicacaoJaCadastradaError(`A publicação de id ${publicacao.id} já está cadastrada!`);
+            throw new PublicacaoJaCadastradaError(`A publicação de id ${publicacao.id} já está cadastrada.`);
         } catch(e:any){
             if(e instanceof PublicacaoJaCadastradaError){
                 throw e;
@@ -267,13 +298,12 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         }
 
         if(!publicacaoProcurada){
-            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada!`)
+            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada.`)
         }
 
         return publicacaoProcurada;
     }
 
-   
     consultarPorIndice(id: number): number{
         let indiceProcurado: number = -1;
         for(let i=0; i<this._publicacoes.length; i++){
@@ -283,7 +313,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         }
 
         if(indiceProcurado == -1){
-            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada!`)
+            throw new PublicacaoNaoEncontradaError(`Publicação de id ${id} não encontrada.`)
         }
 
         return indiceProcurado;
@@ -304,7 +334,7 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         for(let i=0; i<this._publicacoes.length; i++){
             lista = lista + 
             '\nId: ' + this._publicacoes[i].id  + 
-            ' - Título: ' + this._publicacoes[i].titulo + ' ' + 
+            ' - Título: ' + this._publicacoes[i].titulo +
             ' - Autor: ' + this._publicacoes[i]. autor +
             ' - Resumo: ' + this._publicacoes[i].resumo;
         }
@@ -312,25 +342,3 @@ export class Biblioteca implements IBiblioteca{ //não foi alterado
         return lista;
     }
 }
-/*
-let user = new UsersList();
-
-let b :Biblioteca = new Biblioteca();
-
-let a1: Artigo = new Artigo(1, 'mar e sol', 'desconhecido', '...', 4, 'sol, mar');
-let l1: Livro = new Livro(2, 'sol e mar', 'ninguém', '...', 10, 'poesia');
-
-b.publicar(l1);
-b.publicar(a1);
-
-console.log(b.listarPublicacoes());
-
-
-let a: Autenticacao = new Autenticacao();
-
-user.cadastrar(new Usuario('maria','eumaria',123));
-user.cadastrar(new Usuario('jose','eujose',123));
-console.log(user.listarUsuarios());
-user.excluir('eumaria', 1);
-console.log(user.listarUsuarios());
-*/

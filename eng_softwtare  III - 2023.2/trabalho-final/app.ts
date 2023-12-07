@@ -1,12 +1,48 @@
 import prompt from "prompt-sync";
-import {Usuario, User, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./index";
+import {Usuario, UsersList, Leitor, Autor, Publicacao, Livro, Artigo, Biblioteca} from "./indexSolid";
 import {AplicacaoError, ValorInvalidoError, UsuarioNaoEncontradoError} from "./excecoes";
 
 let input = prompt();
-let u: User = new User;
+let u: UsersList = new UsersList;
 let b: Biblioteca = new Biblioteca;
 
 let opcao: string = '';
+
+do{
+    try{
+        console.log('\nSeja bem vindo!');
+        console.log('1 - Cadastrar    2 - Consultar Cadastro    3 - Excluir Cadastro\n' +
+        '4 - Listar Usuários    5 - Ações    0 - Sair');
+        
+        opcao = input('\nDigite uma opção: ');
+        switch (opcao) {
+            case '0':
+                break;
+            case "1":
+                cadastrar();
+                break
+            case "2":
+                consultar();
+                break
+            case "3":
+                excluirCadastro();
+                break;
+            case "4":
+                listarUsuarios();
+                break;
+            case "5":
+                acoes();
+                break;
+        }
+    } catch(e: any){
+        if(e instanceof AplicacaoError) {
+            console.log(e.message);
+        } else {
+            console.log("Erro inesperado, contate o administrador.");
+        }
+    }
+    input('\nOperação finalizada. Pressione <enter>');
+} while(opcao != "0")
 
 function cadastrar(){
     console.log('\nCadastrar um usuário');
@@ -22,7 +58,7 @@ function cadastrar(){
 
     try{
         if(tipo!='a' && tipo!='l'){
-            throw new ValorInvalidoError(`\nO valor "${tipo}" não é válido! Por favor, verifique os campos preenchidos.`);
+            throw new ValorInvalidoError(`\nO valor "${tipo}" não é válido. Por favor, verifique os campos preenchidos.`);
         }
     } catch(e: any){
         if(e instanceof AplicacaoError){
@@ -38,7 +74,7 @@ function cadastrar(){
 
     u.cadastrar(usuario);
 
-    console.log('\nCadastro efetuado com sucesso!');
+    console.log('\nCadastro efetuado com sucesso.');
 }
 
 function exibirUsuario(nomeUsuario:string){
@@ -60,7 +96,7 @@ function excluirCadastro(){
     let senha: number = parseInt(senhaStr);
     u.excluir(nomeUsuario, senha);
 
-    console.log('\nUsuário excluído com sucesso!');
+    console.log('\nUsuário excluído com sucesso.');
 }
 
 function listarUsuarios(){
@@ -77,16 +113,17 @@ function publicar(){
     let autor: string = input('Autor: ');
     let resumo: string = input('Resumo: ');
     let qtdPaginasStr: string = input('Quantidade de páginas: ');
+    let conteudo: string = input ('Conteudo: ')
 
     let id: number = parseInt(idStr);
     let qtdPaginas: number = parseInt(qtdPaginasStr);
 
     if(opcao == 'a'){
         let palavrasChave: string = input('Palavras chave: ')
-        publicacao = new Artigo(id, titulo, autor, resumo, qtdPaginas, palavrasChave);
+        publicacao = new Artigo(id, titulo, autor, resumo, qtdPaginas, conteudo, palavrasChave);
     } else if(opcao == 'l'){
         let genero: string = input('Gênero: ');
-        publicacao = new Livro(id, titulo, autor, resumo, qtdPaginas, genero);
+        publicacao = new Livro(id, titulo, autor, resumo, qtdPaginas, conteudo, genero);
     }
 
     b.publicar(publicacao);
@@ -97,7 +134,7 @@ function publicar(){
         } if(opcao == 'l'){
             console.log('\nLivro publicado com sucesso!!');
         } if(opcao!='a' && opcao!='l'){
-            throw new ValorInvalidoError(`\nO valor "${opcao}" não é válido! Por favor, verifique os campos preenchidos.`);
+            throw new ValorInvalidoError(`\nO valor "${opcao}" não é válido. Por favor, verifique os campos preenchidos.`);
         }
     } catch(e: any){
         if(e instanceof AplicacaoError){
@@ -126,9 +163,9 @@ function consultarPublicacao(){
 }
 
 function exibirPublicacao(id:number){
-    console.log(`Título: ${b.consultarPublicacao(id).titulo}` +
-    `Autor: ${b.consultarPublicacao(id).autor}` +
-    `Resumo: ${b.consultarPublicacao(id).resumo}`);
+    console.log(`Título: ${b.consultarPublicacao(id).titulo} ` +
+    `Autor: ${b.consultarPublicacao(id).autor} ` +
+    `Resumo: ${b.consultarPublicacao(id).resumo} `);
 }
 
 function acoes(){
@@ -148,7 +185,7 @@ function acoes(){
                 
                 opcao = input('\nDigite uma opção: ');
                 switch (opcao) {
-                    case '0': 
+                    case '0':
                         break;
                     case "1":
                         publicar();
@@ -167,7 +204,7 @@ function acoes(){
                 if(e instanceof AplicacaoError) {
                     console.log(e.message);
                 } else {
-                    console.log("Erro não esperado, contate o administrador!");
+                    console.log("Erro inesperado, contate o administrador.");
                 }
             }
             input('\nOperação finalizada. Pressione <enter>');
@@ -181,6 +218,8 @@ function acoes(){
                 
                 opcao = input('\nDigite uma opção: ');
                 switch (opcao) {
+                    case '0':
+                        break;
                     case "1":
                         consultarPublicacao();
                         break
@@ -192,45 +231,10 @@ function acoes(){
                 if(e instanceof AplicacaoError) {
                     console.log(e.message);
                 } else {
-                    console.log("Erro não esperado, contate o administrador!");
+                    console.log("Erro não inesperado, contate o administrador.");
                 }
             }
             input('\nOperação finalizada.');
         } while(opcao != "0")
     }
 }
-
-
-do{
-    try{
-        console.log('\nSeja bem vindo! Você deseja: ');
-        console.log('1 - Cadastrar    2 - Consultar Cadastro    3 - Excluir Cadastro\n' +
-        '4 - Listar Usuários    5 - Ações    0 - Sair');
-        
-        opcao = input('\nDigite uma opção: ');
-        switch (opcao) {
-            case "1":
-                cadastrar();
-                break
-            case "2":
-                consultar();
-                break
-            case "3":
-                excluirCadastro();
-                break;
-            case "4":
-                listarUsuarios();
-                break;
-            case "5":
-                acoes();
-                break;
-        }
-    } catch(e: any){
-        if(e instanceof AplicacaoError) {
-            console.log(e.message);
-        } else {
-            console.log("Erro não esperado, contate o administrador!");
-        }
-    }
-    input('\nOperação finalizada. Pressione <enter>');
-} while(opcao != "0")
