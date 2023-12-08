@@ -67,9 +67,9 @@ function cadastrar(){
     }
 
     if (tipo == 'l'){
-        usuario = new Leitor(nome, nomeUsuario, senha);
+        usuario = new Leitor(nome, nomeUsuario, senha, 0);
     } else if(tipo == 'a'){
-        usuario = new Autor(nome, nomeUsuario, senha);
+        usuario = new Autor(nome, nomeUsuario, senha, 0);
     }
 
     u.cadastrar(usuario);
