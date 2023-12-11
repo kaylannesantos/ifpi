@@ -292,6 +292,8 @@ class App {
             let nomeA = input('Antigo Nome: ')
             let nomeN = input('Novo Nome: ')
             this.redeSocial.editarNome(nomeA, nomeN)
+            let perfil = this.redeSocial.consultarPerfil(undefined, nomeN);
+            console.log(perfil);
         } else if(op == 'e'){
             let emailA = input('Antigo Email: ')
             let emailN = input('Novo Email: ')

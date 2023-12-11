@@ -131,7 +131,7 @@ class TestarFormas{
 }
 let tf: TestarFormas = new TestarFormas();
 tf.executar();
-/*
+
 let q1: Quadrado = new Quadrado(4);
 let q2: Quadrado = new Quadrado(4);
 
@@ -156,4 +156,3 @@ console.log('\nCIRCULO');
 console.log('Área: ', c1.area());
 console.log('Perímetro: ', c1.perimetro());
 console.log('O valor é: ', t1.comparar(c1));
-*/

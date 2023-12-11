@@ -6,13 +6,17 @@ d. Por fim, na classe presidente o método deve retornar 100% do salário + R$ 1
 
 abstract class Funcionario{
     protected salario:number;
+    constructor(salario:number) {
+        this.salario = salario;
+    }
+
     abstract getBonificacao():number;
 }
 
 class Gerente extends Funcionario{
     protected salario: number;
     constructor(salario:number) {
-        super();
+        super(salario);
         this.salario = salario;
     }
 
@@ -24,7 +28,7 @@ class Gerente extends Funcionario{
 class Diretor extends Funcionario{
     protected salario: number;
     constructor(salario:number) {
-        super();
+        super(salario);
         this.salario = salario;
     }
 
@@ -36,7 +40,7 @@ class Diretor extends Funcionario{
 class Presidente extends Funcionario{
     protected salario: number;
     constructor(salario:number) {
-        super();
+        super(salario);
         this.salario = salario;
     }
 

@@ -133,7 +133,12 @@ class PostagemAvancada extends Postagem{
     }
 }
 
-class RepositorioDePerfis {
+export interface IRepositorioDePerfis{ // questão 12-i
+    consultarPerfil(id?: number, nome?: string, email?: string): Perfil;
+    incluirPerfil(perfil: Perfil);
+}
+
+class RepositorioDePerfis implements IRepositorioDePerfis{
     private _perfis: Perfil[] = [];
 
     get perfis():Perfil[]{
@@ -189,7 +194,13 @@ class RepositorioDePerfis {
     } 
 }
 
-class RepositorioDePostagens {
+export interface IRepositorioDePostagens{ // questão 12-i
+    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[];
+    consultarPostagemPorId(idPost: number): Postagem;
+    incluirPostagem(postagem: Postagem);
+}
+
+class RepositorioDePostagens implements IRepositorioDePostagens{
     private _postagens: Postagem[] = [];
 
     get postagens():Postagem[]{

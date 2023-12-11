@@ -1,7 +1,7 @@
 ### Classes Abstratas
 
 1. Podemos instanciar classes abstratas? Justifique.
-- Porque uma classe abstrata ela serve como modelo para outras classes, nela pode estar presente a definição de atributos e métodos, que podem ser abstratos e/ou concretos. 
+- Não, porque uma classe abstrata ela serve como modelo para outras classes e serem estendidas por elas, nela pode estar presente a definição de atributos e métodos, que podem ser abstratos e/ou concretos. 
 
 2. Explique o que é necessário para que a compilação da ClasseConcreta ocorra sem erros:
 - É necessário que a classe filha além de herdar o método abstrato, também implemente-o.
@@ -27,5 +27,6 @@ abstract class FiguraGeometrica {
 }
 let figuras: FiguraGeometrica[] = new Array();
 ```
-
+- Porque o que está sendo feito não é a instância da classe FiguraGeometrica, e sim criando um novo array para armazenar 
+instâncias das classes que estenderem a classe FiguraGeometrica. 
 
