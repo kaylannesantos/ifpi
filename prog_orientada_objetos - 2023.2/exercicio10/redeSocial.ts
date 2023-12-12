@@ -1,23 +1,20 @@
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens } from "./index";
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray, IRepositorioDePerfis, IRepositorioPostagens } from "./index";
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
 class RedeSocial {
-    private _repositorioDePerfis: RepositorioDePerfis = new RepositorioDePerfis();
-    private _repositorioDePostagens: RepositorioDePostagens = new RepositorioDePostagens();
+    private _repositorioDePerfis: IRepositorioDePerfis;
+    private _repositorioDePostagens: IRepositorioPostagens;
 
-    get repositorioDePerfis(): RepositorioDePerfis {
-        return this._repositorioDePerfis;
+    constructor(repositorioDePerfis: IRepositorioDePerfis, repositorioDePostagens: IRepositorioPostagens) {
+        this._repositorioDePerfis = repositorioDePerfis;
+        this._repositorioDePostagens = repositorioDePostagens;
     }
 
-    get respositorioDePostagens(): RepositorioDePostagens {
-        return this._repositorioDePostagens;
-    }
-
-    incluirPerfil(perfil: Perfil){  
+    incluirPerfil(perfil: Perfil) {
         this._repositorioDePerfis.incluirPerfil(perfil);
     }
 
-    consultarPerfil(id?: number | undefined, nome?: string | undefined, email?: string | undefined): Perfil {  
+    consultarPerfil(id?: number, nome?: string, email?: string): Perfil {
         return this._repositorioDePerfis.consultarPerfil(id, nome, email);
     }
 
@@ -28,7 +25,6 @@ class RedeSocial {
     consultarPostagem(id?: number | undefined, texto?: string | undefined, hashtag?: string | undefined, perfil?:  Perfil | undefined): Postagem[]{
         return this._repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
-    
 
     curtir(idPost: number): void {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost)
@@ -69,57 +65,31 @@ class RedeSocial {
         return postagensFiltradas;
     }
 
-    exibirPostagensPorPerfil(id: number): Postagem[]{
+    exibirPostagensPorPerfil(id: number): Postagem[] {
         let postagensFiltradas: Postagem[] = [];
         let perfilProcurado = this.consultarPerfil(id);
-
-        for(let postagem of perfilProcurado.postagensDoPerfil){
-            if (postagem instanceof PostagemAvancada){
-                if (postagem.visualizacoesRestantes > 0){
+    
+        if (perfilProcurado) { // Verificar se o perfil foi encontrado
+            for (let postagem of perfilProcurado.postagensDoPerfil) {
+                if (postagem instanceof PostagemAvancada) {
+                    if (postagem.visualizacoesRestantes > 0) {
+                        postagensFiltradas.push(postagem);
+                        postagem.decrementarVisualizacoes();
+                    }
+                } else {
                     postagensFiltradas.push(postagem);
-                    postagem.decrementarVisualizacoes();
                 }
-            } else {
-                postagensFiltradas.push(postagem);
             }
         }
-
+    
         return postagensFiltradas;
     }
-
-    exibirTodasAsPostagens(): string{
-        let postagens: string = '';
-
-        for(let p of this._repositorioDePostagens.postagens){//!alterado: perfil não estava disponivel
-            if(p instanceof PostagemAvancada){
-                postagens += `
-                Id: ${p.idPostagem}
-                Texto: ${p.texto}
-                Curtidas: ${p.curtidas}
-                Descurtidas: ${p.descurtidas}
-                Hashtags: ${p.hashtags}
-                Vizualizações: ${p.quantidadeDeVizualizaoes()}
-                `
-                if (p.visualizacoesRestantes > 0){
-                    p.decrementarVisualizacoes();
-                }
-            } else {
-                postagens += `
-                Id: ${p.idPostagem}
-                Texto: ${p.texto}
-                Curtidas: ${p.curtidas}
-                Descurtidas: ${p.descurtidas}
-                `
-            }
-        }
-
-        return postagens;
-    }
-
+    
+    /*
     exibirPerfis(): string{
-        let perfis: string = '';
+        const perfis = this._repositorioDePerfis.perfis
 
-        for(let p of this.repositorioDePerfis.perfis){ //!alterado: perfil não estava disponivel
+        for(let p of this._repositorioDePerfis.perfis){
             perfis += `
             Id: ${p.idPerfil}
             Nome: ${p.nome}
@@ -133,28 +103,16 @@ class RedeSocial {
     exibirPerfil(idPerfil: number){ // criado exibição por perfil
         let perfilProcurado = this.consultarPerfil(idPerfil);
 
-        if(perfilProcurado.idPerfil == idPerfil){
+        if((perfilProcurado) && perfilProcurado.idPerfil == idPerfil){
             return `Id: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
         }
     } 
 
     exibirPorPostagem(idPostagem?: number, texto?: string){ 
-        let postagemProcurada = this.consultarPostagem(idPostagem, texto);
-
-        
-        if (idPostagem != undefined || texto != undefined) {
-            return postagemProcurada;
-        }
-        
-        /*
-        for (let p of postagemProcurada) {
-            if (p instanceof PostagemAvancada) {
-                if (p.visualizacoesRestantes > 0){
-                    postagensFiltradas.push(p);
-                    p.decrementarVisualizacoes();
-                }
-            } else {
-                postagensFiltradas.push(p);
+        let postagemProcurada = this.consultarPostagem(idPostagem);
+        if(postagemProcurada instanceof PostagemAvancada){
+            if (postagemProcurada.visualizacoesRestantes > 0){
+                postagemProcurada.decrementarVisualizacoes();
             }
         }
 
@@ -165,21 +123,12 @@ class RedeSocial {
         if(texto != undefined){
             return this.consultarPostagem(undefined, texto);
         }
-        */
-        
-        if(postagemProcurada instanceof PostagemAvancada){
-            if (postagemProcurada.visualizacoesRestantes > 0){
-                postagemProcurada.decrementarVisualizacoes();
-            }
-        }
-        return postagemProcurada;
-
     }
 
     postagensPopulares(): Postagem[]{
         let postagensPopulares: Postagem[] = []
 
-        for(let p of this.respositorioDePostagens.postagens){ //!alterado: perfil não estava disponivel
+        for(let p of this._repositorioDePostagens.postagens){
             if(p.ehPopular()){
                 postagensPopulares.push(p)
             }
@@ -200,16 +149,16 @@ class RedeSocial {
 
     excluirPostagem(idPostagem: number){
         let indice: number = this._repositorioDePostagens.consultarPorIndice(idPostagem);
-        for(let i = indice; i < this.respositorioDePostagens.postagens.length; i++){ //!alterado: perfil não estava disponivel
-            this.respositorioDePostagens.postagens[i] = this.respositorioDePostagens.postagens[i+1];
+        for(let i = indice; i < this._repositorioDePostagens.postagens.length; i++){
+            this._repositorioDePostagens.postagens[i] = this._repositorioDePostagens.postagens[i+1];
         }
-        this.respositorioDePostagens.postagens.pop()
+        this._repositorioDePostagens.postagens.splice(indice, 1);
     }
 
     editarNome(antigoNome: string, nomeNovo: string){
         try{
             let perfil = this.consultarPerfil(undefined, antigoNome);
-            perfil.nome = nomeNovo
+            if(perfil){perfil.nome = nomeNovo}
 
             if(!perfil){
                 throw new PerfilNaoEncontradoError('Perfil não encontrado!');
@@ -224,7 +173,7 @@ class RedeSocial {
     editarEmail(antigoEmail: string, emailNovo: string){
         try{
             let perfil = this.consultarPerfil(undefined, undefined, antigoEmail);
-            perfil.email = emailNovo
+            if(perfil){perfil.email = emailNovo}
             if(!perfil){
                 throw new PerfilNaoEncontradoError('Perfil não encontrado!');
             }
@@ -234,5 +183,6 @@ class RedeSocial {
             }
         }
     }
+    */
 }
 export{ RedeSocial };

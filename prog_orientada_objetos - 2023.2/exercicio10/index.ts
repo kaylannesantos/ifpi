@@ -1,8 +1,7 @@
 // as vizualizacoes nao estao decrementando 
-// problema em exibir todas as postagens e todos os perfis - ta ok!
-// exibirPostagensPorPerfil
 // postagensPopulares
 // excluirPostagem
+// exibirPostagensPorPerfil - excecao
 
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
@@ -94,7 +93,7 @@ class Postagem{
 
 class PostagemAvancada extends Postagem{
     private _hashtags: string[] = [];
-    private _visualizacoesRestantes: number = 10;
+    private _visualizacoesRestantes: number = 1;
     constructor(i:number, t:string, p:Perfil){
         super(i, t, p);
     }
@@ -133,22 +132,31 @@ class PostagemAvancada extends Postagem{
     }
 }
 
-export interface IRepositorioDePerfis{ // questão 12-i
+interface IRepositorioDePerfis {
+    //perfis: Perfil[];
+    incluirPerfil(perfil: Perfil): void;
     consultarPerfil(id?: number, nome?: string, email?: string): Perfil;
-    incluirPerfil(perfil: Perfil);
 }
 
-class RepositorioDePerfis implements IRepositorioDePerfis{
+interface IRepositorioPostagens {
+    //postagens: Postagem[];
+    consultarPorIndice(idPostagem: number): number;
+    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[];
+    consultarPostagemPorId(idPost: number): Postagem;
+    incluirPostagem(postagem: Postagem): void;
+}
+
+class RepositorioDePerfisArray implements IRepositorioDePerfis {
     private _perfis: Perfil[] = [];
 
-    get perfis():Perfil[]{
+    get perfis(): Perfil[] {
         return this._perfis;
     }
 
     consultarPerfil(id?: number, nome?: string, email?: string): Perfil {
         let perfilProcurado!: Perfil;
         try {
-            const perfilProcurado0 = this.perfis.find(p => //alterado p/ chamar o método de acesso get
+            const perfilProcurado0 = this._perfis.find(p =>
                 (id === undefined || p.idPerfil === id) &&
                 (nome === undefined || p.nome === nome) &&
                 (email === undefined || p.email === email)
@@ -178,13 +186,13 @@ class RepositorioDePerfis implements IRepositorioDePerfis{
                 );
 
                 if (perfilExiste) {
-                    throw new PerfilExistenteError('O perfil já existe!');
+                    throw new PerfilExistenteError('O perfil já existe');
                 }
             } else {
                 throw new AtributoVazioError('Os atributos precisam ser preenchidos!');
             }
 
-            this.perfis.push(perfil);  //alterado p/ chamar o método de acesso get
+            this._perfis.push(perfil);
             console.log('Perfil incluído com sucesso!');
         } catch (e:any){
                 if(e instanceof AplicacaoError){
@@ -194,23 +202,153 @@ class RepositorioDePerfis implements IRepositorioDePerfis{
     } 
 }
 
-export interface IRepositorioDePostagens{ // questão 12-i
-    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[];
-    consultarPostagemPorId(idPost: number): Postagem;
-    incluirPostagem(postagem: Postagem);
+class NoPerfil { // armazena Perfil e tem uma referência para o próximo nó na lista.
+    perfil: Perfil;
+    proximo: NoPerfil | null; // referencia o próximo nó na lista (se for o último nó, é definida como null)
+
+    constructor(perfil: Perfil) {
+        this.perfil = perfil;
+        this.proximo = null; 
+    }
 }
 
-class RepositorioDePostagens implements IRepositorioDePostagens{
+class RepositorioDePerfisLista implements IRepositorioDePerfis {
+    private inicio: NoPerfil | null; // início da lista encadeada, o primeiro nó. começa como null quando a lista ta vazia
+
+    constructor() {
+        this.inicio = null;
+    }
+
+    incluirPerfil(perfil: Perfil): void {
+        const novoNo = new NoPerfil(perfil);
+
+        if (this.inicio == null) {
+            this.inicio = novoNo;
+        } else {
+            let atual = this.inicio;
+            while (atual.proximo != null) { // percorre até encontrar o ultimo nó 
+                atual = atual.proximo;
+            }
+            atual.proximo = novoNo; // adiciona ao final da lista
+        }
+    }
+
+    consultarPerfil(id?: number, nome?: string, email?: string): Perfil {
+        let atual = this.inicio;
+
+        while (atual != null) {
+            if (
+                (id != undefined && atual.perfil.idPerfil == id) ||
+                (nome != undefined && atual.perfil.nome == nome) ||
+                (email != undefined && atual.perfil.email == email)
+            ) {
+                return atual.perfil;
+            }
+
+            atual = atual.proximo;
+        }
+
+        throw new PerfilNaoEncontradoError('Perfil não encontrado');
+    }
+}
+
+class NoPostagem { // mesma coisa de perfil
+    postagem: Postagem;
+    proximo: NoPostagem | null;
+
+    constructor(postagem: Postagem) {
+        this.postagem = postagem;
+        this.proximo = null;
+    }
+}
+
+class RepositorioDePostagensLista implements IRepositorioPostagens {
+    private inicio: NoPostagem | null;
+
+    constructor() {
+        this.inicio = null;
+    }
+
+    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] {
+        const postagensFiltradas: Postagem[] = [];
+        let atual = this.inicio;
+
+        while (atual != null) {
+            let postagem = atual.postagem;
+            if (
+                (id == undefined || postagem.idPostagem == id) &&
+                (texto == undefined || postagem.texto == texto) &&
+                (perfil == undefined || postagem.perfil == perfil)
+            ) {
+                if (hashtag != undefined && postagem instanceof PostagemAvancada && postagem.existeHashtag(hashtag)) {
+                    postagensFiltradas.push(postagem);
+                } else if (hashtag == undefined) {
+                    postagensFiltradas.push(postagem);
+                }
+            }
+
+            atual = atual.proximo;
+        }
+
+        return postagensFiltradas;
+    }
+
+    incluirPostagem(postagem: Postagem): void {
+        const novoNo = new NoPostagem(postagem);
+
+        if (this.inicio == null) {
+            this.inicio = novoNo;
+        } else {
+            let atual = this.inicio;
+            while (atual.proximo != null) {
+                atual = atual.proximo;
+            }
+            atual.proximo = novoNo;
+        }
+    }
+
+    consultarPorIndice(idPostagem: number): number {
+        let atual = this.inicio;
+        let indice = 0;
+
+        while (atual !== null) {
+            if (atual.postagem.idPostagem == idPostagem) {
+                return indice;
+            }
+            
+            atual = atual.proximo;
+            indice ++;
+        }
+
+        throw new PostagemNaoEncontradaError('Postagem não encontrada') 
+    }
+
+    consultarPostagemPorId(idPost: number): Postagem {
+        let atual = this.inicio;
+
+        while (atual != null) {
+            if (atual.postagem.idPostagem == idPost) {
+                return atual.postagem;
+            }
+
+            atual = atual.proximo;
+        }
+
+        throw new PostagemNaoEncontradaError('Postagem não encontrada');
+    }
+}
+
+class RepositorioDePostagensArray implements IRepositorioPostagens{
     private _postagens: Postagem[] = [];
 
-    get postagens():Postagem[]{
+    get postagens(): Postagem[] {
         return this._postagens;
     }
 
     consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[]{
         let postagensFiltradas: Postagem[] = [];
     
-        for (let p of this.postagens) { // alterado p/ chamar o método de acesso get
+        for (let p of this._postagens) {
             if ((id == undefined || p.idPostagem == id) &&
                 (texto == undefined || p.texto == texto) &&
                 (perfil == undefined || p.perfil == perfil)) {
@@ -238,7 +376,7 @@ class RepositorioDePostagens implements IRepositorioDePostagens{
     consultarPostagemPorId(idPost: number): Postagem{
         let postagemProcurada!: Postagem;
 
-        for(let p of this.postagens){// alterado p/ chamar o método de acesso get
+        for(let p of this._postagens){
             if(p.idPostagem == idPost){
                 postagemProcurada = p
             }
@@ -261,7 +399,7 @@ class RepositorioDePostagens implements IRepositorioDePostagens{
         let indiceProcurado: number = -1;
         try{
             for(let i = 0; i < this._postagens.length; i++){
-                if(this.postagens[i].idPostagem == id){// alterado p/ chamar o método de acesso get
+                if(this._postagens[i].idPostagem == id){
                     indiceProcurado = i;
                 }
             }
@@ -298,10 +436,7 @@ class RepositorioDePostagens implements IRepositorioDePostagens{
                 console.log(e.message);
             }
         }
-    }  
-
-    
-    
+    }      
 }
 
-export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens }
+export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray, IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisLista, RepositorioDePostagensLista }

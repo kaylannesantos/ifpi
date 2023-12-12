@@ -2,27 +2,35 @@ import prompt from 'prompt-sync';
 let input = prompt();
 
 import { RedeSocial } from "./redeSocial";
-import { Perfil, Postagem, PostagemAvancada } from "./index";
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray,RepositorioDePostagensLista, RepositorioDePerfisLista } from "./index";
 
 class App {
-    private _redeSocial: RedeSocial = new RedeSocial;
+    private _redeSocial1: RedeSocial;
+    private _redeSocial2: RedeSocial;
+
+    constructor() {
+        this._redeSocial1 = new RedeSocial(new RepositorioDePerfisArray(), new RepositorioDePostagensArray());
+        this._redeSocial2 = new RedeSocial(new RepositorioDePerfisLista, new RepositorioDePostagensLista());
+    }
+    
     private _idPerfilAnterior: number = 0;
     private _IdPostagemAnterior: number = 0;
 
     get redeSocial(): RedeSocial {
-        return this._redeSocial;
+        return this._redeSocial1;
+        return this._redeSocial2
     }
 
-    menu(): void {
+    menu(): void{
         let opcao: string = '';
         do {
-            console.log('\nBEM VINDO AO APP \nDigite uma opção:\n ');
-            console.log('1 - Consultar Perfil        2 - Incluir Perfil             3 - Consultar Postagem\n' +
-                        '4 - Incluir Postagem        5 - Avaliar Postagens          6 - Exibir Postagens Populares \n' +
-                        '7 - Exibir Todos os Perfis  8 - Exibir Todas as Postagens  9 - Excluir Postagem\n' +
+            console.log('\nBEM VINDO AO APP \nDigite uma opção: ');
+            console.log('1 - Consultar Perfil    2 - Incluir Perfil      3 - Consultar Postagem\n' +
+                        '4 - Incluir Postagem    5 - Avaliar Postagens   6 - Exibir Postagens Populares \n' +
+                        '7 - Exibir Todos os Perfis        8 - Exibir Todas as Postagens       9 - Excluir Postagem\n' +
                         '10 - Editar Perfil \n' +
                         '0 - Sair \n');
-                        
+
             opcao = input("Opção: ");
             
             switch (opcao) {
@@ -31,7 +39,7 @@ class App {
                     break;
                 case "2":
                     this.incluirPerfil();
-                    break;
+                    break;/*
                 case "3": 
                     this.consultarPostagem();
                     break;
@@ -47,7 +55,7 @@ class App {
                 case "7":
                     this.exibirPerfis();
                     break;
-                case "8":
+                /*case "8":
                     this.exibirTodasPostagens();
                     break;
                 case "9": 
@@ -55,7 +63,7 @@ class App {
                     break;
                 case"10":
                     this.editarPerfil();
-                    break
+                    break*/
                 case "0": console.log('Aplicação encerrada!');
                     break;
                 default:
@@ -81,7 +89,7 @@ class App {
         let novoPerfil: Perfil = new Perfil(idPerfil, nome, email)
         this.redeSocial.incluirPerfil(novoPerfil);
     }
-
+ /*
     consultarPostagem(): void{
         let opcao: string = '';
 
@@ -114,6 +122,7 @@ class App {
             }
         } while (opcao != "0");
     }
+    
 
     consultarPorTexto(){
         console.log('\nCONSULTAR POSTAGEM POR TEXTO');
@@ -156,7 +165,7 @@ class App {
         let texto: string = input('O que voce esta pensando? ');
         let temHashtag: string = input('Deseja adicionar hashtag? (s/n) ');
 
-        let perfil = this._redeSocial.consultarPerfil(undefined, nomePerfil);
+        let perfil = this.redeSocial.consultarPerfil(undefined, nomePerfil);
 
         if(temHashtag == 'n'){
             let novaPostagem: Postagem = new Postagem(idPostagem, texto, perfil);   
@@ -267,7 +276,7 @@ class App {
         console.log(this.redeSocial.exibirPerfis());
     }
 
-    exibirTodasPostagens(): void{
+    /*exibirTodasPostagens(): void{
         console.log('TODAS AS POSTAGENS');
         console.log(this.redeSocial.exibirTodasAsPostagens())
     }
@@ -292,8 +301,6 @@ class App {
             let nomeA = input('Antigo Nome: ')
             let nomeN = input('Novo Nome: ')
             this.redeSocial.editarNome(nomeA, nomeN)
-            let perfil = this.redeSocial.consultarPerfil(undefined, nomeN);
-            console.log(perfil);
         } else if(op == 'e'){
             let emailA = input('Antigo Email: ')
             let emailN = input('Novo Email: ')
@@ -302,6 +309,7 @@ class App {
             console.log('Opção inválida');
         }        
     }
+    */
 }
 
 const meuApp: App = new App();
