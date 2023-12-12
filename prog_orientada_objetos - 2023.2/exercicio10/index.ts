@@ -4,6 +4,7 @@
 // exibirPostagensPorPerfil - excecao
 
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
+import * as fs from 'fs';
 
 class Perfil{
     private _idPerfil: number;
@@ -462,3 +463,33 @@ class RepositorioDePostagensArray implements IRepositorioPostagens{
 }
 
 export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray, IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisLista, RepositorioDePostagensLista }
+/*
+import * as sqlite3 from 'sqlite3';
+
+-Configuração da conexão com o banco de dados SQLite
+const conexao = new sqlite3.Database('BancoDeDados.db');
+
+-Criação da tabela de perfis
+conexao.run(`
+    CREATE TABLE IF NOT EXISTS Perfis (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id_perfil TEXT NOT NULL,
+        nome INTEGER,
+        email TEXT
+    )
+`);
+
+-Criação da tabela de postagens
+conexao.run(`
+    CREATE TABLE IF NOT EXISTS Postagens (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        perfil_id INTEGER,
+        conteudo TEXT,
+        FOREIGN KEY (perfil_id) REFERENCES Perfis (id)
+    )
+`);
+
+salvarPerfil(perfil: Perfil): void {
+    conexao.run('INSERT INTO Perfis (id, nome, email) VALUES (?, ?, ?)', [perfil.idPerfil, perfil.nome, perfil.email]);
+}
+*/
