@@ -2,8 +2,8 @@ import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, Repositor
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
 class RedeSocial {
-    private _repositorioDePerfis: IRepositorioDePerfis = new RepositorioDePerfisArray; //!alterei
-    private _repositorioDePostagens: IRepositorioPostagens = new RepositorioDePostagensArray; //!alterei
+    private _repositorioDePerfis: IRepositorioDePerfis //= new RepositorioDePerfisArray; //!alterei
+    private _repositorioDePostagens: IRepositorioPostagens //= new RepositorioDePostagensArray; //!alterei
 
     constructor(repositorioDePerfis: IRepositorioDePerfis, repositorioDePostagens: IRepositorioPostagens) {
         this._repositorioDePerfis = repositorioDePerfis;

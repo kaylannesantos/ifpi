@@ -2,7 +2,7 @@ import prompt from 'prompt-sync';
 let input = prompt();
 
 import { RedeSocial } from "./redeSocial";
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray,RepositorioDePostagensLista, RepositorioDePerfisLista } from "./index";
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray,RepositorioDePostagensLista, RepositorioDePerfisLista, IRepositorioDePerfis, IRepositorioPostagens } from "./index";
 
 class App {
     private _redeSocial1: RedeSocial;
@@ -12,13 +12,31 @@ class App {
         this._redeSocial1 = new RedeSocial(new RepositorioDePerfisArray(), new RepositorioDePostagensArray());
         this._redeSocial2 = new RedeSocial(new RepositorioDePerfisLista(), new RepositorioDePostagensLista());
     }
+    /*
+    escolherRepositorio(opcao:string): IRepositorioDePerfis | IRepositorioPostagens{ //criar escolha de armazenamento
+        console.log('\nBEM VINDO AO APP \nAntes de iniciar, digite uma opção para repositório: ');
+        console.log('1 - Array    2 - Lista 3 - Outro\n')
+    
+        switch (opcao) {
+            case '1':
+                return new RepositorioDePerfisArray && new RepositorioDePostagensArray;
+            case '2':
+                return new RepositorioDePerfisLista && new RepositorioDePostagensLista;
+            default:
+                throw new Error('Escolha inválida');
+        }
+    }
+
+    constructor() {
+        this._redeSocial1 = new RedeSocial(new RepositorioDePerfisArray, new RepositorioDePostagensArray);
+        this._redeSocial2 = new RedeSocial(new RepositorioDePerfisLista, new RepositorioDePostagensLista);
+    }*/
     
     private _idPerfilAnterior: number = 0;
     private _IdPostagemAnterior: number = 0;
 
     get redeSocial(): RedeSocial {
-        return this._redeSocial1;
-        return this._redeSocial2;
+        return this._redeSocial1 && this._redeSocial2;
     }
 
     menu(): void{
