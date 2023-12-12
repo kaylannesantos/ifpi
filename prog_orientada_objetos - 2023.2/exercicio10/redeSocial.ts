@@ -2,12 +2,18 @@ import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, Repositor
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
 class RedeSocial {
-    private _repositorioDePerfis: IRepositorioDePerfis;
-    private _repositorioDePostagens: IRepositorioPostagens;
+    private _repositorioDePerfis: IRepositorioDePerfis = new RepositorioDePerfisArray; //!alterei
+    private _repositorioDePostagens: IRepositorioPostagens = new RepositorioDePostagensArray; //!alterei
 
     constructor(repositorioDePerfis: IRepositorioDePerfis, repositorioDePostagens: IRepositorioPostagens) {
         this._repositorioDePerfis = repositorioDePerfis;
         this._repositorioDePostagens = repositorioDePostagens;
+    }
+    get repositorioDePerfis():IRepositorioDePerfis{
+        return this._repositorioDePerfis;
+    }
+    get repositorioDePostagens():IRepositorioPostagens{
+        return this._repositorioDePostagens;
     }
 
     incluirPerfil(perfil: Perfil) {
@@ -85,10 +91,8 @@ class RedeSocial {
         return postagensFiltradas;
     }
     
-    /*
     exibirPerfis(): string{
-        const perfis = this._repositorioDePerfis.perfis
-
+        let perfis = '';
         for(let p of this._repositorioDePerfis.perfis){
             perfis += `
             Id: ${p.idPerfil}
@@ -183,6 +187,5 @@ class RedeSocial {
             }
         }
     }
-    */
 }
 export{ RedeSocial };
