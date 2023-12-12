@@ -104,6 +104,20 @@ class RedeSocial {
         return perfis;
     } 
 
+    exibirTodasAsPostagens(): string{
+        let postagens = '';
+        for(let p of this.repositorioDePostagens.postagens){
+            postagens += `
+            Id: ${p.idPostagem}
+            Perfil: ${p.perfil.nome}
+            Texto: ${p.texto}
+            Curtidas: ${p.curtidas}
+            Descurtidas: ${p.descurtidas}
+            `
+        }
+        return postagens;
+    } 
+
     exibirPerfil(idPerfil: number){ // criado exibição por perfil
         let perfilProcurado = this.consultarPerfil(idPerfil);
 

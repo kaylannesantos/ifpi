@@ -56,7 +56,7 @@ class App {
                     this.exibirPerfis();
                     break;
                 case "8":
-                    //this.exibirTodasPostagens();
+                    this.exibirTodasPostagens();
                     break;
                 case "9": 
                     this.excluirPostagem();
@@ -276,10 +276,10 @@ class App {
         console.log(this.redeSocial.exibirPerfis());
     }
 
-    /*exibirTodasPostagens(): void{
+    exibirTodasPostagens(): void{
         console.log('TODAS AS POSTAGENS');
         console.log(this.redeSocial.exibirTodasAsPostagens())
-    }*/
+    }
 
     postagensPopulares(): void{
         console.log('POSTAGENS POPULARES');
