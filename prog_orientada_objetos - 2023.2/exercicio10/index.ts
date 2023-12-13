@@ -74,6 +74,9 @@ class Postagem{
     get curtidas(): number{
         return this._curtidas
     }
+    set curtidas(likes:number){
+        this._curtidas = likes;
+    }
 
     get descurtidas(): number{
         return this._descurtidas
@@ -150,14 +153,14 @@ class PostagemAvancada extends Postagem{
 }
 
 interface IRepositorioDePerfis {
-    get perfis(): Perfil[]; //adicionei
+    get perfis(): Perfil[];
     incluirPerfil(perfil: Perfil): void;
     consultarPerfil(id?: number, nome?: string, email?: string): Perfil;
     atualizarPerfil(perfil: Perfil):void;
 }
 
 interface IRepositorioPostagens {
-    get postagens(): Postagem[]; //adicionei
+    get postagens(): Postagem[];
     consultarPorIndice(idPostagem: number): number;
     consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[];
     consultarPostagemPorId(idPost: number): Postagem;
@@ -179,8 +182,8 @@ class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
 
     incluirPerfil(perfil: Perfil): void {
         if (perfil.nome && perfil.email) {
-            const dados = this.lerArquivo();
-            const perfilExiste = this.perfis.find(p => //!alterei perfis
+            let dados = this.lerArquivo();
+            const perfilExiste = this.perfis.find(p =>
                 (p.idPerfil === perfil.idPerfil) ||
                 (p.nome === perfil.nome) ||
                 (p.email === perfil.email))
@@ -217,7 +220,7 @@ class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
 
     private lerArquivo(): any[] {
         try {
-            const conteudo = fs.readFileSync(this.arquivo, 'utf-8');
+            let conteudo = fs.readFileSync(this.arquivo, 'utf-8');
             return JSON.parse(conteudo);
         } catch (error) {
             return [];
@@ -228,7 +231,7 @@ class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
         fs.writeFileSync(this.arquivo, JSON.stringify(dados, null, 2), 'utf-8');
     }
 
-    atualizarPerfil(perfil: Perfil):void{ //para atualizar os dados dos arquivos
+    atualizarPerfil(perfil: Perfil):void{
         let dados = this.lerArquivo();
         let perfilExiste = this.perfis.find(p =>(p.idPerfil === perfil.idPerfil));
         if (!perfilExiste) {
@@ -283,7 +286,6 @@ class RepositorioDePostagensArquivo implements IRepositorioPostagens {
         if (postagensFiltradas.length === 0) {
             throw new PostagemNaoEncontradaError('Postagem não encontrada');
         }
-
         return postagensFiltradas.map((d: any) => d);
     }
 
@@ -301,6 +303,7 @@ class RepositorioDePostagensArquivo implements IRepositorioPostagens {
 
     consultarPorIndice(idPostagem: number): number {
         const dados = this.lerArquivo();
+            
         const indice = dados.findIndex((d: any) => d._idPostagem === idPostagem);
 
         if(indice == -1){
@@ -311,15 +314,13 @@ class RepositorioDePostagensArquivo implements IRepositorioPostagens {
     }
 
     consultarPostagemPorId(idPost: number): Postagem {
-        const dados = this.lerArquivo();
+        let dados = this.lerArquivo();
         const postagemProcurada = dados.find((d: any) => d._idPostagem === idPost);
-        
         if(postagemProcurada === undefined){
             throw new PostagemNaoEncontradaError('Postagem não encontrada');
         }
-        
-        this.salvarArquivo(dados);
         return postagemProcurada;
+        //this.salvarArquivo(dados);
     } 
 
     atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
@@ -336,13 +337,12 @@ class RepositorioDePostagensArquivo implements IRepositorioPostagens {
             this.salvarArquivo(dados);
         }
     }
-    
 }
 
 class RepositorioDePerfisArray implements IRepositorioDePerfis {
     private _perfis: Perfil[] = [];
 
-    get perfis(): Perfil[] { //adicionei
+    get perfis(): Perfil[] {
         return this._perfis;
     }
 
@@ -372,7 +372,7 @@ class RepositorioDePerfisArray implements IRepositorioDePerfis {
     incluirPerfil(perfil: Perfil){
         try {
             if (perfil.idPerfil && perfil.nome && perfil.email) {
-                const perfilExiste = this.perfis.find(p => //!alterei perfis
+                let perfilExiste = this.perfis.find(p =>
                     (p.idPerfil === perfil.idPerfil) ||
                     (p.nome === perfil.nome) ||
                     (p.email === perfil.email)
@@ -385,7 +385,7 @@ class RepositorioDePerfisArray implements IRepositorioDePerfis {
                 throw new AtributoVazioError('Os atributos precisam ser preenchidos!');
             }
 
-            this.perfis.push(perfil); //!alterei perfis
+            this.perfis.push(perfil);
             console.log('Perfil incluído com sucesso!');
         } catch (e:any){
                 if(e instanceof AplicacaoError){
@@ -394,7 +394,7 @@ class RepositorioDePerfisArray implements IRepositorioDePerfis {
         }
     } 
 
-    atualizarPerfil(perfil: Perfil): void {// adicionado a interface - ver como implementar esse metodo nesse repositorio
+    atualizarPerfil(perfil: Perfil): void {
     }
 }
 
@@ -415,7 +415,7 @@ class RepositorioDePerfisLista implements IRepositorioDePerfis {
         this.inicio = null;
     } 
 
-    get perfis(): Perfil[] { //adicionei
+    get perfis(): Perfil[] {
         let perfis: Perfil[] = [];
         let atual = this.inicio;
 
@@ -458,11 +458,11 @@ class RepositorioDePerfisLista implements IRepositorioDePerfis {
 
         throw new PerfilNaoEncontradoError('Perfil não encontrado');
     }
-    atualizarPerfil(perfil: Perfil): void { // adicionado a interface - ver como implementar esse metodo nesse repositorio
+    atualizarPerfil(perfil: Perfil): void {
     }
 }
 
-class NoPostagem { // mesma coisa de perfil
+class NoPostagem {
     postagem: Postagem;
     proximo: NoPostagem | null;
 
@@ -557,7 +557,8 @@ class RepositorioDePostagensLista implements IRepositorioPostagens {
 
         throw new PostagemNaoEncontradaError('Postagem não encontrada');
     }
-    atualizarPostagem(postagem: Postagem): void {
+
+    atualizarPostagem(postagem: Postagem): void { // ver se ta funcionando
         let atual = this.inicio;
 
         while (atual !== null) {
@@ -575,14 +576,14 @@ class RepositorioDePostagensLista implements IRepositorioPostagens {
 class RepositorioDePostagensArray implements IRepositorioPostagens{
     private _postagens: Postagem[] = [];
 
-    get postagens(): Postagem[] { //adicionei
+    get postagens(): Postagem[] {
         return this._postagens;
     }
 
     consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[]{
         let postagensFiltradas: Postagem[] = [];
     
-        for (let p of this.postagens) { //!alterei postagens
+        for (let p of this.postagens) {
             if ((id == undefined || p.idPostagem == id) &&
                 (texto == undefined || p.texto == texto) &&
                 (perfil == undefined || p.perfil == perfil)) {
@@ -632,7 +633,7 @@ class RepositorioDePostagensArray implements IRepositorioPostagens{
     consultarPorIndice(id:number){
         let indiceProcurado: number = -1;
         try{
-            for(let i = 0; i < this.postagens.length; i++){ //!alterei postagens
+            for(let i = 0; i < this.postagens.length; i++){
                 if(this.postagens[i].idPostagem == id){
                     indiceProcurado = i;
                 }
@@ -671,12 +672,14 @@ class RepositorioDePostagensArray implements IRepositorioPostagens{
             }
         }
     }    
-    atualizarPostagem(postagem: Postagem): void {
-        const index = this._postagens.findIndex(p => p.idPostagem === postagem.idPostagem);
+
+    atualizarPostagem(postagem: Postagem): void { // ver se ta funcionando
+        let index = this._postagens.findIndex(p => p.idPostagem === postagem.idPostagem);
         if (index !== -1) {
             this._postagens[index] = postagem;
         }
-    }  
+    }
 }
+
 
 export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray, IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisLista, RepositorioDePostagensLista, RepositorioDePerfisArquivo, RepositorioDePostagensArquivo }

@@ -28,14 +28,11 @@ class RedeSocial {
     }
 
     curtir(idPost: number): void {
-        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);  
+        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost); 
         if (postagemProcurada !== undefined) {
-            console.log(postagemProcurada['_curtidas']);
-            
-            postagemProcurada['_curtidas']++;
-
-            console.log(postagemProcurada['_curtidas']);
+            //postagemProcurada['_curtidas']++;
             //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            postagemProcurada.curtir();
             this._repositorioDePostagens.atualizarPostagem(postagemProcurada); // chama o metodo de repositorio de postagens por arq
         }
     }
