@@ -92,7 +92,7 @@ class Postagem{
     }
 
     curtir(): void{
-        this._curtidas += 1;
+        this._curtidas ++;
     }
 
     descurtir(): void{
