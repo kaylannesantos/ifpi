@@ -92,11 +92,11 @@ class Postagem{
     }
 
     curtir(): void{
-        this._curtidas ++;
+        this._curtidas++;
     }
 
     descurtir(): void{
-        this._descurtidas ++;
+        this._descurtidas++;
     }
 
     ehPopular(): boolean{
@@ -322,12 +322,13 @@ class RepositorioDePostagensArquivo implements IRepositorioPostagens {
         return postagemProcurada;
     } 
 
-    atualizarPostagem(postagem: Postagem):void { // atualizar postagem
+    atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
         let dados = this.lerArquivo();
-        let postagemExiste = this.postagens.find(p => (p.idPostagem == postagem.idPostagem));
-        if (!postagemExiste) {
-            throw new PerfilNaoEncontradoError('Postagem não encontrada.');
+        let postagemExsite = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
+        if (!postagemExsite) {
+            throw new PerfilExistenteError('O perfil já existe');
         }
+
         let index = this.postagens.findIndex(p => p.idPostagem == postagem.idPostagem);
         if (index != -1) {
             this.postagens[index] = postagem;
@@ -557,7 +558,16 @@ class RepositorioDePostagensLista implements IRepositorioPostagens {
         throw new PostagemNaoEncontradaError('Postagem não encontrada');
     }
     atualizarPostagem(postagem: Postagem): void {
-        // ver forma de implementar esse metodo
+        let atual = this.inicio;
+
+        while (atual !== null) {
+            if (atual.postagem.idPostagem === postagem.idPostagem) {
+                atual.postagem = postagem;
+                break;
+            }
+    
+            atual = atual.proximo;
+        }
     }
 }
 
@@ -662,7 +672,10 @@ class RepositorioDePostagensArray implements IRepositorioPostagens{
         }
     }    
     atualizarPostagem(postagem: Postagem): void {
-        // ver forma de implementar esse metodo
+        const index = this._postagens.findIndex(p => p.idPostagem === postagem.idPostagem);
+        if (index !== -1) {
+            this._postagens[index] = postagem;
+        }
     }  
 }
 
