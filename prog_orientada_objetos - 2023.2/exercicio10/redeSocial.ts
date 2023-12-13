@@ -2,18 +2,13 @@ import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, Repositor
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
 class RedeSocial {
-    private _repositorioDePerfis: IRepositorioDePerfis //= new RepositorioDePerfisArray; //!alterei
-    private _repositorioDePostagens: IRepositorioPostagens //= new RepositorioDePostagensArray; //!alterei
+    private _repositorioDePerfis: IRepositorioDePerfis;
+    private _repositorioDePostagens: IRepositorioPostagens;
 
     constructor(repositorioDePerfis: IRepositorioDePerfis, repositorioDePostagens: IRepositorioPostagens) {
         this._repositorioDePerfis = repositorioDePerfis;
         this._repositorioDePostagens = repositorioDePostagens;
-    }
-    get repositorioDePerfis():IRepositorioDePerfis{
-        return this._repositorioDePerfis;
-    }
-    get repositorioDePostagens():IRepositorioPostagens{
-        return this._repositorioDePostagens;
+       
     }
 
     incluirPerfil(perfil: Perfil) {
@@ -33,21 +28,26 @@ class RedeSocial {
     }
 
     curtir(idPost: number): void {
-        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost)
-        if (postagemProcurada && postagemProcurada.idPostagem == idPost) {
-            postagemProcurada.curtir();     
+        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);  
+        if (postagemProcurada !== undefined) {   
+            postagemProcurada.curtir();
+            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            this._repositorioDePostagens.atualizarPostagem(postagemProcurada); // chama o metodo de repositorio de postagens por arq
         }
     }
-
+    
     descurtir(idPost: number): void {
-        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost)
+        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);
         if (postagemProcurada.idPostagem == idPost) {
-            postagemProcurada.descurtir();     
+            postagemProcurada.descurtir();
+            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
         }
     }
 
     decrementar(postagem: PostagemAvancada): void {
         postagem.decrementarVisualizacoes();
+        this._repositorioDePostagens.atualizarPostagem(postagem);// chama o metodo de repositorio de postagens por arq
     }
 
     exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
@@ -106,7 +106,7 @@ class RedeSocial {
 
     exibirTodasAsPostagens(): string{
         let postagens = '';
-        for(let p of this.repositorioDePostagens.postagens){
+        for(let p of this._repositorioDePostagens.postagens){
             postagens += `
             Id: ${p.idPostagem}
             Perfil: ${p.perfil.nome}
@@ -117,7 +117,7 @@ class RedeSocial {
         }
         return postagens;
     } 
-
+    
     exibirPerfil(idPerfil: number){ // criado exibição por perfil
         let perfilProcurado = this.consultarPerfil(idPerfil);
 
@@ -176,10 +176,17 @@ class RedeSocial {
     editarNome(antigoNome: string, nomeNovo: string){
         try{
             let perfil = this.consultarPerfil(undefined, antigoNome);
-            if(perfil){perfil.nome = nomeNovo}
+            if(perfil) { 
+                if (perfil.nome == nomeNovo) {
+                    throw new PerfilExistenteError('O novo nome é igual ao antigo.')
+                }
+                perfil.nome = nomeNovo;
+                this._repositorioDePerfis.atualizarPerfil(perfil); // chama o metodo atualizarPerfis do repositorio de perfis por arq.
+                //this._repositorioDePerfis.incluirPerfil(perfil)
+            }
 
             if(!perfil){
-                throw new PerfilNaoEncontradoError('Perfil não encontrado!');
+                throw new PerfilNaoEncontradoError('Perfil não encontrado.');
             }
         } catch (e:any){
             if(e instanceof AplicacaoError){
@@ -191,7 +198,15 @@ class RedeSocial {
     editarEmail(antigoEmail: string, emailNovo: string){
         try{
             let perfil = this.consultarPerfil(undefined, undefined, antigoEmail);
-            if(perfil){perfil.email = emailNovo}
+            //if(perfil){perfil.email = emailNovo}
+            if (perfil) {
+                if (perfil.email == emailNovo) {
+                    throw new PerfilExistenteError('O novo email é igual ao antigo.')
+                }
+                perfil.email = emailNovo;
+                this._repositorioDePerfis.atualizarPerfil(perfil); // chama o metodo atualizarPerfis do repositorio de perfis por arq.
+            }
+
             if(!perfil){
                 throw new PerfilNaoEncontradoError('Perfil não encontrado!');
             }

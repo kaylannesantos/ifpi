@@ -22,7 +22,7 @@ export class PerfilNaoEncontradoError extends AplicacaoError{
     }
 }
 
-export class PostagemNaoEncontradaError extends Error{
+export class PostagemNaoEncontradaError extends AplicacaoError{
     constructor(message:string){
         super(message);
     }
