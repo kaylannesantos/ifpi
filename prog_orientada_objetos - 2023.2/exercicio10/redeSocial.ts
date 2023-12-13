@@ -34,7 +34,7 @@ class RedeSocial {
 
     curtir(idPost: number): void {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost)
-        if (postagemProcurada.idPostagem == idPost) {
+        if (postagemProcurada && postagemProcurada.idPostagem == idPost) {
             postagemProcurada.curtir();     
         }
     }
