@@ -1,4 +1,5 @@
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray, IRepositorioDePerfis, IRepositorioPostagens } from "./index";
+import { IRepositorioDePerfis, IRepositorioPostagens } from "./repositorios";
+import { Perfil, Postagem, PostagemAvancada} from "./index";
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
 class RedeSocial {

@@ -1,9 +1,10 @@
 import prompt from 'prompt-sync';
 let input = prompt();
 
-import { RedeSocial } from "./redeSocial";
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray,RepositorioDePostagensLista, RepositorioDePerfisLista, RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./index";
 import { AplicacaoError } from './excecoes';
+import { Perfil, Postagem, PostagemAvancada} from "./index";
+import { RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./repositorios";
+import { RedeSocial } from "./redeSocial";
 
 class App {
     //private _redeSocial1: RedeSocial;
@@ -97,8 +98,7 @@ class App {
         let novoPerfil: Perfil = new Perfil(0, nome, email);  // O ID será atualizado no RepositorioDePerfisArquivo
         this.redeSocial.incluirPerfil(novoPerfil);
     }
-    
- 
+
     consultarPostagem(): void{
         let opcao: string = '';
 
@@ -132,7 +132,6 @@ class App {
         } while (opcao != "0");
     }
     
-
     consultarPorTexto(){
         console.log('\nCONSULTAR POSTAGEM POR TEXTO');
         let texto: string = input('Texto da postagem: ');
