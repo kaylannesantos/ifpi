@@ -36,7 +36,7 @@ class App {
 
                 opcao = input("Opção: ");
                 
-                switch (opcao) {
+                switch (opcao.trim()) { //remove os espacos antes e depois
                     case "1":
                         this.consultarPerfil();
                         break;
@@ -110,15 +110,15 @@ class App {
 
             opcao = input("Opção: ");
             
-            switch (opcao) {
+            switch (opcao.trim()) {
                 case "1":
                     this.consultarPorTexto();
                     break;
                 //case "2":
                     //this.consultarPorHashtag();
                     break;
-                case "3": 
-                    this.consultarPorPerfil();
+                //case "3": 
+                    //this.consultarPorPerfil();
                     break;
                 case "4": 
                     this.consultarPorId();
@@ -203,7 +203,7 @@ class App {
 
             opcao = input("Opção: ");
             
-            switch (opcao) {
+            switch (opcao.trim()) {
                 case "1":
                     this.avaliarPorTexto();
                     break;
