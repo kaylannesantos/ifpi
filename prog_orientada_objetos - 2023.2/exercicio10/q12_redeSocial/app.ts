@@ -3,7 +3,7 @@ let input = prompt();
 
 import { AplicacaoError } from './excecoes';
 import { Perfil, Postagem, PostagemAvancada} from "./index";
-import { RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./repositorios";
+import { RepositorioDePerfisArquivo, RepositorioDePostagensArquivo, RepositorioDePerfisArray, RepositorioDePostagensArray } from "./repositorios";
 import { RedeSocial } from "./redeSocial";
 
 class App {
@@ -114,8 +114,8 @@ class App {
                 case "1":
                     this.consultarPorTexto();
                     break;
-                case "2":
-                    this.consultarPorHashtag();
+                //case "2":
+                    //this.consultarPorHashtag();
                     break;
                 case "3": 
                     this.consultarPorPerfil();

@@ -58,6 +58,9 @@ export class Postagem{
     get idPostagem(): number{
         return this._idPostagem;
     }
+    set idPostagem(id: number){
+        this._idPostagem = id;
+    }
 
     get texto(): string{
         return this._texto;
@@ -73,6 +76,9 @@ export class Postagem{
     get descurtidas(): number{
         return this._descurtidas
     }
+    set descurtidas(deslikes:number){
+        this._descurtidas = deslikes;
+    }
 
     get data(): Date{
         return this._data
@@ -80,10 +86,6 @@ export class Postagem{
 
     get perfil(): Perfil{
         return this._perfil;
-    }
-
-    set idPostagem(id: number){
-        this._idPostagem = id;
     }
 
     curtir(): void{
@@ -95,13 +97,13 @@ export class Postagem{
     }
 
     ehPopular(): boolean{
-        return this.curtidas > (this.descurtidas + this.descurtidas * (50/100));
+        return this.curtidas > (this.descurtidas + this.descurtidas * 0.5);
     }
 }
 
 export class PostagemAvancada extends Postagem{
     private _hashtags: string[] = [];
-    private _visualizacoesRestantes: number = 1;
+    private _visualizacoesRestantes: number = 10;
     
     constructor(i:number, t:string, p:Perfil, c: number, d: number){
         super(i, t, p, c, d);
@@ -125,8 +127,10 @@ export class PostagemAvancada extends Postagem{
 
     existeHashtag(hashtag:string): boolean {
         let temHashtag = false;
+        let hashtagMinuscula = hashtag.toLowerCase();  //converte p/ minuscula
+
         for(let h of this._hashtags){
-            if(h == hashtag){
+            if(h.toLocaleLowerCase() == hashtagMinuscula){
                 temHashtag = true;
                 break;
             }

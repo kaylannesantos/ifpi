@@ -23,6 +23,7 @@ export interface IRepositorioPostagens {
     consultarPostagemPorId(idPost: number): Postagem;
     incluirPostagem(postagem: Postagem): void;
     atualizarPostagem(postagem: Postagem):void;
+    decrementarVisualizacoes(idPostagem: number): void;
 }
 
 export class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
@@ -59,7 +60,7 @@ export class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
     }
     
     consultarPerfil(id?: number, nome?: string, email?: string):Perfil {
-        const dados = this.lerArquivo();
+        let dados = this.lerArquivo();
 
         const perfilEncontrado = dados.find((d: any) => {
             return (
@@ -70,7 +71,7 @@ export class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
         });
 
         if (!perfilEncontrado) {
-            throw new PerfilNaoEncontradoError('Perfil não encontrado!');
+            throw new PerfilNaoEncontradoError('Perfil não encontrado.');
         }
         return new Perfil(perfilEncontrado._idPerfil, perfilEncontrado._nome, perfilEncontrado._email);
     }
@@ -147,7 +148,7 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
     }
 
     incluirPostagem(postagem: Postagem): void {
-        const dados = this.lerArquivo();
+        let dados = this.lerArquivo();
     
         if (postagem.texto.trim() && postagem.perfil) {
             postagem.idPostagem = dados.length + 1;  // Atualiza o ID da postagem
@@ -159,12 +160,12 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
     }    
 
     consultarPorIndice(idPostagem: number): number {
-        const dados = this.lerArquivo();
+        let dados = this.lerArquivo();
             
         const indice = dados.findIndex((d: any) => d._idPostagem === idPostagem);
 
         if(indice == -1){
-            throw new PostagemNaoEncontradaError('Postagem não encontrada');
+            throw new PostagemNaoEncontradaError('Postagem não encontrada.');
         }
         
         return indice;
@@ -174,7 +175,7 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
         let dados = this.lerArquivo();
         const postagemProcurada = dados.find((d: any) => d._idPostagem === idPost);
         if(postagemProcurada === undefined){
-            throw new PostagemNaoEncontradaError('Postagem não encontrada');
+            throw new PostagemNaoEncontradaError('Postagem não encontrada.');
         }
         return postagemProcurada;
         //this.salvarArquivo(dados);
@@ -182,15 +183,28 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
 
     atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
         let dados = this.lerArquivo();
-        let postagemExsite = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
-        if (!postagemExsite) {
-            throw new PerfilExistenteError('O perfil já existe');
+        console.log('dados-->', dados);
+        
+        let postagemExiste = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
+        if (!postagemExiste) {
+            throw new PerfilExistenteError('O perfil já existe.');
         }
 
         let index = this.postagens.findIndex(p => p.idPostagem == postagem.idPostagem);
         if (index != -1) {
             this.postagens[index] = postagem;
             dados[index] = postagem;
+            this.salvarArquivo(dados);
+        }
+    }
+
+    decrementarVisualizacoes(idPostagem: number): void {
+        let dados = this.lerArquivo();
+        const indice = this.consultarPorIndice(idPostagem);
+        
+        if (dados[indice] instanceof PostagemAvancada) {
+            const postagemAvancada = dados[indice] as PostagemAvancada;
+            postagemAvancada.decrementarVisualizacoes();
             this.salvarArquivo(dados);
         }
     }
@@ -213,7 +227,7 @@ export class RepositorioDePerfisArray implements IRepositorioDePerfis {
             );
 
             if (!perfilProcurado0) {
-                throw new PerfilNaoEncontradoError('Perfil não encontrado!');
+                throw new PerfilNaoEncontradoError('Perfil não encontrado.');
             }
 
             perfilProcurado = perfilProcurado0;
@@ -236,14 +250,14 @@ export class RepositorioDePerfisArray implements IRepositorioDePerfis {
                 );
 
                 if (perfilExiste) {
-                    throw new PerfilExistenteError('O perfil já existe');
+                    throw new PerfilExistenteError('O perfil já existe.');
                 }
             } else {
-                throw new AtributoVazioError('Os atributos precisam ser preenchidos!');
+                throw new AtributoVazioError('Os atributos precisam ser preenchidos.');
             }
 
             this.perfis.push(perfil);
-            console.log('Perfil incluído com sucesso!');
+            console.log('Perfil incluído com sucesso.');
         } catch (e:any){
                 if(e instanceof AplicacaoError){
                     console.log(e.message);
@@ -252,7 +266,7 @@ export class RepositorioDePerfisArray implements IRepositorioDePerfis {
     } 
 
     atualizarPerfil(perfil: Perfil): void {
-        //implementar lógica
+        console.log('Lógica não implementada!');
     }
 }
 
@@ -280,7 +294,7 @@ export class RepositorioDePostagensArray implements IRepositorioPostagens{
     
         try{
             if(postagensFiltradas.length == 0){
-                throw new PostagemNaoEncontradaError('Postagem não encontrada!');
+                throw new PostagemNaoEncontradaError('Postagem não encontrada.');
             }
         } catch (e: any) {
             if (e instanceof AplicacaoError) {
@@ -302,7 +316,7 @@ export class RepositorioDePostagensArray implements IRepositorioPostagens{
 
         try{
             if(!postagemProcurada){
-                throw new PostagemNaoEncontradaError('Postagem não encontrada!');
+                throw new PostagemNaoEncontradaError('Postagem não encontrada.');
             }
         } catch (e: any) {
             if (e instanceof AplicacaoError) {
@@ -322,7 +336,7 @@ export class RepositorioDePostagensArray implements IRepositorioPostagens{
                 }
             }
             if(indiceProcurado == -1){
-                throw new PostagemNaoEncontradaError('Essa postagem não exite!')
+                throw new PostagemNaoEncontradaError('Essa postagem não exite.')
             }
         } catch(e: any){
             if (e instanceof AplicacaoError){
@@ -338,27 +352,27 @@ export class RepositorioDePostagensArray implements IRepositorioPostagens{
                 let postagemExiste = this.consultarPostagem(postagem.idPostagem);
         
                 if (postagemExiste.length == 1) {
-                    throw new PostagemJaExisteError('Já existe uma postagem com o mesmo id!');
+                    throw new PostagemJaExisteError('Já existe uma postagem com o mesmo id.');
                 } 
             } else {
-                throw new AtributoVazioError('Todos os atributos da postagem devem estar preenchidos!');
+                throw new AtributoVazioError('Todos os atributos da postagem devem estar preenchidos.');
             }
 
             this._postagens.push(postagem)
             postagem.perfil.postagensDoPerfil.push(postagem);
-            console.log('Postagem incluída com sucesso!');
+            console.log('Postagem incluída com sucesso.');
         } catch (e: any) {
             if (e instanceof AplicacaoError) {
                 console.log(e.message);
             }
         }
-    }    
+    }
 
-    atualizarPostagem(postagem: Postagem): void { // ver se ta funcionando
-        let index = this._postagens.findIndex(p => p.idPostagem === postagem.idPostagem);
-        if (index !== -1) {
-            this._postagens[index] = postagem;
-        }
+    atualizarPostagem(postagem: Postagem):void{
+        //logica não implementada
+    }
+    decrementarVisualizacoes(idPostagem: number): void{
+        //logica não implementada
     }
 }
 
@@ -419,9 +433,10 @@ export class RepositorioDePerfisLista implements IRepositorioDePerfis {
             atual = atual.proximo;
         }
 
-        throw new PerfilNaoEncontradoError('Perfil não encontrado');
+        throw new PerfilNaoEncontradoError('Perfil não encontrado.');
     }
     atualizarPerfil(perfil: Perfil): void {
+        console.log('Lógica não implementada!');
     }
 }
 
@@ -504,7 +519,7 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
             indice ++;
         }
 
-        throw new PostagemNaoEncontradaError('Postagem não encontrada') 
+        throw new PostagemNaoEncontradaError('Postagem não encontrada.') 
     }
 
     consultarPostagemPorId(idPost: number): Postagem {
@@ -518,19 +533,12 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
             atual = atual.proximo;
         }
 
-        throw new PostagemNaoEncontradaError('Postagem não encontrada');
+        throw new PostagemNaoEncontradaError('Postagem não encontrada.');
     }
-
-    atualizarPostagem(postagem: Postagem): void { // ver se ta funcionando
-        let atual = this.inicio;
-
-        while (atual !== null) {
-            if (atual.postagem.idPostagem === postagem.idPostagem) {
-                atual.postagem = postagem;
-                break;
-            }
-    
-            atual = atual.proximo;
-        }
+    atualizarPostagem(postagem: Postagem):void{
+        //logica nao implementada
+    }
+    decrementarVisualizacoes(idPostagem: number): void{
+        //logica não implementada
     }
 }

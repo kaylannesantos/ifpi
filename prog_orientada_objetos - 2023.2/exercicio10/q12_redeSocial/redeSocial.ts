@@ -1,8 +1,8 @@
-import { IRepositorioDePerfis, IRepositorioPostagens } from "./repositorios";
+import { IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./repositorios";
 import { Perfil, Postagem, PostagemAvancada} from "./index";
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
-class RedeSocial {
+export class RedeSocial {
     private _repositorioDePerfis: IRepositorioDePerfis;
     private _repositorioDePostagens: IRepositorioPostagens;
 
@@ -12,7 +12,7 @@ class RedeSocial {
        
     }
 
-    incluirPerfil(perfil: Perfil) {
+    incluirPerfil(perfil: Perfil){
         this._repositorioDePerfis.incluirPerfil(perfil);
     }
 
@@ -28,13 +28,12 @@ class RedeSocial {
         return this._repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
 
-    curtir(idPost: number): void {
-        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost); 
+    curtir(idPostagem: number): void {
+        let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPostagem); 
         if (postagemProcurada !== undefined) {
             //postagemProcurada['_curtidas']++;
-            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
             postagemProcurada.curtir();
-            this._repositorioDePostagens.atualizarPostagem(postagemProcurada); // chama o metodo de repositorio de postagens por arq
+            this._repositorioDePostagens.incluirPostagem(postagemProcurada);
         }
     }
     
@@ -42,14 +41,14 @@ class RedeSocial {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);
         if (postagemProcurada.idPostagem == idPost) {
             postagemProcurada.descurtir();
-            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
-            this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
+            this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            //this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
         }
     }
 
     decrementar(postagem: PostagemAvancada): void {
         postagem.decrementarVisualizacoes();
-        this._repositorioDePostagens.atualizarPostagem(postagem);// chama o metodo de repositorio de postagens por arq
+        //this._repositorioDePostagens.atualizarPostagem(postagem);// chama o metodo de repositorio de postagens por arq
     }
 
     exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
@@ -58,10 +57,9 @@ class RedeSocial {
         let result = this.consultarPostagem(undefined, undefined, hashtag, undefined);
 
         if (typeof result === 'string') {
-            console.log(result);
             return postagensFiltradas;
         }
-
+        
         for(let postagem of result){
             if (postagem instanceof PostagemAvancada && postagem.existeHashtag(hashtag)){
                 if (postagem.visualizacoesRestantes > 0){
@@ -183,8 +181,7 @@ class RedeSocial {
                     throw new PerfilExistenteError('O novo nome é igual ao antigo.')
                 }
                 perfil.nome = nomeNovo;
-                this._repositorioDePerfis.atualizarPerfil(perfil); // chama o metodo atualizarPerfis do repositorio de perfis por arq.
-                //this._repositorioDePerfis.incluirPerfil(perfil)
+                this._repositorioDePerfis.atualizarPerfil(perfil);
             }
 
             if(!perfil){
@@ -200,13 +197,12 @@ class RedeSocial {
     editarEmail(antigoEmail: string, emailNovo: string){
         try{
             let perfil = this.consultarPerfil(undefined, undefined, antigoEmail);
-            //if(perfil){perfil.email = emailNovo}
             if (perfil) {
                 if (perfil.email == emailNovo) {
                     throw new PerfilExistenteError('O novo email é igual ao antigo.')
                 }
                 perfil.email = emailNovo;
-                this._repositorioDePerfis.atualizarPerfil(perfil); // chama o metodo atualizarPerfis do repositorio de perfis por arq.
+                this._repositorioDePerfis.atualizarPerfil(perfil);
             }
 
             if(!perfil){
@@ -219,4 +215,3 @@ class RedeSocial {
         }
     }
 }
-export{ RedeSocial };
