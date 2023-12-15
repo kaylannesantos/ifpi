@@ -83,6 +83,23 @@ class App {
         this.redeSocial.incluirPerfil(novoPerfil);
     }
 
+    editarPerfil(): void{
+        console.log('EDITAR PERFIL');
+        let op = input('Deseja editar o nome ou o email? (n/e) ');
+
+        if(op == 'n'){
+            let nomeA = input('Antigo Nome: ').trim();
+            let nomeN = input('Novo Nome: ').trim();
+            this.redeSocial.editarNome(nomeA, nomeN);
+        } else if(op == 'e'){
+            let emailA = input('Antigo Email: ').trim();
+            let emailN = input('Novo Email: ').trim();
+            this.redeSocial.editarEmail(emailA, emailN);
+        } else {
+            console.log('Opção inválida');
+        }        
+    }
+
     excluirPerfil(): void{
         console.log('EXCLUIR PERFIL');
         let idStr = input('Id do perfil que deseja excluir: ').trim();
@@ -272,6 +289,18 @@ class App {
         console.log(postagem);
     }
 
+    excluirPostagem(): void{
+        console.log('EXCLUIR POSTAGEM');
+        let idStr = input('Id da postagem que deseja excluir: ').trim();
+        let id: number = parseFloat(idStr);
+        this.redeSocial.excluirPostagem(id);
+    }
+
+    postagensPopulares(): void{
+        console.log('POSTAGENS POPULARES');
+        console.log(this.redeSocial.postagensPopulares())
+    }
+
     exibirPerfis(): void{
         console.log('TODOS OS PERFIS');
         console.log(this.redeSocial.exibirPerfis());
@@ -280,35 +309,6 @@ class App {
     exibirTodasPostagens(): void{
         console.log('TODAS AS POSTAGENS');
         console.log(this.redeSocial.exibirTodasAsPostagens())
-    }
-
-    postagensPopulares(): void{
-        console.log('POSTAGENS POPULARES');
-        console.log(this.redeSocial.postagensPopulares())
-    }
-
-    excluirPostagem(): void{
-        console.log('EXCLUIR POSTAGEM');
-        let idStr = input('Id da postagem que deseja excluir: ').trim();
-        let id: number = parseFloat(idStr);
-        this.redeSocial.excluirPostagem(id);
-    }
-
-    editarPerfil(): void{
-        console.log('EDITAR PERFIL');
-        let op = input('Deseja editar o nome ou o email? (n/e) ');
-
-        if(op == 'n'){
-            let nomeA = input('Antigo Nome: ').trim();
-            let nomeN = input('Novo Nome: ').trim();
-            this.redeSocial.editarNome(nomeA, nomeN);
-        } else if(op == 'e'){
-            let emailA = input('Antigo Email: ').trim();
-            let emailN = input('Novo Email: ').trim();
-            this.redeSocial.editarEmail(emailA, emailN);
-        } else {
-            console.log('Opção inválida');
-        }        
     }
 }
 
