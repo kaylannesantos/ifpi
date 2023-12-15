@@ -1,4 +1,5 @@
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray } from "./index";
+import { Perfil, Postagem, PostagemAvancada } from "./index";
+import { RepositorioDePerfisArray, RepositorioDePostagensArray } from "./repositorios";
 
 class RedeSocial {
     private _repositorioDePerfis: RepositorioDePerfisArray = new RepositorioDePerfisArray();
@@ -20,6 +21,10 @@ class RedeSocial {
         return this._repositorioDePerfis.consultarPerfil(id, nome, email);
     }
 
+    excluirPerfil(idPerfil: number){
+        return this._repositorioDePerfis.excluirPerfil(idPerfil);
+    }
+
     incluirPostagem(postagem: Postagem){
         this._repositorioDePostagens.incluirPostagem(postagem);
     }
@@ -28,12 +33,16 @@ class RedeSocial {
         return this._repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
 
+    excluirPostagem(idPostagem: number){
+        return this.respositorioDePostagens.excluirPostagem(idPostagem);
+    }
+
     curtir(idPost: number): void {
-        this.respositorioDePostagens.curtir(idPost)
+        this.respositorioDePostagens.curtir(idPost);
     }
 
     descurtir(idPost: number): void {
-        this.respositorioDePostagens.descurtir(idPost)
+        this.respositorioDePostagens.descurtir(idPost);
     }
 
     decrementar(postagem: PostagemAvancada): void {
@@ -62,10 +71,6 @@ class RedeSocial {
 
     postagensPopulares(){
         return this.respositorioDePostagens.postagensPopulares()
-    }
-
-    excluirPostagem(idPostagem: number){
-        return this.respositorioDePostagens.excluirPostagem(idPostagem)
     }
 
     editarNome(antigoNome: string, nomeNovo: string){

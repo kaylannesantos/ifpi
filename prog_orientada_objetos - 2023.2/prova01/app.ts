@@ -17,11 +17,10 @@ class App {
         let opcao: string = '';
         do {
             console.log('\nBEM VINDO AO APP \nDigite uma opção: ');
-            console.log('1 - Consultar Perfil    2 - Incluir Perfil      3 - Consultar Postagem\n' +
-                        '4 - Incluir Postagem    5 - Avaliar Postagens   6 - Exibir Postagens Populares \n' +
-                        '7 - Exibir Todos os Perfis        8 - Exibir Todas as Postagens       9 - Excluir Postagem\n' +
-                        '10 - Editar Perfil \n' +
-                        '0 - Sair \n');
+            console.log('1 - Consultar Perfil            2 - Incluir Perfil            3 - Editar Perfil             4 - Excluir Perfil\n' +  
+                        '5 - Consultar Postagem          6 - Incluir Postagem          7 - Avaliar Postagens         8 - Excluir Postagem \n' +
+                        '9 - Exibir Postagens Populares  10 - Exibir Todos os Perfis   11 - Exibir Todas as Postagens\n' +
+                        '0 - Sair\n');
 
             opcao = input("Opção: ");
             
@@ -32,30 +31,32 @@ class App {
                 case "2":
                     this.incluirPerfil();
                     break;
-                case "3": 
+                case '3':
+                    this.editarPerfil();
+                    break;
+                case '4':
+                    this.excluirPerfil();
+                    break;
+                case '5':
                     this.consultarPostagem();
                     break;
-                case "4":
+                case '6':
                     this.incluirPostagem();
                     break;
-                case "5":
+                case '7':
                     this.avaliarPostagem();
                     break;
-                case "6":
-                    this.postagensPopulares();
-                    break;
-                case "7":
-                    this.exibirPerfis();
-                    break;
-                case "8":
-                    this.exibirTodasPostagens();
-                    break;
-                case "9": 
+                case '8':
                     this.excluirPostagem();
                     break;
-                case"10":
-                    this.editarPerfil();
-                    break
+                case '9':
+                    this.postagensPopulares();
+                    break;
+                case '10':
+                    this.exibirPerfis();
+                case '11':
+                    this.exibirTodasPostagens();
+                    break;
                 case "0": console.log('Aplicação encerrada!');
                     break;
                 default:
@@ -80,6 +81,13 @@ class App {
 
         let novoPerfil: Perfil = new Perfil(idPerfil, nome, email)
         this.redeSocial.incluirPerfil(novoPerfil);
+    }
+
+    excluirPerfil(): void{
+        console.log('EXCLUIR PERFIL');
+        let idStr = input('Id do perfil que deseja excluir: ').trim();
+        let id: number = parseFloat(idStr);
+        this.redeSocial.excluirPerfil(id);
     }
 
     consultarPostagem(): void{
