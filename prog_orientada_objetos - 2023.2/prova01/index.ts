@@ -1,3 +1,8 @@
+//avaliar por hashtag
+//decrementar visualizacoes
+//consultar por hashtag
+//consultar por perfil
+
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excessoes";
 
 class Perfil{

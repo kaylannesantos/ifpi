@@ -1,4 +1,0 @@
-index 
-redeSocial
-app
-excessoes
