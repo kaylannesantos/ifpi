@@ -1,11 +1,9 @@
 //avaliar por hashtag
-//decrementar visualizacoes
-//consultar por hashtag
-//consultar por perfil
+
 
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excessoes";
 
-class Perfil{
+export class Perfil{
     private _idPerfil: number;
     private _nome: string;
     private _email: string;
@@ -41,7 +39,7 @@ class Perfil{
     }
 }
 
-class Postagem{
+export class Postagem{
     private _idPostagem: number;
     private _texto: string;
     private _curtidas: number = 0;
@@ -87,13 +85,13 @@ class Postagem{
     }
 
     ehPopular(): boolean{
-        return this.curtidas > (this.descurtidas + this.descurtidas * 50/100);
+        return this.curtidas > (this.descurtidas + this.descurtidas * 0.5);
     }
 }
 
-class PostagemAvancada extends Postagem{
+export class PostagemAvancada extends Postagem{
     private _hashtags: string[] = [];
-    private _visualizacoesRestantes: number = 1;
+    private _visualizacoesRestantes: number = 100;
     constructor(i:number, t:string, p:Perfil){
         super(i, t, p);
     }
@@ -112,6 +110,8 @@ class PostagemAvancada extends Postagem{
 
     existeHashtag(hashtag:string): boolean {
         let temHashtag = false;
+        //let hashtagMinuscula = hashtag.toLowerCase();  //converte p/ minuscula
+
         for(let h of this._hashtags){
             if(h == hashtag){
                 temHashtag = true;
@@ -132,7 +132,7 @@ class PostagemAvancada extends Postagem{
     }
 }
 
-class RepositorioDePerfis {
+export class RepositorioDePerfisArray {
     private _perfis: Perfil[] = [];
 
     consultarPerfil(id?: number, nome?: string, email?: string): Perfil {
@@ -215,7 +215,7 @@ class RepositorioDePerfis {
         return perfis;
     }
     
-    exibirPerfil(idPerfil: number){ // criado exibição por perfil
+    exibirPerfil(idPerfil: number){
         let perfilProcurado = this.consultarPerfil(idPerfil);
 
         if(perfilProcurado.idPerfil == idPerfil){
@@ -254,7 +254,7 @@ class RepositorioDePerfis {
     
 }
 
-class RepositorioDePostagens {
+export class RepositorioDePostagensArray {
     private _postagens: Postagem[] = [];
 
     consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[]{
@@ -304,6 +304,8 @@ class RepositorioDePostagens {
             }
         }
 
+        console.log('AQUI->', postagemProcurada.idPostagem);
+        
         return postagemProcurada;
     }
 
@@ -327,7 +329,6 @@ class RepositorioDePostagens {
 
         return indiceProcurado;
     }
-
 
     incluirPostagem(postagem: Postagem){
         try{
@@ -397,7 +398,7 @@ class RepositorioDePostagens {
     exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
         let postagensFiltradas: PostagemAvancada [] = [];
         
-        let result = this.consultarPostagem(undefined, undefined, hashtag, undefined);//como instanciar ????????
+        let result = this.consultarPostagem(undefined, undefined, hashtag, undefined);
 
         if (typeof result === 'string') {
             console.log(result);
@@ -415,22 +416,24 @@ class RepositorioDePostagens {
         return postagensFiltradas;
     }
 
+    exibirPorPostagem(idPostagem?: number, texto?: string){ // corrigido
+        let postagensFiltradas: PostagemAvancada [] = [];
 
-    exibirPorPostagem(idPostagem?: number, texto?: string){ 
-        let postagemProcurada = this.consultarPostagem(idPostagem);
-        if(postagemProcurada instanceof PostagemAvancada){
-            if (postagemProcurada.visualizacoesRestantes > 0){
-                postagemProcurada.decrementarVisualizacoes();
+        let result = this.consultarPostagem(idPostagem, texto, undefined,undefined);
+
+        if (typeof result == 'string') {
+            console.log(result);
+            return postagensFiltradas;
+        }
+        for (let postagem of result) {
+            if (postagem instanceof PostagemAvancada) {
+                if (postagem.visualizacoesRestantes > 0) {
+                    postagensFiltradas.push(postagem);
+                    postagem.decrementarVisualizacoes();
+                }
             }
         }
-
-        if(idPostagem != undefined){
-            return this.consultarPostagem(idPostagem);
-        }
-
-        if(texto != undefined){
-            return this.consultarPostagem(undefined, texto);
-        }
+        return postagensFiltradas;
     }
 
     postagensPopulares(): Postagem[]{
@@ -460,9 +463,9 @@ class RepositorioDePostagens {
         for(let i = indice; i < this._postagens.length; i++){
             this._postagens[i] = this._postagens[i+1];
         }
-        this._postagens.pop()
+        this._postagens.pop();
+        console.log('Postagem excluida com sucesso.');
+        
     }
     
 }
-
-export { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens }

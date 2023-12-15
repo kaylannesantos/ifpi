@@ -1,14 +1,14 @@
-import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfis, RepositorioDePostagens } from "./index";
+import { Perfil, Postagem, PostagemAvancada, RepositorioDePerfisArray, RepositorioDePostagensArray } from "./index";
 
 class RedeSocial {
-    private _repositorioDePerfis: RepositorioDePerfis = new RepositorioDePerfis();
-    private _repositorioDePostagens: RepositorioDePostagens = new RepositorioDePostagens();
+    private _repositorioDePerfis: RepositorioDePerfisArray = new RepositorioDePerfisArray();
+    private _repositorioDePostagens: RepositorioDePostagensArray = new RepositorioDePostagensArray();
 
-    get repositorioDePerfis(): RepositorioDePerfis {
+    get repositorioDePerfis(): RepositorioDePerfisArray {
         return this._repositorioDePerfis;
     }
 
-    get respositorioDePostagens(): RepositorioDePostagens {
+    get respositorioDePostagens(): RepositorioDePostagensArray {
         return this._repositorioDePostagens;
     }
 
