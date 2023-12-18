@@ -200,10 +200,7 @@ export class RepositorioDePostagensArray {
             if (e instanceof AplicacaoError) {
                 console.log(e.message);
             }
-        }
-
-        console.log('AQUI->', postagemProcurada.idPostagem);
-        
+        }        
         return postagemProcurada;
     }
 
