@@ -57,7 +57,7 @@ class App {
                 case '11':
                     this.exibirTodasPostagens();
                     break;
-                case "0": console.log('Aplicação encerrada!');
+                case "0": console.log('Aplicação encerrada.');
                     break;
                 default:
                     console.log("Opção inválida. Tente novamente.");
@@ -131,7 +131,7 @@ class App {
                 case "4": 
                     this.consultarPorId();
                     break;
-                case "0": console.log('Voltando à pagina inicial!');
+                case "0": console.log('Voltando à pagina inicial.');
                     break;
                 default:
                     console.log("Opção inválida. Tente novamente.");
@@ -222,7 +222,7 @@ class App {
                 case "3": 
                     this.avaliarPorId();
                     break;
-                case "0": console.log('Voltando à pagina inicial!');
+                case "0": console.log('Voltando à pagina inicial.');
                     break;
                 default:
                     console.log("Opção inválida. Tente novamente.");
@@ -246,7 +246,7 @@ class App {
                     this.redeSocial.descurtir(p.idPostagem);
                 }
             }
-            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso!`);
+            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso.`);
         }
 
         console.log(postagens);
@@ -266,7 +266,7 @@ class App {
                     this.redeSocial.descurtir(p.idPostagem);
                 }
             }
-            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso!`);
+            console.log(`\nPostagem(s) ${avaliacao === 'c' ? 'curtida(s)' : 'descurtida(s)'} com sucesso.`);
         }
 
         console.log(postagens);

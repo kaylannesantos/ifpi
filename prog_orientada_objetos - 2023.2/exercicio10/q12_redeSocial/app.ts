@@ -3,7 +3,8 @@ let input = prompt();
 
 import { AplicacaoError } from './excecoes';
 import { Perfil, Postagem, PostagemAvancada} from "./index";
-import { RepositorioDePerfisArquivo, RepositorioDePostagensArquivo, RepositorioDePerfisArray, RepositorioDePostagensArray } from "./repositorios";
+import { RepositorioDePerfisArquivo, RepositorioDePostagensArquivo} from "./repositorioArq";
+import { RepositorioDePerfisArray, RepositorioDePostagensArray } from './repositorios';
 import { RedeSocial } from "./redeSocial";
 
 class App {
@@ -28,44 +29,45 @@ class App {
         do {
             try {
                 console.log('\nBEM VINDO AO APP \nDigite uma opção: ');
-                console.log('1 - Consultar Perfil    2 - Incluir Perfil      3 - Consultar Postagem\n' +
-                            '4 - Incluir Postagem    5 - Avaliar Postagens   6 - Exibir Postagens Populares \n' +
-                            '7 - Exibir Todos os Perfis        8 - Exibir Todas as Postagens       9 - Excluir Postagem\n' +
-                            '10 - Editar Perfil \n' +
-                            '0 - Sair \n');
+                console.log('1 - Consultar Perfil            2 - Incluir Perfil            3 - Editar Perfil             4 - Excluir Perfil\n' +  
+                '5 - Consultar Postagem          6 - Incluir Postagem          7 - Avaliar Postagens         8 - Excluir Postagem \n' +
+                '9 - Exibir Postagens Populares  10 - Exibir Todos os Perfis   11 - Exibir Todas as Postagens\n' +
+                '0 - Sair\n');
 
                 opcao = input("Opção: ");
                 
-                switch (opcao.trim()) { //remove os espacos antes e depois
+                switch (opcao.trim()) {
                     case "1":
                         this.consultarPerfil();
                         break;
                     case "2":
                         this.incluirPerfil();
                         break;
-                    case "3": 
+                    case '3':
+                        this.editarPerfil();
+                        break;
+                    case '4':
+                        this.excluirPerfil();
+                        break;
+                    case '5':
                         this.consultarPostagem();
                         break;
-                    case "4":
+                    case '6':
                         this.incluirPostagem();
                         break;
-                    case "5":
+                    case '7':
                         this.avaliarPostagem();
                         break;
-                    case "6":
-                        this.postagensPopulares();
-                        break;
-                    case "7":
-                        this.exibirPerfis();
-                        break;
-                    case "8":
-                        this.exibirTodasPostagens();
-                        break;
-                    case "9": 
+                    case '8':
                         this.excluirPostagem();
                         break;
-                    case"10":
-                        this.editarPerfil();
+                    case '9':
+                        this.postagensPopulares();
+                        break;
+                    case '10':
+                        this.exibirPerfis();
+                    case '11':
+                        this.exibirTodasPostagens();
                         break;
                     case "0": console.log('Aplicação encerrada!');
                         break;
@@ -77,17 +79,16 @@ class App {
             if (e instanceof AplicacaoError) {
                 console.log(e.message);
             }
-        } finally {
-            console.log("\nOperação finalizada. Digite 0 para sair");
         }
         } while (opcao != "0");
     }
 
     consultarPerfil(): void {
         console.log('\nCONSULTAR PERFIL');
-        let nomePerfil = input('Nome do perfil procurado: ');
+        let nomePerfil = input('Nome do perfil procurado: ').trim();
         let perfil = this.redeSocial.consultarPerfil(undefined, nomePerfil);
-        console.log(perfil);
+        console.log(this.redeSocial.exibirPerfil(undefined,nomePerfil))
+        //console.log(perfil);
     }
 
     incluirPerfil(): void {
@@ -97,6 +98,31 @@ class App {
     
         let novoPerfil: Perfil = new Perfil(0, nome, email);  // O ID será atualizado no RepositorioDePerfisArquivo
         this.redeSocial.incluirPerfil(novoPerfil);
+    }
+
+    editarPerfil(): void{
+        console.log('EDITAR PERFIL');
+        let op = input('Deseja editar o nome ou o email? (n/e) ')
+
+        if(op == 'n'){
+            let nomeA = input('Antigo Nome: ')
+            let nomeN = input('Novo Nome: ')
+            this.redeSocial.editarNome(nomeA, nomeN)
+            console.log(this.redeSocial.exibirPerfil(undefined,nomeN));    
+        } else if(op == 'e'){
+            let emailA = input('Antigo Email: ')
+            let emailN = input('Novo Email: ')
+            this.redeSocial.editarEmail(emailA, emailN)
+        } else {
+            console.log('Opção inválida');
+        }        
+    }
+
+    excluirPerfil(): void{
+        console.log('EXCLUIR PERFIL');
+        let idStr = input('Id do perfil que deseja excluir: ').trim();
+        let id: number = parseFloat(idStr);
+        this.redeSocial.excluirPefil(id);
     }
 
     consultarPostagem(): void{
@@ -114,11 +140,11 @@ class App {
                 case "1":
                     this.consultarPorTexto();
                     break;
-                //case "2":
-                    //this.consultarPorHashtag();
+                case "2":
+                    this.consultarPorHashtag();
                     break;
-                //case "3": 
-                    //this.consultarPorPerfil();
+                case "3": 
+                    this.consultarPorPerfil();
                     break;
                 case "4": 
                     this.consultarPorId();
@@ -134,7 +160,7 @@ class App {
     
     consultarPorTexto(){
         console.log('\nCONSULTAR POSTAGEM POR TEXTO');
-        let texto: string = input('Texto da postagem: ');
+        let texto: string = input('Texto da postagem: ').trim();
         let postagem = this.redeSocial.exibirPorPostagem(undefined, texto);
 
         console.log(postagem);
@@ -142,7 +168,7 @@ class App {
 
     consultarPorHashtag(){
         console.log('\nCONSULTAR POSTAGEM POR HASHTAG');
-        let hashtag: string = input('Hashtag a ser consultada: ');
+        let hashtag: string = input('Hashtag a ser consultada: ').trim();
         let postagens = this.redeSocial.exibirPostagensPorHashtag(hashtag);
 
         console.log(postagens);
@@ -150,7 +176,7 @@ class App {
 
     consultarPorPerfil(){
         console.log('\nCONSULTAR POSTAGEM POR PERFIL');
-        let nome: string = input('Nome do perfil que deseja ver as postagens: ');
+        let nome: string = input('Nome do perfil que deseja ver as postagens: ').trim();
         let perfil = this.redeSocial.consultarPerfil(undefined, nome);
         let postagens = this.redeSocial.exibirPostagensPorPerfil(perfil.idPerfil)
 
@@ -159,7 +185,7 @@ class App {
 
     consultarPorId(){
         console.log('\nCONSULTAR POSTAGEM POR ID');
-        let idPostagemStr: string = input('Id da postagem: ');
+        let idPostagemStr: string = input('Id da postagem: ').trim();
         let idPostagem: number = parseFloat(idPostagemStr)
         let postagem = this.redeSocial.exibirPorPostagem(idPostagem);
 
@@ -225,7 +251,8 @@ class App {
     avaliarPorTexto(): void {
         console.log('\nAVALIAR POSTAGENS POR TEXTO');
         let texto: string = input('Texto da postagem: ');
-        let postagens = this.redeSocial.consultarPostagem(undefined, texto);
+        let postagens = this.redeSocial.exibirPorPostagem(undefined,texto); // corrigi
+        //let postagens = this.redeSocial.consultarPostagem(undefined, texto);
 
         let avaliacao = input('Voce deseja curtir ou descurtir a(s) postagem(ens)? (c/d) ')
         for (let p of postagens) {
@@ -274,8 +301,21 @@ class App {
             this.redeSocial.descurtir(idPostagem);
         }
 
-        let postagem = this.redeSocial.consultarPostagem(idPostagem);
+        let postagem = this.redeSocial.exibirPorPostagem(idPostagem, undefined); //corrigi?
+        //let postagem = this.redeSocial.consultarPostagem(idPostagem);
         console.log(postagem);
+    }
+
+    excluirPostagem(): void{
+        console.log('EXCLUIR POSTAGEM');
+        let idStr = input('Id da postagem que deseja excluir: ')
+        let id: number = parseFloat(idStr)
+        this.redeSocial.excluirPostagem(id)
+    }
+
+    postagensPopulares(): void{
+        console.log('POSTAGENS POPULARES');
+        console.log(this.redeSocial.postagensPopulares())
     }
 
     exibirPerfis(): void{
@@ -287,36 +327,6 @@ class App {
         console.log('TODAS AS POSTAGENS');
         console.log(this.redeSocial.exibirTodasAsPostagens())
     }
-
-    postagensPopulares(): void{
-        console.log('POSTAGENS POPULARES');
-        console.log(this.redeSocial.postagensPopulares())
-    }
-
-    excluirPostagem(): void{
-        console.log('EXCLUIR POSTAGEM');
-        let idStr = input('Id da postagem que deseja excluir: ')
-        let id: number = parseFloat(idStr)
-        this.redeSocial.excluirPostagem(id)
-    }
-
-    editarPerfil(): void{
-        console.log('EDITAR PERFIL');
-        let op = input('Deseja editar o nome ou o email? (n/e) ')
-
-        if(op == 'n'){
-            let nomeA = input('Antigo Nome: ')
-            let nomeN = input('Novo Nome: ')
-            this.redeSocial.editarNome(nomeA, nomeN)
-        } else if(op == 'e'){
-            let emailA = input('Antigo Email: ')
-            let emailN = input('Novo Email: ')
-            this.redeSocial.editarEmail(emailA, emailN)
-        } else {
-            console.log('Opção inválida');
-        }        
-    }
-    
 }
 
 const meuApp: App = new App();

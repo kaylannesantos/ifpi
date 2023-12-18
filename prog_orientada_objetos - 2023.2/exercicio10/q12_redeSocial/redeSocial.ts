@@ -1,4 +1,4 @@
-import { IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./repositorios";
+import { IRepositorioDePerfis, IRepositorioPostagens, RepositorioDePerfisArquivo, RepositorioDePostagensArquivo } from "./repositorioArq";
 import { Perfil, Postagem, PostagemAvancada} from "./index";
 import { AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
 
@@ -20,6 +20,20 @@ export class RedeSocial {
         return this._repositorioDePerfis.consultarPerfil(id, nome, email);
     }
 
+    excluirPefil(idPerfil: number){
+        let perfilProcurado = this._repositorioDePerfis.consultarPorIndice(idPerfil);
+        if (perfilProcurado == undefined) {
+            throw new PerfilNaoEncontradoError('Perfil não encontrado.');
+        }
+        this._repositorioDePerfis.excluirPerfil(idPerfil);
+        console.log('Perfil excluido com sucesso.');
+        /*for(let i = indice; i < this._repositorioDePerfis.perfis.length; i++){
+            this._repositorioDePerfis.perfis[i] = this._repositorioDePerfis.perfis[i+1];
+        }
+        //this._perfis.pop();
+        this._repositorioDePerfis.perfis.splice(indice, 1);*/
+    }
+
     incluirPostagem(postagem: Postagem){
         this._repositorioDePostagens.incluirPostagem(postagem);
     }
@@ -28,12 +42,21 @@ export class RedeSocial {
         return this._repositorioDePostagens.consultarPostagem(id, texto, hashtag, perfil);
     }
 
+    excluirPostagem(idPostagem: number){
+        let indice: number = this._repositorioDePostagens.consultarPorIndice(idPostagem);
+        for(let i = indice; i < this._repositorioDePostagens.postagens.length; i++){
+            this._repositorioDePostagens.postagens[i] = this._repositorioDePostagens.postagens[i+1];
+        }
+        this._repositorioDePostagens.postagens.splice(indice, 1);
+        console.log('Postagem excluida com sucesso.');
+    }
+
     curtir(idPostagem: number): void {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPostagem); 
         if (postagemProcurada !== undefined) {
-            //postagemProcurada['_curtidas']++;
             postagemProcurada.curtir();
-            this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            this._repositorioDePostagens.atualizarPostagem(postagemProcurada);
         }
     }
     
@@ -41,17 +64,72 @@ export class RedeSocial {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);
         if (postagemProcurada.idPostagem == idPost) {
             postagemProcurada.descurtir();
-            this._repositorioDePostagens.incluirPostagem(postagemProcurada);
-            //this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
+            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
+            this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
         }
     }
 
     decrementar(postagem: PostagemAvancada): void {
         postagem.decrementarVisualizacoes();
-        //this._repositorioDePostagens.atualizarPostagem(postagem);// chama o metodo de repositorio de postagens por arq
+        this._repositorioDePostagens.atualizarPostagem(postagem);// chama o metodo de repositorio de postagens por arq
     }
 
-    exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] {
+    exibirPerfil(idPerfil?: number, nomePerfil?:string, emailPerfil?:string){ // ta ok?
+        let perfilProcurado = this.consultarPerfil(idPerfil, nomePerfil, emailPerfil);
+        if (perfilProcurado.idPerfil == idPerfil || perfilProcurado.nome == nomePerfil || perfilProcurado.email == emailPerfil) {
+            return `\nId: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
+        }
+
+        /*if((perfilProcurado) && perfilProcurado.idPerfil == idPerfil){
+            return `Id: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
+        }*/
+    } 
+
+    exibirPerfis(): string{ // ta ok?
+        let perfis = '';
+        for(let p of this._repositorioDePerfis.perfis){
+            perfis += `
+            Id: ${p.idPerfil}
+            Nome: ${p.nome}
+            Email: ${p.email}
+            `
+        }
+        return perfis;
+    } 
+
+    exibirPorPostagem(idPostagem?: number, texto?: string){ // ta ok?
+        let postagemFiltradas: PostagemAvancada [] = [];
+        let result = this.consultarPostagem(idPostagem, texto, undefined,undefined);
+
+        if (typeof result == 'string') {
+            return postagemFiltradas;
+        }
+        for (let postagem of result) {
+            if (postagem instanceof PostagemAvancada) {
+                if (postagem.visualizacoesRestantes > 0) {
+                    postagemFiltradas.push(postagem);
+                    postagem.decrementarVisualizacoes();
+                }
+            }
+        }
+        return postagemFiltradas;
+        /*let postagemProcurada = this.consultarPostagem(idPostagem);
+        if(postagemProcurada instanceof PostagemAvancada){
+            if (postagemProcurada.visualizacoesRestantes > 0){
+                postagemProcurada.decrementarVisualizacoes();
+            }
+        }
+
+        if(idPostagem != undefined){
+            return this.consultarPostagem(idPostagem);
+        }
+
+        if(texto != undefined){
+            return this.consultarPostagem(undefined, texto);
+        }*/
+    }
+
+    exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] { // ta ok? 
         let postagensFiltradas: PostagemAvancada [] = [];
         
         let result = this.consultarPostagem(undefined, undefined, hashtag, undefined);
@@ -71,11 +149,23 @@ export class RedeSocial {
         return postagensFiltradas;
     }
 
-    exibirPostagensPorPerfil(id: number): Postagem[] {
+    exibirPostagensPorPerfil(id: number): Postagem[] { // ta ok?
         let postagensFiltradas: Postagem[] = [];
         let perfilProcurado = this.consultarPerfil(id);
-    
-        if (perfilProcurado) { // Verificar se o perfil foi encontrado
+
+        for (let postagem of perfilProcurado.postagensDoPerfil) {
+            if (postagem instanceof PostagemAvancada) {
+                if (postagem.visualizacoesRestantes > 0) {
+                    postagensFiltradas.push(postagem);
+                    postagem.decrementarVisualizacoes();
+                }
+            } else {
+                postagensFiltradas.push(postagem);
+            }
+        }
+        return postagensFiltradas;
+        
+        /*if (perfilProcurado) { // Verificar se o perfil foi encontrado
             for (let postagem of perfilProcurado.postagensDoPerfil) {
                 if (postagem instanceof PostagemAvancada) {
                     if (postagem.visualizacoesRestantes > 0) {
@@ -87,26 +177,36 @@ export class RedeSocial {
                 }
             }
         }
-    
-        return postagensFiltradas;
+        return postagensFiltradas;*/
     }
-    
-    exibirPerfis(): string{
-        let perfis = '';
-        for(let p of this._repositorioDePerfis.perfis){
-            perfis += `
-            Id: ${p.idPerfil}
-            Nome: ${p.nome}
-            Email: ${p.email}
-            `
-        }
 
-        return perfis;
-    } 
-
-    exibirTodasAsPostagens(): string{
+    exibirTodasAsPostagens(): string{ // ta ok?
         let postagens = '';
-        for(let p of this._repositorioDePostagens.postagens){
+
+        for (let p of this._repositorioDePostagens.postagens) {
+            if (p instanceof PostagemAvancada) {
+                postagens += `
+                Id: ${p.idPostagem}
+                Texto: ${p.texto}
+                Curtidas: ${p.curtidas}
+                Descurtidas: ${p.descurtidas}
+                Hashtags: ${p.hashtags}
+                Visualizações: ${p.quantidadeDeVizualizaoes()}
+                `
+                if (p.visualizacoesRestantes > 0) {
+                    p.decrementarVisualizacoes();
+                }
+            } else {
+                postagens += `
+                Id: ${p.idPostagem}
+                Texto: ${p.texto}
+                Curtidas: ${p.curtidas}
+                Descurtidas: ${p.descurtidas}
+                `
+            }
+        }
+        return postagens;
+        /*for(let p of this._repositorioDePostagens.postagens){
             postagens += `
             Id: ${p.idPostagem}
             Perfil: ${p.perfil.nome}
@@ -115,35 +215,10 @@ export class RedeSocial {
             Descurtidas: ${p.descurtidas}
             `
         }
-        return postagens;
-    } 
-    
-    exibirPerfil(idPerfil: number){ // criado exibição por perfil
-        let perfilProcurado = this.consultarPerfil(idPerfil);
-
-        if((perfilProcurado) && perfilProcurado.idPerfil == idPerfil){
-            return `Id: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
-        }
-    } 
-
-    exibirPorPostagem(idPostagem?: number, texto?: string){ 
-        let postagemProcurada = this.consultarPostagem(idPostagem);
-        if(postagemProcurada instanceof PostagemAvancada){
-            if (postagemProcurada.visualizacoesRestantes > 0){
-                postagemProcurada.decrementarVisualizacoes();
-            }
-        }
-
-        if(idPostagem != undefined){
-            return this.consultarPostagem(idPostagem);
-        }
-
-        if(texto != undefined){
-            return this.consultarPostagem(undefined, texto);
-        }
+        return postagens;*/
     }
-
-    postagensPopulares(): Postagem[]{
+    
+    postagensPopulares(): Postagem[]{ // ta ok?
         let postagensPopulares: Postagem[] = []
 
         for(let p of this._repositorioDePostagens.postagens){
@@ -152,25 +227,10 @@ export class RedeSocial {
             }
         }
 
-        try{
-            if(postagensPopulares.length == 0){
-                throw new PostagemNaoEncontradaError('Não há postagens populares')
-            }
-        } catch(e: any) {
-            if (e instanceof AplicacaoError) {
-                console.log(e.message);
-            }
+        if(postagensPopulares.length == 0){
+            throw new PostagemNaoEncontradaError('Não há postagens populares')
         }
-
         return postagensPopulares;
-    }
-
-    excluirPostagem(idPostagem: number){
-        let indice: number = this._repositorioDePostagens.consultarPorIndice(idPostagem);
-        for(let i = indice; i < this._repositorioDePostagens.postagens.length; i++){
-            this._repositorioDePostagens.postagens[i] = this._repositorioDePostagens.postagens[i+1];
-        }
-        this._repositorioDePostagens.postagens.splice(indice, 1);
     }
 
     editarNome(antigoNome: string, nomeNovo: string){

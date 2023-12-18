@@ -1,214 +1,6 @@
-// as vizualizacoes nao estao decrementando 
-// postagensPopulares
-// excluirPostagem
-// consultar por hashtag 
-// consultar por perfil
-// curtir e descurtir
-
 import {AplicacaoError, AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
+import { IRepositorioDePerfis, IRepositorioPostagens } from "./repositorioArq";
 import { Perfil, Postagem, PostagemAvancada } from ".";
-import * as fs from 'fs';
-
-export interface IRepositorioDePerfis {
-    get perfis(): Perfil[];
-    incluirPerfil(perfil: Perfil): void;
-    consultarPerfil(id?: number, nome?: string, email?: string): Perfil;
-    atualizarPerfil(perfil: Perfil):void;
-}
-
-export interface IRepositorioPostagens {
-    get postagens(): Postagem[];
-    consultarPorIndice(idPostagem: number): number;
-    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[];
-    consultarPostagemPorId(idPost: number): Postagem;
-    incluirPostagem(postagem: Postagem): void;
-    atualizarPostagem(postagem: Postagem):void;
-    decrementarVisualizacoes(idPostagem: number): void;
-}
-
-export class RepositorioDePerfisArquivo implements IRepositorioDePerfis {
-    private arquivo: string;
-
-    constructor(arquivo: string) {
-        this.arquivo = arquivo;
-    }
-
-    get perfis(): Perfil[] {
-        const dados = this.lerArquivo();
-        return dados.map((d: any) => new Perfil(d._idPerfil, d._nome, d._email));
-    }
-
-    incluirPerfil(perfil: Perfil): void {
-        if (perfil.nome && perfil.email) {
-            let dados = this.lerArquivo();
-            const perfilExiste = this.perfis.find(p =>
-                (p.idPerfil === perfil.idPerfil) ||
-                (p.nome === perfil.nome) ||
-                (p.email === perfil.email))
-                    
-            if (perfilExiste) {
-                throw new PerfilExistenteError('O perfil já existe');
-            }
-            perfil.idPerfil = dados.length + 1;  // Atualiza o ID do perfil
-            dados.push(perfil);
-            this.salvarArquivo(dados);
-            
-
-        } else {
-            throw new AtributoVazioError('Os atributos precisam ser preenchidos!');
-        }
-    }
-    
-    consultarPerfil(id?: number, nome?: string, email?: string):Perfil {
-        let dados = this.lerArquivo();
-
-        const perfilEncontrado = dados.find((d: any) => {
-            return (
-                (id !== undefined && d._idPerfil === id) ||
-                (nome !== undefined && d._nome === nome) ||
-                (email !== undefined && d._email === email)
-            );
-        });
-
-        if (!perfilEncontrado) {
-            throw new PerfilNaoEncontradoError('Perfil não encontrado.');
-        }
-        return new Perfil(perfilEncontrado._idPerfil, perfilEncontrado._nome, perfilEncontrado._email);
-    }
-
-    private lerArquivo(): any[] {
-        try {
-            let conteudo = fs.readFileSync(this.arquivo, 'utf-8');
-            return JSON.parse(conteudo);
-        } catch (error) {
-            return [];
-        }
-    }
-
-    private salvarArquivo(dados: any[]): void {
-        fs.writeFileSync(this.arquivo, JSON.stringify(dados, null, 2), 'utf-8');
-    }
-
-    atualizarPerfil(perfil: Perfil):void{
-        let dados = this.lerArquivo();
-        let perfilExiste = this.perfis.find(p =>(p.idPerfil === perfil.idPerfil));
-        if (!perfilExiste) {
-            throw new PerfilExistenteError('O perfil já existe');
-        }
-
-        let index = this.perfis.findIndex(p => p.idPerfil == perfil.idPerfil);
-        if (index != -1) {
-            this.perfis[index] = perfil;
-            dados[index] = perfil;
-            this.salvarArquivo(dados);
-        }
-    }
-}
-
-export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
-    private arquivo: string;
-
-    constructor(arquivo: string) {
-        this.arquivo = arquivo;
-    }
-
-    private lerArquivo(): any[] {
-        try {
-            let conteudo = fs.readFileSync(this.arquivo, 'utf-8');
-            return JSON.parse(conteudo);
-        } catch (error) {
-            return [];
-        }
-    }
-
-    private salvarArquivo(dados: any[]): void {
-        fs.writeFileSync(this.arquivo, JSON.stringify(dados, null, 2), 'utf-8');
-    }
-
-    get postagens(): Postagem[] {
-        return this.lerArquivo();
-    }
-
-    consultarPostagem(id?: number, texto?: string, hashtag?: string, perfil?: Perfil): Postagem[] {
-        let dados = this.lerArquivo();
-        const postagensFiltradas = dados
-            .filter((d: any) => {
-                return (
-                    (id === undefined || d._idPostagem === id) &&
-                    (texto === undefined || d._texto.includes(texto)) &&
-                    (perfil === undefined || d._perfil === perfil) &&
-                    (hashtag === undefined || (d._hashtags && d._hashtags.includes(hashtag)))
-                );
-            });
-
-        if (postagensFiltradas.length === 0) {
-            throw new PostagemNaoEncontradaError('Postagem não encontrada');
-        }
-        return postagensFiltradas.map((d: any) => d);
-    }
-
-    incluirPostagem(postagem: Postagem): void {
-        let dados = this.lerArquivo();
-    
-        if (postagem.texto.trim() && postagem.perfil) {
-            postagem.idPostagem = dados.length + 1;  // Atualiza o ID da postagem
-            dados.push(postagem);
-            this.salvarArquivo(dados);
-        } else {
-            throw new AtributoVazioError('Todos os atributos da postagem devem estar preenchidos!');
-        }
-    }    
-
-    consultarPorIndice(idPostagem: number): number {
-        let dados = this.lerArquivo();
-            
-        const indice = dados.findIndex((d: any) => d._idPostagem === idPostagem);
-
-        if(indice == -1){
-            throw new PostagemNaoEncontradaError('Postagem não encontrada.');
-        }
-        
-        return indice;
-    }
-
-    consultarPostagemPorId(idPost: number): Postagem {
-        let dados = this.lerArquivo();
-        const postagemProcurada = dados.find((d: any) => d._idPostagem === idPost);
-        if(postagemProcurada === undefined){
-            throw new PostagemNaoEncontradaError('Postagem não encontrada.');
-        }
-        return postagemProcurada;
-        //this.salvarArquivo(dados);
-    } 
-
-    atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
-        let dados = this.lerArquivo();
-        console.log('dados-->', dados);
-        
-        let postagemExiste = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
-        if (!postagemExiste) {
-            throw new PerfilExistenteError('O perfil já existe.');
-        }
-
-        let index = this.postagens.findIndex(p => p.idPostagem == postagem.idPostagem);
-        if (index != -1) {
-            this.postagens[index] = postagem;
-            dados[index] = postagem;
-            this.salvarArquivo(dados);
-        }
-    }
-
-    decrementarVisualizacoes(idPostagem: number): void {
-        let dados = this.lerArquivo();
-        const indice = this.consultarPorIndice(idPostagem);
-        
-        if (dados[indice] instanceof PostagemAvancada) {
-            const postagemAvancada = dados[indice] as PostagemAvancada;
-            postagemAvancada.decrementarVisualizacoes();
-            this.salvarArquivo(dados);
-        }
-    }
-}
 
 export class RepositorioDePerfisArray implements IRepositorioDePerfis {
     private _perfis: Perfil[] = [];
@@ -266,7 +58,13 @@ export class RepositorioDePerfisArray implements IRepositorioDePerfis {
     } 
 
     atualizarPerfil(perfil: Perfil): void {
-        console.log('Lógica não implementada!');
+        // implementar lógica
+    }
+    consultarPorIndice(id: number): number {
+        return id;//implementar lógica
+    }
+    excluirPerfil(id: number): void {
+        // implementar lógica
     }
 }
 
@@ -385,6 +183,7 @@ class NoPerfil { // armazena Perfil e tem uma referência para o próximo nó na
         this.proximo = null; 
     }
 }
+
 export class RepositorioDePerfisLista implements IRepositorioDePerfis {
     private inicio: NoPerfil | null; // início da lista encadeada, o primeiro nó. começa como null quando a lista ta vazia
 
@@ -435,8 +234,15 @@ export class RepositorioDePerfisLista implements IRepositorioDePerfis {
 
         throw new PerfilNaoEncontradoError('Perfil não encontrado.');
     }
+
+    consultarPorIndice(id: number): number {
+        return id;//implementar lógica
+    }
     atualizarPerfil(perfil: Perfil): void {
-        console.log('Lógica não implementada!');
+        //implementar lógica
+    }
+    excluirPerfil(id: number): void {
+        //implementar lógica
     }
 }
 
@@ -457,7 +263,7 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
         this.inicio = null;
     }
     
-    get postagens(): Postagem[] { //adicionei
+    get postagens(): Postagem[] {
         let postagens: Postagem[] = [];
         let atual = this.inicio;
 
@@ -488,7 +294,6 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
 
             atual = atual.proximo;
         }
-
         return postagensFiltradas;
     }
 
@@ -518,7 +323,6 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
             atual = atual.proximo;
             indice ++;
         }
-
         throw new PostagemNaoEncontradaError('Postagem não encontrada.') 
     }
 
@@ -532,9 +336,9 @@ export class RepositorioDePostagensLista implements IRepositorioPostagens {
 
             atual = atual.proximo;
         }
-
         throw new PostagemNaoEncontradaError('Postagem não encontrada.');
     }
+    
     atualizarPostagem(postagem: Postagem):void{
         //logica nao implementada
     }

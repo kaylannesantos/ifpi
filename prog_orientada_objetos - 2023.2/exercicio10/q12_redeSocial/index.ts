@@ -127,10 +127,10 @@ export class PostagemAvancada extends Postagem{
 
     existeHashtag(hashtag:string): boolean {
         let temHashtag = false;
-        let hashtagMinuscula = hashtag.toLowerCase();  //converte p/ minuscula
+        //let hashtagMinuscula = hashtag.toLowerCase();  //converte p/ minuscula
 
         for(let h of this._hashtags){
-            if(h.toLocaleLowerCase() == hashtagMinuscula){
+            if(h == hashtag){
                 temHashtag = true;
                 break;
             }
