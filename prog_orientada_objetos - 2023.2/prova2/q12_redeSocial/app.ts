@@ -66,6 +66,7 @@ class App {
                         break;
                     case '10':
                         this.exibirPerfis();
+                        break;
                     case '11':
                         this.exibirTodasPostagens();
                         break;

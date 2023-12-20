@@ -98,8 +98,9 @@ export class RedeSocial {
     } 
 
     exibirPorPostagem(idPostagem?: number, texto?: string){ // ta ok?
+        /*
         let postagemFiltradas: PostagemAvancada [] = [];
-        let result = this.consultarPostagem(idPostagem, texto, undefined,undefined);
+        let result = this.consultarPostagem(idPostagem);
 
         if (typeof result == 'string') {
             return postagemFiltradas;
@@ -112,8 +113,8 @@ export class RedeSocial {
                 }
             }
         }
-        return postagemFiltradas;
-        /*let postagemProcurada = this.consultarPostagem(idPostagem);
+        return postagemFiltradas;*/
+        let postagemProcurada = this.consultarPostagem(idPostagem, texto);
         if(postagemProcurada instanceof PostagemAvancada){
             if (postagemProcurada.visualizacoesRestantes > 0){
                 postagemProcurada.decrementarVisualizacoes();
@@ -126,7 +127,8 @@ export class RedeSocial {
 
         if(texto != undefined){
             return this.consultarPostagem(undefined, texto);
-        }*/
+        }
+        return postagemProcurada;
     }
 
     exibirPostagensPorHashtag(hashtag: string): PostagemAvancada[] { // ta ok? 

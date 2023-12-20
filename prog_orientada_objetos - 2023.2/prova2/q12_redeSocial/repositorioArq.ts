@@ -194,6 +194,7 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
     consultarPostagemPorId(idPost: number): Postagem { // ta ok?
         let dados = this.lerArquivo();
         let postagemProcurada = dados.find((d: any) => d._idPostagem === idPost);
+        console.log('AQUI->', postagemProcurada);        
 
         for (let p of dados) {
             if (p._idPostagem == idPost) {
@@ -215,7 +216,6 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
 
     atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
         let dados = this.lerArquivo();
-        console.log('dados-->', dados);
         
         let postagemExiste = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
         if (!postagemExiste) {
