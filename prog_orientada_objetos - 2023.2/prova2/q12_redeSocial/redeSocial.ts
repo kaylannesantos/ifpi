@@ -123,7 +123,7 @@ export class RedeSocial {
                     postagem.decrementarVisualizacoes();
                 }
             }
-        }
+        } 
         return postagensFiltradas;
     }
 
