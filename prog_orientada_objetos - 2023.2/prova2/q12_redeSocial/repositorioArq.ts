@@ -1,5 +1,5 @@
 import {AtributoVazioError, PerfilExistenteError, PerfilNaoEncontradoError, PostagemJaExisteError, PostagemNaoEncontradaError } from "./excecoes";
-import { Perfil, Postagem } from ".";
+import { Perfil, Postagem, PostagemAvancada } from ".";
 import * as fs from 'fs';
 
 export interface IRepositorioDePerfis {
@@ -215,6 +215,8 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
     } 
 
     atualizarPostagem(postagem: Postagem):void{ //para atualizar os dados dos arquivos
+        /*
+        !Versão 1
         let dados = this.lerArquivo();
         
         let postagemExiste = this.postagens.find(p =>(p.idPostagem === postagem.idPostagem));
@@ -228,6 +230,36 @@ export class RepositorioDePostagensArquivo implements IRepositorioPostagens {
             dados[index] = postagem;
             this.salvarArquivo(dados);
         }
+        !Versão 2
+        let dados = this.lerArquivo();
+
+        let indice = dados.findIndex((d:any)=> d._idPostagem == postagem.idPostagem);
+
+        if (indice == -1) {
+            throw new PostagemNaoEncontradaError('Postagem não encontrada.');
+        }
+
+        dados[indice]._curtidas = postagem.curtidas;
+        dados[indice]._descurtidas = postagem.descurtidas;
+        if (postagem instanceof PostagemAvancada) {
+            dados[indice]._visualizacoesRestantes = postagem.visualizacoesRestantes;
+        }
+
+        this.salvarArquivo(dados);
+        */
+        let dados = this.lerArquivo();
+
+        let indice = this.consultarPorIndice(postagem.idPostagem);
+        if (indice == -1) {
+            throw new PerfilNaoEncontradoError('Postagem não encontrada.');
+        }
+
+        dados[indice]._curtidas = postagem.curtidas;
+        dados[indice]._descurtidas = postagem.descurtidas;
+        if (postagem instanceof PostagemAvancada) {
+            dados[indice]._visualizacoesRestantes = postagem.visualizacoesRestantes;
+        }
+        this.salvarArquivo(dados);
     }
 }
 

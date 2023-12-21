@@ -9,7 +9,6 @@ export class RedeSocial {
     constructor(repositorioDePerfis: IRepositorioDePerfis, repositorioDePostagens: IRepositorioPostagens) {
         this._repositorioDePerfis = repositorioDePerfis;
         this._repositorioDePostagens = repositorioDePostagens;
-       
     }
 
     incluirPerfil(perfil: Perfil){
@@ -27,11 +26,6 @@ export class RedeSocial {
         }
         this._repositorioDePerfis.excluirPerfil(idPerfil);
         console.log('Perfil excluido com sucesso.');
-        /*for(let i = indice; i < this._repositorioDePerfis.perfis.length; i++){
-            this._repositorioDePerfis.perfis[i] = this._repositorioDePerfis.perfis[i+1];
-        }
-        //this._perfis.pop();
-        this._repositorioDePerfis.perfis.splice(indice, 1);*/
     }
 
     incluirPostagem(postagem: Postagem){
@@ -55,7 +49,6 @@ export class RedeSocial {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPostagem); 
         if (postagemProcurada !== undefined) {
             postagemProcurada.curtir();
-            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
             this._repositorioDePostagens.atualizarPostagem(postagemProcurada);
         }
     }
@@ -64,7 +57,6 @@ export class RedeSocial {
         let postagemProcurada = this._repositorioDePostagens.consultarPostagemPorId(idPost);
         if (postagemProcurada.idPostagem == idPost) {
             postagemProcurada.descurtir();
-            //this._repositorioDePostagens.incluirPostagem(postagemProcurada);
             this._repositorioDePostagens.atualizarPostagem(postagemProcurada);// chama o metodo de repositorio de postagens por arq
         }
     }
@@ -79,13 +71,9 @@ export class RedeSocial {
         if (perfilProcurado.idPerfil == idPerfil || perfilProcurado.nome == nomePerfil || perfilProcurado.email == emailPerfil) {
             return `\nId: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
         }
-
-        /*if((perfilProcurado) && perfilProcurado.idPerfil == idPerfil){
-            return `Id: ${perfilProcurado.idPerfil},\nUsuário: ${perfilProcurado.nome},\nEmail: ${perfilProcurado.email}.`;
-        }*/
     } 
 
-    exibirPerfis(): string{ // ta ok?
+    exibirPerfis(): string{
         let perfis = '';
         for(let p of this._repositorioDePerfis.perfis){
             perfis += `
@@ -98,28 +86,7 @@ export class RedeSocial {
     } 
 
     exibirPorPostagem(idPostagem?: number, texto?: string){ // ta ok?
-        /*
-        let postagemFiltradas: PostagemAvancada [] = [];
-        let result = this.consultarPostagem(idPostagem);
-
-        if (typeof result == 'string') {
-            return postagemFiltradas;
-        }
-        for (let postagem of result) {
-            if (postagem instanceof PostagemAvancada) {
-                if (postagem.visualizacoesRestantes > 0) {
-                    postagemFiltradas.push(postagem);
-                    postagem.decrementarVisualizacoes();
-                }
-            }
-        }
-        return postagemFiltradas;*/
         let postagemProcurada = this.consultarPostagem(idPostagem, texto);
-        if(postagemProcurada instanceof PostagemAvancada){
-            if (postagemProcurada.visualizacoesRestantes > 0){
-                postagemProcurada.decrementarVisualizacoes();
-            }
-        }
 
         if(idPostagem != undefined){
             return this.consultarPostagem(idPostagem);
@@ -128,6 +95,15 @@ export class RedeSocial {
         if(texto != undefined){
             return this.consultarPostagem(undefined, texto);
         }
+
+        if(postagemProcurada instanceof PostagemAvancada){
+            if (postagemProcurada.visualizacoesRestantes > 0){
+                postagemProcurada.decrementarVisualizacoes();
+                this._repositorioDePostagens.atualizarPostagem(postagemProcurada); // adicionei para verificar se a contagem de visualizações funciona
+            }
+        }
+
+
         return postagemProcurada;
     }
 
