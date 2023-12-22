@@ -19,7 +19,7 @@ export class RedeSocial {
         return this._repositorioDePerfis.consultarPerfil(id, nome, email);
     }
 
-    excluirPefil(idPerfil: number){
+    excluirPerfil(idPerfil: number){
         let perfilProcurado = this._repositorioDePerfis.consultarPorIndice(idPerfil);
         if (perfilProcurado == undefined) {
             throw new PerfilNaoEncontradoError('Perfil não encontrado.');

@@ -123,7 +123,7 @@ class App {
         console.log('EXCLUIR PERFIL');
         let idStr = input('Id do perfil que deseja excluir: ').trim();
         let id: number = parseFloat(idStr);
-        this.redeSocial.excluirPefil(id);
+        this.redeSocial.excluirPerfil(id);
     }
 
     consultarPostagem(): void{
