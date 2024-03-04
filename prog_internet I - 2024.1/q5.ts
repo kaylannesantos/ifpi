@@ -12,10 +12,10 @@ async function pesqPalavra(url:string, searchTerm:string): Promise<void> {
         let resposta = await axios.get(url);
         let loading = cheerio.load(resposta.data);
 
-        let bodyText  = loading('body').text();
-        let palavras = bodyText.split(/\s+/);
+        let bodyText  = loading('body').text(); // obtém o corpo da página
+        let palavras = bodyText.split(/\s+/); // divide o texto em palavras
 
-        let ocorrencias: string[] = [];
+        let ocorrencias: string[] = []; // encontra todas as ocorrencias da palavra buscada
         for (let i = 0; i < palavras.length; i++) {
             if (palavras[i].toLowerCase() == searchTerm.toLowerCase()) {
                 let iniciarIndex = Math.max(0, i - 10);

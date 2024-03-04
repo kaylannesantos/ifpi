@@ -11,9 +11,9 @@ import * as cheerio from 'cheerio';
 async function getLinksUrl(url:string): Promise<void>{
     try {
         let resposta = await axios.get(url);
-        let loadingHtml = cheerio.load(resposta.data);
+        let loadingHtml = cheerio.load(resposta.data); // carregando o HTMl
         
-        loadingHtml('a').each((index, element) => {
+        loadingHtml('a').each((index, element) => { // extraindo os links da URl
             const href = loadingHtml(element).attr('href');
             if (href) {
                 console.log(href);

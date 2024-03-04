@@ -6,8 +6,9 @@ import axios, { AxiosResponse } from 'axios';
 
 async function buscadorUrl(url: string): Promise<void>{
     try {
-        let resposta: AxiosResponse = await axios.get(url, {responseType: 'arraybuffer'});
+        let resposta: AxiosResponse = await axios.get(url, {responseType: 'arraybuffer'}); //solicitação get para a URL fornecida
 
+        //logs de exibição sobre a URL fornecida
         console.log('Status code:', resposta.status);
         console.log('Encoding:', resposta.headers['Content-Length']);
         console.log('Tamanho da resposta:', resposta.headers['Content-Length']);

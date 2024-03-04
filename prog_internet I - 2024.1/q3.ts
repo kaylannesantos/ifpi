@@ -11,8 +11,8 @@ async function downloadImage(url:string, nameArq: string) {
     try {
         let resposta: AxiosResponse = await axios.get(url, {responseType: 'arraybuffer'});
 
-        if (resposta.data) {
-            fs.writeFileSync(nameArq, resposta.data);
+        if (resposta.data) { // verifica se a resposta contém dados
+            fs.writeFileSync(nameArq, resposta.data); //salva os dados
             console.log(`Imagem salva com sucesso como ${nameArq}`);
         } else {
             throw new Error('Resposta vazia recebida');
