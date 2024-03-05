@@ -8,7 +8,7 @@ Dica: use expressões regulares ou o equivalente ao beautiful soap */
 import axios from "axios";
 import * as cheerio from 'cheerio';
 
-async function getLinksUrl(url:string): Promise<void>{
+async function obterLinks(url:string): Promise<void>{
     try {
         let resposta = await axios.get(url);
         let loadingHtml = cheerio.load(resposta.data); // carregando o HTMl
@@ -25,5 +25,5 @@ async function getLinksUrl(url:string): Promise<void>{
     }
 }
 
-const url = 'https://www.w3schools.com//';
-getLinksUrl(url);
+const url = 'https://www.devmedia.com.br';
+obterLinks(url);

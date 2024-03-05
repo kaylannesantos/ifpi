@@ -19,5 +19,5 @@ async function buscadorUrl(url: string): Promise<void>{
     }    
 }
 
-const url = 'https://www.w3schools.com';
+const url = 'https://www.devmedia.com.br';
 buscadorUrl(url);

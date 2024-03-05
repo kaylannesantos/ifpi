@@ -37,6 +37,6 @@ async function pesqPalavra(url:string, searchTerm:string): Promise<void> {
     }
 }
 
-const url = 'https://www.w3schools.com/html/html_exercises.asp';
-const searchTerm = 'html';
+const url = 'https://www.devmedia.com.br';
+const searchTerm = 'sql';
 pesqPalavra(url,searchTerm);

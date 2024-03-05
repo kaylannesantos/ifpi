@@ -7,24 +7,25 @@ um arquivo de imagem (escolha um tipo apenas - jpg ou gif...):
 import axios, { AxiosResponse } from "axios";
 import * as fs from 'fs';
 
-async function downloadImage(url:string, nameArq: string) {
+async function downloadImagem(url:string, nomeArq: string) {
     try {
         let resposta: AxiosResponse = await axios.get(url, {responseType: 'arraybuffer'});
 
         if (resposta.data) { // verifica se a resposta contém dados
-            fs.writeFileSync(nameArq, resposta.data); //salva os dados
-            console.log(`Imagem salva com sucesso como ${nameArq}`);
+            fs.writeFileSync(nomeArq, resposta.data); //salva os dados
+            console.log(`Imagem salva com sucesso como ${nomeArq}.`);
         } else {
-            throw new Error('Resposta vazia recebida');
+            throw new Error('Resposta vazia recebida.');
         }
     } catch (error) {
-        console.error('Error ao baixar a imagem:', error.message);
+        console.error('Error ao baixar a imagem: ', error.message);
     }   
 }
 
-const url = 'https://images.pexels.com/photos/210764/pexels-photo-210764.jpeg';
-const nameArq = 'img.jpg';
-downloadImage(url,nameArq);
+//const url = 'https://images.pexels.com/photos/210764/pexels-photo-210764.jpeg';
+const url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sql_ledger_login.png/140px-Sql_ledger_login.png';
+const nomeArq = 'img.png';
+downloadImagem(url,nomeArq);
 
 
 
