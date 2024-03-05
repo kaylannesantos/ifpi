@@ -19,6 +19,5 @@ async function buscadorUrl(url: string): Promise<void>{
     }    
 }
 
-//const url = 'https://w3schools.com';
 const url = 'https://www.w3schools.com';
 buscadorUrl(url);
