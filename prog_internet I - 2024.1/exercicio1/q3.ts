@@ -23,7 +23,7 @@ async function downloadImagem(url:string, nomeArq: string) {
 }
 
 //const url = 'https://images.pexels.com/photos/210764/pexels-photo-210764.jpeg';
-const url = 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Sql_ledger_login.png/140px-Sql_ledger_login.png';
+const url = 'https://www.sqlfromhell.com/wp-content/uploads/2018/06/except.png';
 const nomeArq = 'img.png';
 downloadImagem(url,nomeArq);
 
