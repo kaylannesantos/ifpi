@@ -3,23 +3,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'); /*importando a fonte 'Bebas Neue'*/
 
 @font-face {
-    font-family: 'Android';
-    src: url('../fontes/idroid.otf') format('opentype'); /*o '..' é pra voltar uma pasta*/
+    font-family: 'Scripter';
+    src: url('../fonts/Scripter.otf') format('opentype'); /*o '..' é pra voltar uma pasta*/
     font-weight: normal;
-} /*usando a fonte baixada*/
+}
+@font-face {
+    font-family: 'atwriter';
+    src: url('../fonts/atwriter.ttf') format('opentype'); /*o '..' é pra voltar uma pasta*/
+    font-weight: normal;
+}
 
 :root {
-    --cor0: #c5ebd6;
-    --cor1: #83e1ad;
-    --cor2: #3ddc84;
-    --cor3: #2fa866;
-    --cor4: #1a5c37;
-    --cor5: #063d1e;
+    --cor0: #FFFFFF;
+    --cor1: #91BBF2;
+    --cor2: #4B7DBF;
+    --cor3: #4E7DA6;
+    --cor4: #3D5A73;
+    --cor5: #004575;
 
-    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
+    --fonte-padrao: 'Courier New', Courier, monospace;
     --fonte-destaque: 'Bebas Neue', cursive;
-    --fonte-android: 'Android', cursive; 
-    --fonte-titulos: 'Arial';
+    --fonte-android: 'Scripter'; 
+    --fonte-titulos: 'atwriter';    
 }
 
 * { /*vai tirar a margin e o padding de todos os elementos (h1, h2, p, ...)*/
@@ -29,6 +34,10 @@
 
 body {
     background-color: var(--cor0);
+    font-family: var(--fonte-padrao);
+}
+
+body > nav >a{
     font-family: var(--fonte-padrao);
 }
 
@@ -141,7 +150,7 @@ main h1 {
 
 main h2 {
     color: var(--cor4);
-    font-family: var(--fonte-android);
+    font-family: var(--fonte-titulos);
     font-size: 1.3em;
     font-weight: normal;
     background-image: linear-gradient(to right, var(--cor1), transparent);
