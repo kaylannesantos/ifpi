@@ -1,7 +1,277 @@
-body header h1 {
-    font-family: 'Courier New', Courier, monospace;
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'); /*importando a fonte 'Bebas Neue'*/
+
+@font-face {
+    font-family: 'Android';
+    src: url('../fontes/idroid.otf') format('opentype'); /*o '..' é pra voltar uma pasta*/
+    font-weight: normal;
+} /*usando a fonte baixada*/
+
+:root {
+    --cor0: #c5ebd6;
+    --cor1: #83e1ad;
+    --cor2: #3ddc84;
+    --cor3: #2fa866;
+    --cor4: #1a5c37;
+    --cor5: #063d1e;
+
+    --fonte-padrao: Arial, Verdana, Helvetica, sans-serif;
+    --fonte-destaque: 'Bebas Neue', cursive;
+    --fonte-android: 'Android', cursive; 
+    --fonte-titulos: 'Arial';
 }
 
-.main h2{
-    font-family: 'Times New Roman', Times, serif;
+* { /*vai tirar a margin e o padding de todos os elementos (h1, h2, p, ...)*/
+    margin: 0; 
+    padding: 0;
+}
+
+body {
+    background-color: var(--cor0);
+    font-family: var(--fonte-padrao);
+}
+
+a.externo::after {
+    content: '\1F517';
+}
+
+header {
+    background-image: linear-gradient(to bottom, var(--cor3), var(--cor5));
+    min-height: 150px;
+    text-align: center;
+    padding-top: 40px;
+}
+
+header > h1 {
+    color: white;
+    font-family: var(--fonte-destaque);
+    font-size: 3em;
+    font-weight: normal;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.267); /*sombra feita no 'inspecionar' do google*/
+}
+
+header > p {
+    color: white;
+    font-size: 1.2em;
+    max-width: 500px;
+    margin: auto; /*como colocou uma largura máxima, virou um bloco, então, para centralizar, coloca margin: auto*/
+    padding-bottom: 40px;
+    padding: 0 10px 10px 0; /*padding na direira e na esquerda | quando a tela estiver menor que 500px, não vai ficar colado na lateral*/
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.315);
+}
+
+nav {
+    background-color: var(--cor5);
+    padding: 10px;
+    box-shadow: 0 7px 7px rgba(0, 0, 0, 0.363);
+}
+
+nav > a {
+    color: var(--cor1);
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition-duration: .5s; /*quando passar o mouse, a transição vai durar meio segundo*/
+}
+
+nav > a:hover {
+    background-color: var(--cor2);
+    color: var(--cor4);
+}
+
+/* Esconde o submenu inicialmente */
+#submenu {
+    display: none;
+}
+
+/* Exibe o submenu quando o link "Mais Lidos" é ativado */
+#maislidos:hover + #submenu {
+    display: block;
+}
+#submenu:hover {
+    display: block;
+}
+
+/* Estilos para o submenu dos gêneros */
+#submenu {
+    position: absolute;
+    background-color: var(--cor1);
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 0.8%;
+    margin-left: 13%;
+}
+
+#submenu li {
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+#submenu li a {
+    color: var(--cor4);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#submenu li a:hover {
+    color: var(--cor2);
+}
+
+
+main {
+    background-color: white;
+    min-width: none;
+    max-width: 1000px;
+    margin: auto;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 0 0px 10px 10px; /*arredonda só as bordas de baixo*/
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.432);
+}
+
+main h1 {
+    color: var(--cor5);
+    font-family: var(--fonte-android);
+    font-weight: normal;
+    font-size: 1.8em;
+}
+
+main h2 {
+    color: var(--cor4);
+    font-family: var(--fonte-android);
+    font-size: 1.3em;
+    font-weight: normal;
+    background-image: linear-gradient(to right, var(--cor1), transparent);
+    text-indent: 8px;
+}
+
+main h3 {
+    color: var(--cor4);
+    font-family: var(--fonte-titulos);
+    font-size: 1.3em;
+    font-weight: normal;
+    text-indent: 8px;
+    padding-top: 15px;
+}
+
+main p {
+    margin: 15px 0;
+    text-align: justify;
+    text-indent: 30px; /*espaço de quando começa do parágrafo*/
+    font-size: 1em;
+    line-height: 1.6em;
+}
+
+main strong {
+    color: var(--cor4);
+    font-weight: bold;
+}
+
+main a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--cor5);
+    background-color: var(--cor1);
+    padding: 2px 4px;
+}
+
+main a:hover {
+    text-decoration: underline;
+    color: var(--cor4);
+}
+
+main img {
+    width: 100%;
+}
+
+section {
+    padding: 15px;
+}
+
+.livro-container-esquerdo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.livro-imagem-esquerdo {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.livro-imagem-esquerdo img {
+    max-width: 200px;
+    height: auto;
+}
+
+.livro-resumo-direito {
+    flex: 1;
+}
+
+.livro-container-direito {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.livro-imagem-direito {
+    flex: 0 0 auto;
+    margin-left: 20px; /* Alterado para margin-left */
+}
+
+.livro-imagem-direito img {
+    max-width: 200px;
+    height: auto;
+}
+
+.livro-resumo-esquerdo {
+    flex: 1;
+    text-align: justify; /* Ajusta o alinhamento do texto */
+}
+
+aside {
+    background-color: var(--cor1);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.281);
+}
+
+aside > h3 {
+    background-color: var(--cor4);
+    color: white;
+    padding: 5px;
+    margin: -10px -10px 0 -10px; /*o valor negativo vai fazer a margem "crescer pra fora"*/
+    border-radius: 10px 10px 0 0;
+}
+
+aside > ul {
+    list-style-type: '\2714\00a0\00a0'; /*- \2714 representa o código (sem o U+) do emoji no emojipedia | \00a0 serve para dar um espaço entre o emoji e o item da lista*/
+    list-style-position: inside; /*colocar a "bolinha pro lado de dentro*/
+    columns: 2; /*coloca a lista em duas colunas*/
+}
+
+aside abbr {
+    text-decoration: none;
+}
+
+footer {
+    background-color: var(--cor5);
+    color: white;
+    text-align: center;
+    font-size: 0.8em;
+    padding: 5px;
+}
+
+footer a {
+    color: white;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: var(--cor1);
 }
