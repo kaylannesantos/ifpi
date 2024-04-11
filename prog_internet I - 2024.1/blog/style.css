@@ -1,6 +1,7 @@
 @charset "UTF-8";
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap'); /*importando a fonte 'Bebas Neue'*/
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 @font-face {
     font-family: 'Scripter';
@@ -24,7 +25,7 @@
     --fonte-padrao: 'Courier New', Courier, monospace;
     --fonte-destaque: 'Bebas Neue', cursive;
     --fonte-android: 'Scripter'; 
-    --fonte-titulos: 'atwriter';    
+    --fonte-titulos: 'Bebas Neue'; 
 }
 
 * { /*vai tirar a margin e o padding de todos os elementos (h1, h2, p, ...)*/
@@ -33,12 +34,12 @@
 }
 
 body {
-    background-color: var(--cor0);
+    background-color: var(--cor3);
     font-family: var(--fonte-padrao);
-}
 
-body > nav >a{
-    font-family: var(--fonte-padrao);
+    nav > a{
+        font-family: var(--fonte-padrao);
+    }
 }
 
 a.externo::after {
@@ -50,45 +51,45 @@ header {
     min-height: 150px;
     text-align: center;
     padding-top: 40px;
-}
 
-header > h1 {
-    color: white;
-    font-family: var(--fonte-destaque);
-    font-size: 3em;
-    font-weight: normal;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.267); /*sombra feita no 'inspecionar' do google*/
-}
+    h1{
+        color: white;
+        font-family: var(--fonte-destaque);
+        font-size: 3em;
+        font-weight: normal;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 0px rgba(19, 18, 18, 0.267); /*sombra feita no 'inspecionar' do google*/
+    }
 
-header > p {
-    color: white;
-    font-size: 1.2em;
-    max-width: 500px;
-    margin: auto; /*como colocou uma largura máxima, virou um bloco, então, para centralizar, coloca margin: auto*/
-    padding-bottom: 40px;
-    padding: 0 10px 10px 0; /*padding na direira e na esquerda | quando a tela estiver menor que 500px, não vai ficar colado na lateral*/
-    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.315);
+    p{
+        color: white;
+        font-size: 1.2em;
+        max-width: 500px;
+        margin: auto; /*como colocou uma largura máxima, virou um bloco, então, para centralizar, coloca margin: auto*/
+        padding-bottom: 40px;
+        padding: 0 10px 10px 0; /*padding na direira e na esquerda | quando a tela estiver menor que 500px, não vai ficar colado na lateral*/
+        text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.315);
+    }
 }
 
 nav {
     background-color: var(--cor5);
     padding: 10px;
     box-shadow: 0 7px 7px rgba(0, 0, 0, 0.363);
-}
 
-nav > a {
-    color: var(--cor1);
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition-duration: .5s; /*quando passar o mouse, a transição vai durar meio segundo*/
-}
+    a{
+        color: var(--cor1);
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition-duration: .5s; /*quando passar o mouse, a transição vai durar meio segundo*/
+    }
 
-nav > a:hover {
-    background-color: var(--cor2);
-    color: var(--cor4);
+    a:hover{
+        background-color: var(--cor1);
+        color: var(--cor4);
+    }
 }
 
 /* Esconde o submenu inicialmente */
@@ -132,14 +133,18 @@ nav > a:hover {
 
 main {
     background-color: white;
-    min-width: none;
+    min-width: none;  
     max-width: 1000px;
+    height: 100%;
     margin: auto;
-    margin-bottom: 30px;
     padding: 20px;
-    border-radius: 0 0px 10px 10px; /*arredonda só as bordas de baixo*/
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.432);
 }
+
+/*
+margin-bottom: 30px;
+border-radius: 0 0px 10px 10px; //arredonda só as bordas de baixo
+*/
 
 main h1 {
     color: var(--cor5);
@@ -271,7 +276,10 @@ footer {
     color: white;
     text-align: center;
     font-size: 0.8em;
-    padding: 5px;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
 
 footer a {
