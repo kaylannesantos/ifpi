@@ -1,0 +1,11 @@
+banco de dados - loja de roupas
+
+cliente: id, nome, cpf, contato, email
+funcionario: id, nome, cpf, contato, email
+pedido: id, id_cliente, id_funcionario, id_pagamento, valor_total
+pagamento: id, tipo
+item_pedido: id, id_pedido, id_produto, id_estoque, quantidade, status
+produto: id, nome, id_categoria, valor_unitario
+categoria: id, nome
+loja: id, nome
+estoque: id, id_produto, id_loja, quantidade
