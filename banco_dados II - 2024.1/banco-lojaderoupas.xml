@@ -10,7 +10,7 @@
 <Alinhamento_h Valor="50"/>
 <Zoom Valor="100"/>
 <Fonte Estilo="0" Nome="Arial" Tamanho="12"/>
-<Localizacao Left="379" Top="79"/>
+<Localizacao Left="128" Top="213"/>
 <Realce Valor="false"/>
 </InfoDiagrama>
 <Entidade ID="4">
@@ -1950,7 +1950,7 @@
 <Largura Valor="1"/>
 <Ligacoes PontaA="628" PontaB="34"/>
 <Pontos>
-<Ponto Left="985" Top="135"/>
+<Ponto Left="984" Top="135"/>
 <Ponto Left="962" Top="135"/>
 <Ponto Left="962" Top="111"/>
 </Pontos>
@@ -1968,7 +1968,7 @@
 <Largura Valor="1"/>
 <Ligacoes PontaA="552" PontaB="34"/>
 <Pontos>
-<Ponto Left="959" Top="148"/>
+<Ponto Left="958" Top="148"/>
 <Ponto Left="937" Top="148"/>
 <Ponto Left="937" Top="111"/>
 </Pontos>
@@ -2008,7 +2008,7 @@
 <Ponto Left="427" Top="272"/>
 </Pontos>
 </Ligacao>
-<Ligacao ID="1315">
+<Ligacao ID="1330">
 <DisablePainted Valor="false"/>
 <Tag LinhaMestre="-1"/>
 <Dashed Valor="false"/>
@@ -2026,7 +2026,7 @@
 <Ponto Left="1052" Top="514"/>
 <Ponto Left="920" Top="514"/>
 </Pontos>
-<Cardinalidade ID="1316">
+<Cardinalidade ID="1331">
 <Bounds Height="15" Left="930" Top="501" Width="34"/>
 <DisablePainted Valor="false"/>
 <Texto>Cardinalidade_16</Texto>
