@@ -4,6 +4,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 
 @font-face {
+<<<<<<< Updated upstream
     font-family: 'Scripter';
     src: url('../fonts/Scripter.otf') format('opentype'); /*o '..' é pra voltar uma pasta*/
     font-weight: normal;
@@ -15,17 +16,46 @@
 }
 
 :root {
+=======
+    font-family: 'FinancierText-Bold';
+    src: url('../font/FinancierText-Bold.ttf') format('opentype'); /*o '..' é pra voltar uma pasta*/
+    font-weight: normal;
+} /*usando a fonte baixada*/
+@font-face {
+    font-family: 'FinancierText-Medium';
+    src: url('../font/FinancierText-Medium.ttf') format('opentype'); /*o '..' é pra voltar uma pasta*/
+    font-weight: normal;
+}
+
+:root {/* 
+>>>>>>> Stashed changes
     --cor0: #FFFFFF;
     --cor1: #91BBF2;
     --cor2: #4B7DBF;
     --cor3: #4E7DA6;
     --cor4: #3D5A73;
+<<<<<<< Updated upstream
     --cor5: #004575;
 
     --fonte-padrao: 'Courier New', Courier, monospace;
     --fonte-destaque: 'Bebas Neue', cursive;
     --fonte-android: 'Scripter'; 
     --fonte-titulos: 'Bebas Neue'; 
+=======
+    --cor5: #527173;*/
+    
+    --cor0: #FFFFFF;
+    --cor1: #9E795E;
+    --cor2: #825E46;
+    --cor3: #5D3C2B;
+    --cor4: #603522;
+    --cor5: #422215;
+
+    --fonte-padrao: "Georgia", sans-serif;
+    --fonte-destaque: 'FinancierText-Bold', cursive;
+    --fonte-android: 'Times New Roman', cursive; 
+    --fonte-titulos: 'FinancierText-Bold';
+>>>>>>> Stashed changes
 }
 
 * { /*vai tirar a margin e o padding de todos os elementos (h1, h2, p, ...)*/
