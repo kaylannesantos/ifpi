@@ -68,11 +68,17 @@ INSERT INTO FUNCIONARIO(COD_CARGO, COD_LOJA, NOME, CPF, CONTATO, EMAIL) VALUES
 	(4, 5, 'Fernanda Santos', '444.555.666-33', '(99) 21098-7654', 'fernanda.santos@email.com'),
 	(5, 5, 'Rafaela Almeida', '666.777.888-11', '(00) 10987-6543', 'rafaela.almeida@email.com');
 
-
 CREATE TABLE PAGAMENTO(
 	COD_PAGAMENTO SERIAL NOT NULL PRIMARY KEY,
 	TIPO VARCHAR(50) NOT NULL
 );
+
+INSERT INTO PAGAMENTO (TIPO) VALUES 
+	('Cartão de Crédito'),
+	('Cartão de Débito'),
+	('Dinheiro'),
+	('Transferência Bancária'),
+	('Pix');
 
 CREATE TABLE CATEGORIA(
 	COD_CATEGORIA SERIAL NOT NULL PRIMARY KEY,
