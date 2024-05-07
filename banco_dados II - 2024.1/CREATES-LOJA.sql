@@ -54,9 +54,20 @@ CREATE TABLE FUNCIONARIO(
 	CPF VARCHAR(15) NOT NULL UNIQUE,
 	CONTATO VARCHAR(20) NOT NULL,
 	EMAIL VARCHAR(50) NOT NULL
-	--CONSTRAINT FK_CARGO FOREIGN KEY(COD_CARGO) REFERENCES CARGO(COD_CARGO) ON UPDATE CASCADE ON DELETE RESTRICT,
-	--CONSTRAINT FK_LOJA FOREIGN KEY(COD_LOJA) REFERENCES LOJA(COD_LOJA) ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+INSERT INTO FUNCIONARIO(COD_CARGO, COD_LOJA, NOME, CPF, CONTATO, EMAIL) VALUES
+	(1, 1, 'João Silva', '123.456.789-01', '(11) 91234-5678', 'joao.silva@email.com'),
+	(2, 1, 'Maria Santos', '987.654.321-09', '(22) 98765-4321', 'maria.santos@email.com'),
+	(3, 2, 'Carlos Oliveira', '222.333.444-55', '(33) 87654-3210', 'carlos.oliveira@email.com'),
+	(4, 2, 'Ana Pereira', '555.666.777-99', '(44) 76543-2109', 'ana.pereira@email.com'),
+	(5, 3, 'Pedro Rocha', '111.222.333-44', '(55) 65432-1098', 'pedro.rocha@email.com'),
+	(1, 3, 'Mariana Costa', '999.888.777-66', '(66) 54321-0987', 'mariana.costa@email.com'),
+	(2, 4, 'Lucas Oliveira', '333.222.111-00', '(77) 43210-9876', 'lucas.oliveira@email.com'),
+	(3, 4, 'Juliana Pereira', '777.888.999-00', '(88) 32109-8765', 'juliana.pereira@email.com'),
+	(4, 5, 'Fernanda Santos', '444.555.666-33', '(99) 21098-7654', 'fernanda.santos@email.com'),
+	(5, 5, 'Rafaela Almeida', '666.777.888-11', '(00) 10987-6543', 'rafaela.almeida@email.com');
+
 
 CREATE TABLE PAGAMENTO(
 	COD_PAGAMENTO SERIAL NOT NULL PRIMARY KEY,
@@ -109,4 +120,3 @@ CREATE TABLE ITEM_PEDIDO(
 	CONSTRAINT FK_ESTOQUE FOREIGN KEY(COD_ESTOQUE) REFERENCES ESTOQUE(COD_ESTOQUE) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
---INSERT's
