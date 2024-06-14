@@ -5,7 +5,6 @@ CREATE TABLE CLIENTE(
 	CONTATO VARCHAR(20) NOT NULL,
 	EMAIL VARCHAR(50) NOT NULL
 );
-
 INSERT INTO CLIENTE (NOME, CPF, CONTATO, EMAIL) VALUES 
 	('Maria Silva', '123.456.789-10', '(11) 91234-5678', 'maria.silva@gmail.com'),
 	('João Oliveira', '987.654.321-00', '(21) 99876-5432', 'joao.oliveira@gmail.com'),
