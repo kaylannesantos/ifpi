@@ -6,7 +6,7 @@
 '^[0-9]' - numeros no comeco da string
 */
 
---------------------------------------------EXCEÇÕES--------------------------------------------------------------
+------------------------------------------------EXCEÇÕES--------------------------------------------------------------
 CREATE OR REPLACE FUNCTION VERIFICAR_ATRIBUTOS_INT(ATRIBUTOS VARCHAR[]) --CHECK_VALUES_INT
 RETURNS VOID AS $$ 
 DECLARE 
@@ -31,7 +31,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---GATILHOS
+--TRIGGER BY TABLE
 CREATE TRIGGER TRIGGER_ADD_ALTER
 BEFORE INSERT OR UPDATE ON CLIENTE
 FOR EACH ROW 
@@ -62,7 +62,7 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
---gatilhos
+--TRIGGER BY TABLE
 CREATE TRIGGER TRIGGER_INSERT_UPDATE
 BEFORE INSERT OR UPDATE ON CLIENTE
 FOR EACH ROW
