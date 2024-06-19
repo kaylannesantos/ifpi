@@ -93,7 +93,8 @@ BEFORE INSERT OR UPDATE ON PRODUTO
 FOR EACH ROW
 EXECUTE FUNCTION TRIGGER_VERIFICAR_ATRIBUTO();
 
-----------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------FUNÇÕES DE VENDA-----------------------------------------------------------
+
 CREATE OR REPLACE FUNCTION ADD_PEDIDO(
 	CPF_C VARCHAR(15), 
 	NOME_P VARCHAR(50), 
