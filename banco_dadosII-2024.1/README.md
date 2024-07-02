@@ -4,5 +4,5 @@
 - [Exceções]()
 - [Functions Insert](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20INSERT.sql)
 - [Functions Update](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20UPDATE.sql)
-- [Functions Delete]()
+- [Functions Delete](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20DELETE.sql)
 - [Criar Pedidos] ()
