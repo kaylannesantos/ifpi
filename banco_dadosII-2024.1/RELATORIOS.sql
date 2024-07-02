@@ -1,7 +1,7 @@
 -----------------------------------------------------RELATÓRIOS------------------------------------------------------
 --FUNCIONARIO
 CREATE OR REPLACE VIEW VER_FUNCIONARIOS AS
-	SELECT F.COD as "n°Id", F.NOME as Nome, F.CPF as cpf, F.CONTATO as Telefone, F.EMAIL as Email, C.NOME as Cargo, C.SALARIO as Salario
+	SELECT F.COD as "n°Id", F.NOME as Nome, F.CPF as cpf, F.CONTATO as Telefone, F.EMAIL as Email, C.NOME as Cargo, C.SALARIO as Salario, L.NOME as Loja
 	FROM FUNCIONARIO F
 		JOIN CARGO C ON C.COD = F.COD_CARGO
 		JOIN LOJA L ON L.COD = F.COD_LOJA
