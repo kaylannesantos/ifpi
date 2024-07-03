@@ -10,13 +10,14 @@ INSERT INTO CLIENTE (NOME, CPF, CONTATO, EMAIL) VALUES
 	('João Oliveira', '987.654.321-00', '(21) 99876-5432', 'joao.oliveira@gmail.com'),
 	('Ana Santos', '456.789.123-45', '(31) 98765-4321', 'ana.santos@gmail.com'),
 	('Pedro Souza', '654.321.987-00', '(41) 97654-3210', 'pedro.souza@gmail.com'),
-	('Mariana Lima', '789.123.456-78', '(51) 96543-2109', 'mariana.lima@gmail.com'),
-	('Carlos Pereira', '234.567.890-12', '(61) 95432-1098', 'carlos.pereira@gmail.com'),
-	('Juliana Costa', '876.543.210-98', '(71) 94321-0987', 'juliana.costa@gmail.com'),
-	('Fernando Oliveira', '345.678.901-23', '(81) 93210-9876', 'fernando.oliveira@gmail.com'),
-	('Amanda Rodrigues', '567.890.123-45', '(91) 92109-8765', 'amanda.rodrigues@gmail.com'),
-	('Lucas Almeida', '901.234.567-89', '(10) 91087-6543', 'lucas.almeida@gmail.com');
+	('Mariana Lima', '789.123.456-78', '(51) 96543-2109', 'mariana.lima@gmail.com');
 
+SELECT CADASTRAR('cliente','Maria Silva', '123.456.789-10', '(11) 91234-5678', 'maria.silva@gmail.com') 
+SELECT CADASTRAR('CLIENTE','João Oliveira', '987.654.321-00', '(21) 99876-5432', 'joao.oliveira@gmail.com') 
+SELECT CADASTRAR('CLIENTE','Ana Santos', '456.789.123-45', '(31) 98765-4321', 'ana.santos@gmail.com') 
+SELECT CADASTRAR('CLIENTE','Pedro Souza', '654.321.987-00', '(41) 97654-3210', 'pedro.souza@gmail.com') 
+SELECT CADASTRAR('CLIENTE','Mariana Lima', '789.123.456-78', '(51) 96543-2109', 'mariana.lima@gmail.com')
+	
 CREATE TABLE CARGO(
 	COD SERIAL NOT NULL PRIMARY KEY,
 	NOME VARCHAR(50) NOT NULL,
@@ -25,8 +26,8 @@ CREATE TABLE CARGO(
 INSERT INTO CARGO (NOME, SALARIO) VALUES 
 	('Gerente', 4800.00),
 	('Supervisor', 2.186.00),
-	('Assistente', 1.227.00),
-	('Caixa', 1.782.00),
+	('Vendedor', 1.227.00),
+	('Operador de Caixa', 1.782.00),
 	('Estoquista', 1.800.00);
 
 CREATE TABLE LOJA(
