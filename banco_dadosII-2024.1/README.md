@@ -7,3 +7,4 @@
 5. [Functions Delete](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20DELETE.sql)
 6. [Create Pedidos](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/EXECUTE%20PEDIDOS.sql)
 7. [Relatórios](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/RELATORIOS.sql)
+8. [Comissão e Salário](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/COMISSAO%20E%20SALARIO.sql)
