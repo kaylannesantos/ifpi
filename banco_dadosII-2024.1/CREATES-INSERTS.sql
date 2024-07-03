@@ -5,13 +5,6 @@ CREATE TABLE CLIENTE(
 	CONTATO VARCHAR(20) NOT NULL,
 	EMAIL VARCHAR(50) NOT NULL
 );
-INSERT INTO CLIENTE (NOME, CPF, CONTATO, EMAIL) VALUES 
-	('Maria Silva', '123.456.789-10', '(11) 91234-5678', 'maria.silva@gmail.com'),
-	('João Oliveira', '987.654.321-00', '(21) 99876-5432', 'joao.oliveira@gmail.com'),
-	('Ana Santos', '456.789.123-45', '(31) 98765-4321', 'ana.santos@gmail.com'),
-	('Pedro Souza', '654.321.987-00', '(41) 97654-3210', 'pedro.souza@gmail.com'),
-	('Mariana Lima', '789.123.456-78', '(51) 96543-2109', 'mariana.lima@gmail.com');
-
 SELECT CADASTRAR('cliente','Maria Silva', '123.456.789-10', '(11) 91234-5678', 'maria.silva@gmail.com') 
 SELECT CADASTRAR('CLIENTE','João Oliveira', '987.654.321-00', '(21) 99876-5432', 'joao.oliveira@gmail.com') 
 SELECT CADASTRAR('CLIENTE','Ana Santos', '456.789.123-45', '(31) 98765-4321', 'ana.santos@gmail.com') 
@@ -23,23 +16,21 @@ CREATE TABLE CARGO(
 	NOME VARCHAR(50) NOT NULL,
 	SALARIO NUMERIC(8,2) NOT NULL
 );
-INSERT INTO CARGO (NOME, SALARIO) VALUES 
-	('Gerente', 4800.00),
-	('Supervisor', 2.186.00),
-	('Vendedor', 1.227.00),
-	('Operador de Caixa', 1.782.00),
-	('Estoquista', 1.800.00);
+SELECT CADASTRAR('CARGO','Gerente', 2500.00)
+SELECT CADASTRAR('CARGO','Supervisor', 2186.00)
+SELECT CADASTRAR('CARGO','Vendedor', 1427.00)
+SELECT CADASTRAR('CARGO','Operador de Caixa', 1782.00)
+SELECT CADASTRAR('CARGO','Estoquista', 1350.00)
 
-CREATE TABLE LOJA(
+CREATE TABLE LOJA
 	COD SERIAL NOT NULL PRIMARY KEY,
 	NOME VARCHAR(50) NOT NULL
 );
-INSERT INTO LOJA (NOME) VALUES 
-	('Loja 1'),
-	('Loja 2'),
-	('Loja 3'),
-	('Loja 4'),
-	('Loja 5'); 
+SELECT CADASTRAR('LOJA','Loja 1')
+SELECT CADASTRAR('LOJA','Loja 2')
+SELECT CADASTRAR('LOJA','Loja 3')
+SELECT CADASTRAR('LOJA','Loja 4')
+SELECT CADASTRAR('LOJA','Loja 5')
 
 CREATE TABLE FUNCIONARIO(
 	COD SERIAL NOT NULL PRIMARY KEY,
@@ -54,40 +45,37 @@ CREATE TABLE FUNCIONARIO(
 	CONTATO VARCHAR(20) NOT NULL,
 	EMAIL VARCHAR(50) NOT NULL
 );
-INSERT INTO FUNCIONARIO(COD_CARGO, COD_LOJA, NOME, CPF, CONTATO, EMAIL) VALUES
-	(1, 1, 'João Silva', '123.456.789-01', '(11) 91234-5678', 'joao.silva@email.com'),
-	(2, 1, 'Maria Santos', '987.654.321-09', '(22) 98765-4321', 'maria.santos@email.com'),
-	(3, 2, 'Carlos Oliveira', '222.333.444-55', '(33) 87654-3210', 'carlos.oliveira@email.com'),
-	(4, 2, 'Ana Pereira', '555.666.777-99', '(44) 76543-2109', 'ana.pereira@email.com'),
-	(5, 3, 'Pedro Rocha', '111.222.333-44', '(55) 65432-1098', 'pedro.rocha@email.com'),
-	(1, 3, 'Mariana Costa', '999.888.777-66', '(66) 54321-0987', 'mariana.costa@email.com'),
-	(2, 4, 'Lucas Oliveira', '333.222.111-00', '(77) 43210-9876', 'lucas.oliveira@email.com'),
-	(3, 4, 'Juliana Pereira', '777.888.999-00', '(88) 32109-8765', 'juliana.pereira@email.com'),
-	(4, 5, 'Fernanda Santos', '444.555.666-33', '(99) 21098-7654', 'fernanda.santos@email.com'),
-	(5, 5, 'Rafaela Almeida', '666.777.888-11', '(00) 10987-6543', 'rafaela.almeida@email.com');
-
+SELECT CADASTRAR('FUNCIONARIO','Gerente','Loja 1','João Silva', '123.456.789-01', '(11) 91234-5678', 'joao.silva@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Supervisor','Loja 1','Maria Santos', '987.654.321-09', '(22) 98765-4321', 'maria.santos@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Vendedor','Loja 2','Carlos Oliveira', '222.333.444-55', '(33) 87654-3210', 'carlos.oliveira@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Operador de Caixa','Loja 2','Ana Pereira', '555.666.777-99', '(44) 76543-2109', 'ana.pereira@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Estoquista','Loja 3','Pedro Rocha', '111.222.333-44', '(55) 65432-1098', 'pedro.rocha@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Gerente','Loja 3','Mariana Costa', '999.888.777-66', '(66) 54321-0987', 'mariana.costa@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Supervisor','Loja 4','Lucas Oliveira', '333.222.111-00', '(77) 43210-9876', 'lucas.oliveira@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Vendedor','Loja 4','Juliana Pereira', '777.888.999-00', '(88) 32109-8765', 'juliana.pereira@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Operador de Caixa','Loja 5','Fernanda Santos', '444.555.666-33', '(99) 21098-7654', 'fernanda.santos@email.com')
+SELECT CADASTRAR('FUNCIONARIO','Estoquista','Loja 5','Rafaela Almeida', '666.777.888-11', '(00) 10987-6543', 'rafaela.almeida@email.com')
+	
 CREATE TABLE PAGAMENTO(
 	COD SERIAL NOT NULL PRIMARY KEY,
 	NOME VARCHAR(50) NOT NULL
 );
-INSERT INTO PAGAMENTO (NOME) VALUES 
-	('Cartão de Crédito'),
-	('Cartão de Débito'),
-	('Dinheiro'),
-	('Transferência Bancária'),
-	('Pix');
+SELECT CADASTRAR('PAGAMENTO','Cartão de Crédito')
+SELECT CADASTRAR('PAGAMENTO','Cartão de Débito')
+SELECT CADASTRAR('PAGAMENTO','Dinheiro')
+SELECT CADASTRAR('PAGAMENTO','Transferência Bancária')
+SELECT CADASTRAR('PAGAMENTO','Pix')
 
 CREATE TABLE CATEGORIA(
 	COD SERIAL NOT NULL PRIMARY KEY,
 	NOME VARCHAR(100) NOT NULL,
 	DESCRICAO TEXT NOT NULL
 );
-INSERT INTO CATEGORIA (NOME, DESCRICAO) VALUES 
-	('Camisetas', 'Camisetas de diversos estilos e cores'),
-	('Calças Jeans', 'Calças jeans masculinas e femininas'),
-	('Vestidos', 'Vestidos elegantes para diversas ocasiões'),
-	('Sapatos', 'Calçados confortáveis e estilosos'),
-	('Acessórios', 'Acessórios variados, como bolsas e cintos');
+SELECT CADASTRAR('CATEGORIA','Camisetas', 'Camisetas de diversos estilos e cores')
+SELECT CADASTRAR('CATEGORIA','Calças Jeans', 'Calças jeans masculinas e femininas')
+SELECT CADASTRAR('CATEGORIA','Vestidos', 'Vestidos elegantes para diversas ocasiões')
+SELECT CADASTRAR('CATEGORIA','Sapatos', 'Calçados confortáveis e estilosos')
+SELECT CADASTRAR('CATEGORIA','Acessórios', 'Acessórios variados, como bolsas e cintos')
 
 CREATE TABLE PRODUTO(
 	COD SERIAL NOT NULL PRIMARY KEY,
@@ -97,17 +85,16 @@ CREATE TABLE PRODUTO(
 	NOME VARCHAR(50) NOT NULL,
 	VALOR_UNITARIO NUMERIC(8,2) NOT NULL
 );
-INSERT INTO PRODUTO (COD_CATEGORIA, NOME, VALOR_UNITARIO) VALUES 
-	(1, 'Camiseta Básica', 29.99),
-	(1, 'Camiseta Estampada', 39.99),
-	(2, 'Calça Jeans Skinny', 89.99),
-	(2, 'Calça Jeans Reta', 79.99),
-	(3, 'Vestido Midi Floral', 129.99),
-	(3, 'Vestido Longo de Festa', 199.99),
-	(4, 'Sapato Social Masculino', 149.99),
-	(4, 'Sapato Anabela Feminino', 119.99),
-	(5, 'Bolsa Transversal', 79.99),
-	(5, 'Cinto de Couro', 49.99);
+SELECT CADASTRAR('PRODUTO','Camisetas','Camiseta Básica', 29.99)
+SELECT CADASTRAR('PRODUTO','Camisetas','Camiseta Estampada', 39.99)
+SELECT CADASTRAR('PRODUTO','Calças Jeans','Calça Jeans Skinny', 89.99)
+SELECT CADASTRAR('PRODUTO','Calças Jeans','Calça Jeans Reta', 79.99)
+SELECT CADASTRAR('PRODUTO','Vestidos','Vestido Midi Floral', 129.99)
+SELECT CADASTRAR('PRODUTO','Vestidos','Vestido Longo de Festa', 199.99)
+SELECT CADASTRAR('PRODUTO','Sapatos','Sapato Social Masculino', 149.99)
+SELECT CADASTRAR('PRODUTO','Sapatos','Sapato Anabela Feminino', 119.99)
+SELECT CADASTRAR('PRODUTO','Acessórios','Bolsa Transversal', 79.99)
+SELECT CADASTRAR('PRODUTO','Acessórios','Cinto de Couro', 49.99)
 
 CREATE TABLE ESTOQUE(
 	COD SERIAL NOT NULL PRIMARY KEY, 
@@ -119,18 +106,17 @@ CREATE TABLE ESTOQUE(
 		ON DELETE RESTRICT,
 	QUANTIDADE INT NOT NULL
 );
-INSERT INTO ESTOQUE (COD_PRODUTO, COD_LOJA, QUANTIDADE) VALUES 
-	(1, 1, 100),
-	(3, 1, 80),
-	(6, 1, 80),
-	(2, 2, 50),
-	(4, 2, 70),
-	(8, 2, 70),
-	(9, 3, 120),
-	(10, 3, 60),
-	(5, 3, 60),
-	(1, 1, 90);
-
+SELECT CADASTRAR('ESTOQUE','Camiseta Básica','Loja 1',100)
+SELECT CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 2',100)
+SELECT CADASTRAR('ESTOQUE','Calça Jeans Skinny','Loja 3',100)
+SELECT CADASTRAR('ESTOQUE','Calça Jeans Reta','Loja 4',100)
+SELECT CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 5',100)
+SELECT CADASTRAR('ESTOQUE','Vestido Longo de Festa','Loja 1',100)
+SELECT CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 2',100)
+SELECT CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 3',100)
+SELECT CADASTRAR('ESTOQUE','Bolsa Transversal','Loja 4',100)
+SELECT CADASTRAR('ESTOQUE','Cinto de Couro','Loja 5',100)
+	
 CREATE TABLE PEDIDO(
 	COD SERIAL NOT NULL PRIMARY KEY,
 	COD_CLIENTE INT NOT NULL REFERENCES CLIENTE(COD) 
@@ -146,12 +132,6 @@ CREATE TABLE PEDIDO(
 	DATA_HORA TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	PAGO BOOLEAN DEFAULT FALSE NOT NULL
 );
-INSERT INTO PEDIDO (COD_CLIENTE, COD_FUNCIONARIO, COD_PAGAMENTO, VALOR_TOTAL, DATA_HORA, PAGO) VALUES 
-	(1, 1, 1, 150.00, CURRENT_TIMESTAMP, TRUE),
-	(2, 2, 2, 250.00, CURRENT_TIMESTAMP, TRUE),
-	(3, 3, 3, 180.00, CURRENT_TIMESTAMP, TRUE),
-	(4, 4, 4, 200.00, CURRENT_TIMESTAMP, FALSE),
-	(5, 5, 5, 300.00, CURRENT_TIMESTAMP, FALSE);
 
 CREATE TABLE ITEM_PEDIDO(
 	COD SERIAL NOT NULL PRIMARY KEY,
@@ -164,10 +144,3 @@ CREATE TABLE ITEM_PEDIDO(
 	QUANTIDADE INT NOT NULL,
 	VALOR_TOTAL_ITEM NUMERIC(8,2) NOT NULL
 );
-INSERT INTO ITEM_PEDIDO (COD_PEDIDO, COD_ESTOQUE, QUANTIDADE, VALOR_TOTAL_ITEM) VALUES 
-	(1, 1, 2, 50.00),
-	(1, 2, 1, 100.00),
-	(2, 3, 1, 150.00),
-	(3, 4, 2, 120.00),
-	(4, 5, 1, 200.00),
-	(5, 6, 3, 300.00);
