@@ -13,7 +13,7 @@ BEGIN
 			JOIN FUNCIONARIO F ON F.COD = P.COD_FUNCIONARIO
 			WHERE 
 				CPF ILIKE CPF_F 
-				AND DATA_HORA >= DT_I --verifica se a data do pedido é igual ou suerior que a data final
+				AND DATA_HORA >= DT_I --verifica se a data do pedido é igual ou superior que a data final
 				AND DATA_HORA < (DT_F + INTERVAL '1 DAY')  --verifica se a data é anterior a data final e adiciona o intervalo de 1 dia
 				AND PAGO = TRUE;
 	
