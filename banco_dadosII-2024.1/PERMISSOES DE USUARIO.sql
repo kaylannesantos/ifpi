@@ -1,0 +1,6 @@
+-----------------------GERENCIAMENTO DE USUÁRIOS E PERMISSÕES DE ACESSO----------------------------------------------------
+--GERENTE
+--SUPERVISOR
+--VENDEDOR
+--OPERADOR DE CAIXA
+--ESTOQUISTA
