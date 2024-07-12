@@ -1,5 +1,4 @@
 --------------------------------------------------------INSERT's---------------------------------------------------
--- BLOCO DE INSERÇÃO EM UMA ÚNICA TRANSAÇÃO
 
 DO $$ 
 	BEGIN
@@ -55,7 +54,6 @@ PERFORM CADASTRAR('FUNCIONARIO','Estoquista','Loja 5','Rodrigo De Gomes Monteiro
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Crédito');
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Débito');
 PERFORM CADASTRAR('PAGAMENTO','Dinheiro');
-PERFORM CADASTRAR('PAGAMENTO','Transferência Bancária');
 PERFORM CADASTRAR('PAGAMENTO','Pix');
 
 PERFORM CADASTRAR('CATEGORIA','Camisetas', 'Camisetas de diversos estilos e cores');
@@ -104,4 +102,4 @@ PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 5',100);
 PERFORM CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 5',100);
 PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 5',100);
 PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 5',100);
-	END $$; -- FECHAMENTO DO BLOCO
+	END $$;
