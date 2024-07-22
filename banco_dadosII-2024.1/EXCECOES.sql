@@ -4,6 +4,8 @@
 '^\([0-9]{2}\) [0-9]{10}' - formato contato
 '.*[0-9].*' - numeros dentro de uma string
 '^[0-9]' - numeros no comeco da string
+'^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}-[0-9]{2}$' - formato cnpj 8 primeiros digitos raiz do cnpj, 4 digitos posteriores filial, 2 digitos seguintes codigo verificador
+'^[0-9\.\(\)\-\s]+$'
 */
 ------------------------------------------------EXCEÇÕES--------------------------------------------------------------
 
@@ -14,7 +16,7 @@ DECLARE
 BEGIN 
     FOREACH ATRIBUTO IN ARRAY ATRIBUTOS
     LOOP
-		IF ATRIBUTO !~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$' AND ATRIBUTO !~ '^\([0-9]{2}\) [0-9]{5}\-[0-9]{4}$' THEN --IF ATRIBUTO !~ '^[0-9\.\(\)\-\s]+$' THEN
+		IF ATRIBUTO !~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$' AND ATRIBUTO !~ '^\([0-9]{2}\) [0-9]{5}\-[0-9]{4}$' AND ATRIBUTO !~ '^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}-[0-9]{2}$' THEN
 			RAISE EXCEPTION 'ERROR: ATRIBUTO DE VALOR INVÁLIDO %.', ATRIBUTO;
 		ELSIF ATRIBUTO = '' OR TRIM(ATRIBUTO) = '' THEN
 			RAISE EXCEPTION 'ERROR: ATRIBUTO VÁZIO.';
@@ -26,7 +28,7 @@ $$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION TG_VERIFICAR_ATRIBUTOS_INT()
 RETURNS TRIGGER AS $$
 BEGIN
-    PERFORM VERIFICAR_ATRIBUTOS_INT(ARRAY[NEW.CPF, NEW.CONTATO]);
+    PERFORM VERIFICAR_ATRIBUTOS_INT(ARRAY[NEW.CPF, NEW.CONTATO, NEW.CNPJ]);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql; 
@@ -39,6 +41,11 @@ EXECUTE FUNCTION TG_VERIFICAR_ATRIBUTOS_INT();
 
 CREATE TRIGGER TG_CHECK_INT
 BEFORE INSERT OR UPDATE ON FUNCIONARIO
+FOR EACH ROW
+EXECUTE FUNCTION TG_VERIFICAR_ATRIBUTOS_INT();
+
+CREATE TRIGGER TG_CHECK_INT
+BEFORE INSERT OR UPDATE ON LOJA
 FOR EACH ROW
 EXECUTE FUNCTION TG_VERIFICAR_ATRIBUTOS_INT();
 
