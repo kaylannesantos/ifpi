@@ -14,10 +14,8 @@ PERFORM CADASTRAR('CLIENTE','Jessica Maria de Almeida', '098.654.345-22', '(21) 
 PERFORM CADASTRAR('CLIENTE','Lucas Lopes Menezes', '989.654.433-11', '(21) 99900-1212', 'kaioalbuquerque@gmail.com');
 	
 PERFORM CADASTRAR('CARGO','Gerente', 2250.00);
-PERFORM CADASTRAR('CARGO','Supervisor', 2186.00);
-PERFORM CADASTRAR('CARGO','Vendedor', 1427.00);
-PERFORM CADASTRAR('CARGO','Operador de Caixa', 1782.00);
-PERFORM CADASTRAR('CARGO','Estoquista', 1350.00);
+PERFORM CADASTRAR('CARGO','Vendedor', 1650.00, 0.1);
+PERFORM CADASTRAR('CARGO','Operador de Caixa', 1412.00, 0.05);
 
 PERFORM CADASTRAR('Loja 1', '12.345.678/0001-95', 'Rua Aviador, Centro, Teresina (PI), N°6770, CEP 12345-678');
 PERFORM CADASTRAR('Loja 2', '12.345.678/0002-86', 'Avenida Benhur Marques, Bairro Árvores Verdes, Altos (PI), N°456, CEP 23456-789');
@@ -27,39 +25,28 @@ PERFORM CADASTRAR('Loja 5', '12.345.678/0005-59', 'Praça Esperança, Bairro Min
 
 --funcionario loja 1
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 1', 'João Silva', '123.456.789-01', '(89) 91234-5678', 'joao.silva@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Supervisor', 'Loja 1', 'Maria Oliveira', '234.567.890-12', '(89) 92345-6789', 'maria.oliveira@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 1', 'Carlos Santos', '345.678.901-23', '(89) 93456-7890', 'carlos.santos@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 1', 'Ana Costa', '456.789.012-34', '(89) 94567-8901', 'ana.costa@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Estoquista', 'Loja 1', 'Pedro Lima', '567.890.123-45', '(89) 95678-9012', 'pedro.lima@email.com');
 	
 --funcionario loja 2
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 2', 'Lucas Almeida', '678.901.234-56', '(89) 96789-0123', 'lucas.almeida@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Supervisor', 'Loja 2', 'Fernanda Silva', '789.012.345-67', '(89) 97890-1234', 'fernanda.silva@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 2', 'Roberto Pereira', '890.123.456-78', '(89) 98901-2345', 'roberto.pereira@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 2', 'Juliana Martins', '901.234.567-89', '(89) 99012-3456', 'juliana.martins@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Estoquista', 'Loja 2', 'Thiago Santos', '012.345.678-90', '(89) 90123-4567', 'thiago.santos@email.com');
 	
 --funcionario loja 3
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 3', 'Juliana Rocha', '234.567.890-12', '(86) 91234-5678', 'juliana.rocha@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Supervisor', 'Loja 3', 'Eduardo Lima', '345.678.901-23', '(86) 92345-6789', 'eduardo.lima@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 3', 'Beatriz Costa', '456.789.012-34', '(86) 93456-7890', 'beatriz.costa@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 3', 'Felipe Martins', '567.890.123-45', '(86) 94567-8901', 'felipe.martins@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Estoquista', 'Loja 3', 'Aline Silva', '678.901.234-56', '(86) 95678-9012', 'aline.silva@email.com');
 	
 --funcionario loja 4
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 4', 'Ricardo Pereira', '789.012.345-67', '(86) 96789-0123', 'ricardo.pereira@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Supervisor', 'Loja 4', 'Camila Santos', '890.123.456-78', '(86) 97890-1234', 'camila.santos@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 4', 'Tiago Almeida', '901.234.567-89', '(86) 98901-2345', 'tiago.almeida@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 4', 'Larissa Oliveira', '012.345.678-90', '(86) 99012-3456', 'larissa.oliveira@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Estoquista', 'Loja 4', 'Gustavo Costa', '123.456.789-01', '(86) 90123-4567', 'gustavo.costa@email.com');
 	
 --funcionario loja 5
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 5', 'Mariana Rocha', '234.567.890-12', '(86) 91234-5678', 'mariana.rocha@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Supervisor', 'Loja 5', 'Pedro Lima', '345.678.901-23', '(86) 92345-6789', 'pedro.lima@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 5', 'Sofia Almeida', '456.789.012-34', '(86) 93456-7890', 'sofia.almeida@email.com');
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 5', 'Bruno Oliveira', '567.890.123-45', '(86) 94567-8901', 'bruno.oliveira@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Estoquista', 'Loja 5', 'Raquel Santos', '678.901.234-56', '(86) 95678-9012', 'raquel.santos@email.com');
-
 
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Crédito');
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Débito');
