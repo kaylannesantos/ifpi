@@ -88,9 +88,10 @@ ORDER BY PDD.COD DESC;
 
 CREATE OR REPLACE VIEW CARNE_CREDIARIO AS 
 SELECT 
-	C.QUANTIDADE_PARCELA as "n°Parcela",
+	'n°' || C.QUANTIDADE_PARCELA as "Parcela",
 	CLI.NOME as "Cliente",
 	CLI.CPF as cpf,
+	COALESCE(C.VALOR_JUROS::VARCHAR, 'Sem Juros') as "Valor Juros",
 	C.VALOR_PARCELA as "Valor Parcela", 
 	PROD.NOME as "Produto",
 	IP.QUANTIDADE as "Quantidade",
