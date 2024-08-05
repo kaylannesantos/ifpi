@@ -91,11 +91,14 @@ SELECT
 	'n°' || C.QUANTIDADE_PARCELA as "Parcela",
 	CLI.NOME as "Cliente",
 	CLI.CPF as cpf,
-	COALESCE(C.VALOR_JUROS::VARCHAR, 'Sem Juros') as "Valor Juros",
-	C.VALOR_PARCELA as "Valor Parcela", 
 	PROD.NOME as "Produto",
 	IP.QUANTIDADE as "Quantidade",
 	PROD.VALOR_UNITARIO as "Valor Unitario",
+    CASE 
+        WHEN C.VALOR_JUROS IS NULL OR C.VALOR_JUROS = 0.00 THEN 'Sem Juros'
+        ELSE C.VALOR_JUROS::VARCHAR
+    END AS "Valor Juros",
+	C.VALOR_PARCELA as "Valor Parcela",
 	L.NOME as "Loja",
 	L.CNPJ as "cnpj",
 	F.NOME as "Funcionário",
