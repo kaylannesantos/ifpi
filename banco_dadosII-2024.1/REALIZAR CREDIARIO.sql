@@ -49,19 +49,20 @@ $$ LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION PAGAR_CARNE(CPF_C VARCHAR(15), DATA_PAG TIMESTAMP DEFAULT CURRENT_TIMESTAMP) --PAGAR_CARNE_CREDIARIO
 RETURNS TABLE(
-    "n°Parcela" INT,
-    "Cliente" VARCHAR,
-    "CPF" VARCHAR(15),
-    "Valor Parcela" NUMERIC(10, 2),
-    "Produto" VARCHAR,
-    "Quantidade" INT,
-    "Valor Unitario" NUMERIC(10, 2),
-    "Loja" VARCHAR,
-    cnpj VARCHAR(14),
-    "Funcionário" VARCHAR,
-    "Data Vencimento" VARCHAR(10),
-    "Data Pagamento" VARCHAR(10),
-    "id°Pedido" INT) AS $$
+	"Parcela" TEXT,
+	"Cliente" VARCHAR,
+	"CPF" VARCHAR,
+	"Produto" VARCHAR,
+	"Quantidade" INT,
+	"Valor" NUMERIC,
+    "Valor Juros" VARCHAR,
+	"Valor Parcela" NUMERIC,
+	"Loja" VARCHAR,
+	"cnpj" VARCHAR,
+	"Funcionário" VARCHAR,
+	"Data Vencimento" VARCHAR,
+	"Data Pagamento" VARCHAR,
+	"id°Pedido" INT) AS $$
 DECLARE
 	COD_CLI INT; --CLIENTE
 	COD_P INT; --PEDIDO
@@ -117,7 +118,42 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-SELECT ADD_PEDIDO('123.456.789-10', 'Calça Jeans Skinny', 3, 'Crediário','890.123.456-78',4)
+-------------------------------------------------------VER CARNÊ CREDIARIO-------------------------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION VER_CARNE(COD_P INT) --DROP FUNCTION VER_CARNE
+RETURNS TABLE(
+	"Parcela" TEXT,
+	"Cliente" VARCHAR,
+	"CPF" VARCHAR,
+	"Produto" VARCHAR,
+	"Quantidade" INT,
+	"Valor" NUMERIC,
+    "Valor Juros" VARCHAR,
+	"Valor Parcela" NUMERIC,
+	"Loja" VARCHAR,
+	"cnpj" VARCHAR,
+	"Funcionário" VARCHAR,
+	"Data Vencimento" VARCHAR,
+	"Data Pagamento" VARCHAR,
+	"id°Pedido" INT) AS $$
+DECLARE 
+    CPF_C VARCHAR(15);
+BEGIN
+    SELECT CPF INTO CPF_C FROM CLIENTE CLI 
+    JOIN PEDIDO P ON CLI.COD = P.COD_CLIENTE
+    JOIN CREDIARIO C ON P.COD = C.COD_PEDIDO
+    WHERE P.COD = COD_P GROUP BY CLI.CPF;
+    
+    RETURN QUERY
+    SELECT *
+    FROM CARNE_CREDIARIO CC
+    WHERE CC.CPF = CPF_C AND CC."id°Pedido" = COD_P;
+END;
+$$ LANGUAGE PLPGSQL;
+
+----------------------------------------------------------------------------------------------------------------------------
+
+SELECT ADD_PEDIDO('123.456.789-10', 'Calça Jeans Skinny', 1, 'Crediário','890.123.456-78',2)
 SELECT * FROM FINALIZAR_PEDIDO('123.456.789-10')
 SELECT * FROM PAGAR_CARNE('123.456.789-10')
 SELECT * FROM VER_CARNE()
@@ -138,37 +174,3 @@ FROM PEDIDO PDD,
 	(SELECT COUNT(QUANTIDADE_PARCELA) QTDD_P FROM CREDIARIO) P, 
 	(SELECT VALOR_JUROS JUROS FROM CREDIARIO) J
 WHERE COD_PEDIDO = COD_PDD;
--------------------------------------------------------VER CARNÊ CREDIARIO-------------------------------------------------------------------------
-
-CREATE OR REPLACE FUNCTION VER_CARNE(COD_P INT) --VER_CARNE_CREDIARIO
-RETURNS TABLE(
-	"Parcela" TEXT,
-	"Cliente" VARCHAR,
-	"CPF" VARCHAR,
-	"Produto" VARCHAR,
-	"Quantidade" INT,
-	"Valor Unitario" NUMERIC,
-    "Valor Juros" VARCHAR,
-	"Valor Parcela" NUMERIC,
-	"Loja" VARCHAR,
-	"cnpj" VARCHAR,
-	"Funcionário" VARCHAR,
-	"Data Vencimento" VARCHAR,
-	"Data Pagamento" VARCHAR,
-	"id°Pedido" INT) AS $$
-DECLARE 
-    CPF_C VARCHAR(15);
-BEGIN
-    SELECT CPF INTO CPF_C FROM CLIENTE CLI 
-    JOIN PEDIDO P ON CLI.COD = P.COD_CLIENTE
-    JOIN CREDIARIO C ON P.COD = C.COD_PEDIDO
-    WHERE P.COD = COD_P GROUP BY CLI.CPF;
-    
-    RETURN QUERY
-    SELECT *
-    FROM CARNE_CREDIARIO CC
-    WHERE CC.CPF = CPF_C;
-END;
-$$ LANGUAGE PLPGSQL;
-SELECT * FROM VER_CARNE(75)
-----------------------------------------------------------------------------------------------------------------------------
