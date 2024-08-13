@@ -1,0 +1,9 @@
+1) Estude o que é o DOM e a que ele se aplica a partir das seguintes páginas.
+DOM representa a estrutura do documento HTML e XML como uma arvore de objetos, 
+onde cada elemento do documento representa um no nessa arvore. Ou seja, o HTML DOM é um padrão de como obter, 
+alterar, adicionar ou excluir elementos HTML.
+
+5) Qual a diferença entre as propriedades textContent e innerHTML dos elementos
+HTML? Cite exemplos
+Usando o textContent você manipula o conteudo contido em um elemento, sem manipular o html presente dentro esse elemento.
+O innerHTML manipula tanto o conteudo como quanto o html dentro desse elemento.
