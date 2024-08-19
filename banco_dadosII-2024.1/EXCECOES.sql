@@ -1,12 +1,3 @@
-/*	
-'^[^a-zA-Z0-9]+$' - caracteres especiais
-'^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$' - formato cpf
-'^\([0-9]{2}\) [0-9]{10}' - formato contato
-'.*[0-9].*' - numeros dentro de uma string
-'^[0-9]' - numeros no comeco da string
-'^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}-[0-9]{2}$' - formato cnpj 8 primeiros digitos raiz do cnpj, 4 digitos posteriores filial, 2 digitos seguintes codigo verificador
-'^[0-9\.\(\)\-\s]+$'
-*/
 ------------------------------------------------EXCEÇÕES--------------------------------------------------------------
 
 CREATE OR REPLACE FUNCTION VERIFICAR_ATRIBUTOS_INT(ATRIBUTOS VARCHAR[])
@@ -16,7 +7,9 @@ DECLARE
 BEGIN 
     FOREACH ATRIBUTO IN ARRAY ATRIBUTOS
     LOOP
-		IF ATRIBUTO !~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$' AND ATRIBUTO !~ '^\([0-9]{2}\) [0-9]{5}\-[0-9]{4}$' THEN
+		IF ATRIBUTO !~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}\-[0-9]{2}$' 
+		AND ATRIBUTO !~ '^\([0-9]{2}\) [0-9]{5}\-[0-9]{4}$' 
+		AND ATRIBUTO !~ '^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}-[0-9]{2}$' THEN
 			RAISE EXCEPTION 'ERROR: ATRIBUTO DE VALOR INVÁLIDO %.', ATRIBUTO;
 		ELSIF ATRIBUTO = '' OR TRIM(ATRIBUTO) = '' THEN
 			RAISE EXCEPTION 'ERROR: ATRIBUTO VÁZIO.';
@@ -33,21 +26,10 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql; 
 
-CREATE OR REPLACE FUNCTION VERIFICAR_ATRIBUTO_CNPJ(ATRIBUTO VARCHAR(18)) -- VERIFICAR CNPJ
-RETURNS VOID AS $$ 
-BEGIN 
-	IF ATRIBUTO !~ '^[0-9]{2}\.[0-9]{3}\.[0-9]{3}/[0-9]{4}-[0-9]{2}$' THEN
-		RAISE EXCEPTION 'ERROR: ATRIBUTO DE VALOR INVÁLIDO %.', ATRIBUTO;
-	ELSIF ATRIBUTO = '' OR TRIM(ATRIBUTO) = '' THEN
-		RAISE EXCEPTION 'ERROR: ATRIBUTO VÁZIO.';
-	END IF;
-END;
-$$ LANGUAGE PLPGSQL;
-
 CREATE OR REPLACE FUNCTION TG_VERIFICAR_ATRIBUTO_CNPJ() -- TRIGGER VERIFICAR CNPJ
 RETURNS TRIGGER AS $$
 BEGIN
-    PERFORM VERIFICAR_ATRIBUTO_CNPJ(NEW.CNPJ);
+    PERFORM VERIFICAR_ATRIBUTOS_INT(ARRAY[NEW.CNPJ]);
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -63,7 +45,7 @@ BEFORE INSERT OR UPDATE ON FUNCIONARIO
 FOR EACH ROW
 EXECUTE FUNCTION TG_VERIFICAR_ATRIBUTOS_INT();
 
-CREATE TRIGGER TG_CHECK_CNPJ
+CREATE TRIGGER TG_CHECK_INT
 BEFORE INSERT OR UPDATE ON LOJA
 FOR EACH ROW
 EXECUTE FUNCTION TG_VERIFICAR_ATRIBUTO_CNPJ();
