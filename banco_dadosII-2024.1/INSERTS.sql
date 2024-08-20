@@ -14,9 +14,9 @@ PERFORM CADASTRAR('CARGO','Operador de Caixa', 1412.00, 0.05);
 
 PERFORM CADASTRAR('LOJA', 'Loja 1', '12.345.678/0001-95', 'Rua Aviador, Centro, Teresina (PI), N°6770, CEP 12345-678');
 PERFORM CADASTRAR('LOJA', 'Loja 2', '12.345.678/0002-86', 'Avenida Benhur Marques, Bairro Árvores Verdes, Altos (PI), N°456, CEP 23456-789');
-PERFORM CADASTRAR('LOJA', 'Loja 3', '12.345.678/0003-77', 'Rua Isidoro Martins, Bairro Vermelha, Teresina (PI), N°2002, CEP 34567-890');
-PERFORM CADASTRAR('LOJA', 'Loja 4', '12.345.678/0004-68', 'Rua Alameda Dos Ipês, Bairro Primavera, Teresina (PI), N°602, CEP 45678-901');
-PERFORM CADASTRAR('LOJA', 'Loja 5', '12.345.678/0005-59', 'Praça Esperança, Bairro Ministro Portela, José De Freitas (PI), N°2770, CEP 56789-012');
+--PERFORM CADASTRAR('LOJA', 'Loja 3', '12.345.678/0003-77', 'Rua Isidoro Martins, Bairro Vermelha, Teresina (PI), N°2002, CEP 34567-890');
+--PERFORM CADASTRAR('LOJA', 'Loja 4', '12.345.678/0004-68', 'Rua Alameda Dos Ipês, Bairro Primavera, Teresina (PI), N°602, CEP 45678-901');
+--PERFORM CADASTRAR('LOJA', 'Loja 5', '12.345.678/0005-59', 'Praça Esperança, Bairro Ministro Portela, José De Freitas (PI), N°2770, CEP 56789-012');
 
 --funcionario loja 1
 PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 1', 'João Silva', '123.456.789-01', '(89) 91234-5678', 'joaosilva@email.com');
@@ -29,19 +29,19 @@ PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 2', 'Roberto Pereira', '890.12
 PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 2', 'Juliana Martins', '901.234.567-89', '(89) 99012-3456', 'jumartins@email.com');
 	
 --funcionario loja 3
-PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 3', 'Juliana Rocha', '234.567.890-12', '(86) 91234-5678', 'julianarocha@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 3', 'Beatriz Costa', '456.789.012-00', '(86) 93456-7890', 'beatrizcosta@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 3', 'Felipe Martins', '567.890.123-45', '(86) 94567-8901', 'felipemartins@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 3', 'Juliana Rocha', '234.567.890-12', '(86) 91234-5678', 'julianarocha@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 3', 'Beatriz Costa', '456.789.012-00', '(86) 93456-7890', 'beatrizcosta@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 3', 'Felipe Martins', '567.890.123-45', '(86) 94567-8901', 'felipemartins@email.com');
 	
 --funcionario loja 4
-PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 4', 'Ricardo Pereira', '789.012.345-67', '(86) 96789-0123', 'ricardopereira@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 4', 'Tiago Almeida', '901.777.567-99', '(86) 98901-2345', 'tiago.almeida@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 4', 'Larissa Oliveira', '012.345.678-90', '(86) 99012-3456', 'larissaoliver@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 4', 'Ricardo Pereira', '789.012.345-67', '(86) 96789-0123', 'ricardopereira@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 4', 'Tiago Almeida', '901.777.567-99', '(86) 98901-2345', 'tiago.almeida@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 4', 'Larissa Oliveira', '012.345.678-90', '(86) 99012-3456', 'larissaoliver@email.com');
 	
 --funcionario loja 5
-PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 5', 'Mariana Rocha', '123.567.000-12', '(86) 91234-5678', 'mariana.rocha@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 5', 'Sofia Almeida', '456.789.012-67', '(86) 93456-7890', 'sofiaalmeida@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 5', 'Bruno Oliveira', '567.111.123-45', '(86) 94567-8901', 'brunooliveira@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 5', 'Mariana Rocha', '123.567.000-12', '(86) 91234-5678', 'mariana.rocha@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 5', 'Sofia Almeida', '456.789.012-67', '(86) 93456-7890', 'sofiaalmeida@email.com');
+--PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 5', 'Bruno Oliveira', '567.111.123-45', '(86) 94567-8901', 'brunooliveira@email.com');
 
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Crédito');
 PERFORM CADASTRAR('PAGAMENTO','Cartão de Débito');
@@ -79,20 +79,20 @@ PERFORM CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 2',100);
 PERFORM CADASTRAR('ESTOQUE','Cinto de Couro','Loja 2',100);
 
 --estoque loja 3
-PERFORM CADASTRAR('ESTOQUE','Calça Jeans Skinny','Loja 3',100);
-PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 3',100);
-PERFORM CADASTRAR('ESTOQUE','Cinto de Couro','Loja 3',100);
-PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 3',100);
+--PERFORM CADASTRAR('ESTOQUE','Calça Jeans Skinny','Loja 3',100);
+--PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 3',100);
+--PERFORM CADASTRAR('ESTOQUE','Cinto de Couro','Loja 3',100);
+--PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 3',100);
 
 --estoque loja 4
-PERFORM CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 4',100);
-PERFORM CADASTRAR('ESTOQUE','Vestido Longo de Festa','Loja 4',100);
-PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 4',100);
-PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 4',100);
+--PERFORM CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 4',100);
+--PERFORM CADASTRAR('ESTOQUE','Vestido Longo de Festa','Loja 4',100);
+--PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 4',100);
+--PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 4',100);
 
 --estoque loja 5
-PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 5',100);
-PERFORM CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 5',100);
-PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 5',100);
-PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 5',100);
+--PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 5',100);
+--PERFORM CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 5',100);
+--PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 5',100);
+--PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 5',100);
 	END $$;
