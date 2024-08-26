@@ -2,9 +2,9 @@
 
 DO $$ 
 	BEGIN
-PERFORM CADASTRAR('CLIENTE','Maria Silva Oliveira', '123.456.789-10', '(11) 91234-5678', 'mariasilva@gmail.com');
-PERFORM CADASTRAR('CLIENTE','João Oliveira Menezes', '987.654.321-00', '(21) 99876-5432', 'j.oliveira@gmail.com'); 
-PERFORM CADASTRAR('CLIENTE','Ana Maria Santos ', '456.789.123-45', '(89) 98765-4321', 'anamsantos@gmail.com'); 
+PERFORM CADASTRAR('CLIENTE','Maria Silva Oliveira', '123.456.789-10', '(86) 99234-5678', 'mariasilva@gmail.com');
+PERFORM CADASTRAR('CLIENTE','João Oliveira Menezes', '987.654.321-00', '(89) 99876-5432', 'j.oliveira@gmail.com'); 
+PERFORM CADASTRAR('CLIENTE','Ana Maria Santos', '456.789.123-45', '(89) 98765-4321', 'anamsantos@gmail.com'); 
 PERFORM CADASTRAR('CLIENTE','Pedro Souza Gomes', '654.321.987-00', '(86) 97654-3210', 'pedrogomes@gmail.com'); 
 PERFORM CADASTRAR('CLIENTE','Mariana Lima Silva', '789.123.456-78', '(86) 96543-2109', 'marisilva@gmail.com');
 	
@@ -68,14 +68,16 @@ PERFORM CADASTRAR('PRODUTO','Acessórios','Cinto de Couro', 49.99);
 
 --estoque loja 1
 PERFORM CADASTRAR('ESTOQUE','Camiseta Básica','Loja 1',100);
-PERFORM CADASTRAR('ESTOQUE','Vestido Longo de Festa','Loja 1',100);
-PERFORM CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 1',100);
-PERFORM CADASTRAR('ESTOQUE','Cinto de Couro','Loja 1',100);
+PERFORM CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 1',100);
+PERFORM CADASTRAR('ESTOQUE','Calça Jeans Skinny','Loja 1',100);
+PERFORM CADASTRAR('ESTOQUE','Calça Jeans Reta','Loja 1',100);
+PERFORM CADASTRAR('ESTOQUE','Vestido Midi Floral','Loja 1',100);
 
 --estoque loja 2
-PERFORM CADASTRAR('ESTOQUE','Camiseta Estampada','Loja 2',100);
-PERFORM CADASTRAR('ESTOQUE','Calça Jeans Skinny','Loja 2',100);
+PERFORM CADASTRAR('ESTOQUE','Vestido Longo de Festa','Loja 2',100);
+PERFORM CADASTRAR('ESTOQUE','Sapato Social Masculino','Loja 2',100);
 PERFORM CADASTRAR('ESTOQUE','Sapato Anabela Feminino','Loja 2',100);
+PERFORM CADASTRAR('ESTOQUE','Bolsa Transversal','Loja 2',100);
 PERFORM CADASTRAR('ESTOQUE','Cinto de Couro','Loja 2',100);
 
 --estoque loja 3
