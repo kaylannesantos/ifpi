@@ -174,7 +174,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 ----------------------------------------------------------------------------------------------------------------------------
-/*
+
 SELECT * FROM PEDIDO; --DELETE FROM PEDIDO
 SELECT * FROM ITEM_PEDIDO; --DELETE FROM ITEM_PEDIDO
 SELECT * FROM CREDIARIO; --DELETE FROM CREDIARIO
@@ -185,8 +185,7 @@ SELECT * FROM ESTOQUE;
 SELECT * FROM PRODUTO;
 SELECT * FROM PAGAMENTO;
 
-SELECT ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Estampada', 1, 'Crediário','João Silva', 2);
+SELECT ADD_PEDIDO('Mariana Lima Silva', 'Vestido Longo de Festa', 5, 'Crediário','Roberto Pereira', 8);
 SELECT * FROM PAGAR_PEDIDO('123.456.789-10');
 
 SELECT * FROM PAGAR_CREDIARIO('Maria Silva Oliveira')
-*/
