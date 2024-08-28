@@ -52,7 +52,49 @@ CREATE OR REPLACE TRIGGER TG_CONTROLE_ESTOQUE
 BEFORE INSERT OR UPDATE ON ITEM_PEDIDO
 FOR EACH ROW
 EXECUTE FUNCTION CONTROLE_ESTOQUE();
+
+---------------------------------------------------NOTA FISCAL-----------------------------------------------------------
+
+CREATE OR REPLACE FUNCTION NOTA_FISCAL(COD_P INT) --DROP FUNCTION NOTA_FISCAL
+RETURNS TABLE (
+	"n°Pedido" VARCHAR, 
+	Cliente VARCHAR(100), 
+	Produto VARCHAR(100), 
+	Valor NUMERIC(8,2), 
+	Quantidade INT, 
+	Total NUMERIC(8,2), 
+	Data VARCHAR(10), 
+	Hora VARCHAR(8), 
+	Funcionario VARCHAR(100), 
+	Pago TEXT) AS $$
+BEGIN
+	RETURN QUERY
+		SELECT 
+			(PDD.COD)::VARCHAR "n°Pedido", 
+			C.NOME Cliente, 
+			P.NOME Produto, 
+			P.VALOR_UNITARIO Valor, 
+			IP.QUANTIDADE Quantidade, 
+			(P.VALOR_UNITARIO * IP.QUANTIDADE) Total, 
+			(TO_CHAR(PDD.DATA_HORA, 'DD-MM-YYYY'))::VARCHAR(10) Data, 
+			(TO_CHAR(PDD.DATA_HORA, 'HH24:MI:SS'))::VARCHAR(8) Hora,
+			F.NOME Funcionario,
+			CASE 
+				WHEN PDD.PAGO THEN 'Pago'
+				ELSE 'A pagar'
+			END AS PAGAMENTO
+		FROM PEDIDO PDD 
+			JOIN ITEM_PEDIDO IP ON IP.COD_PEDIDO = PDD.COD 
+			JOIN ESTOQUE E ON E.COD = IP.COD_ESTOQUE 
+			JOIN CLIENTE C ON C.COD = PDD.COD_CLIENTE 
+			JOIN PRODUTO P ON P.COD = E.COD_PRODUTO 
+			JOIN FUNCIONARIO F ON F.COD = PDD.COD_FUNCIONARIO
+		WHERE PDD.COD = COD_P;
+END;
+$$ LANGUAGE PLPGSQL;
+
 --------------------------------------------------CRIAR PEDIDO--------------------------------------------------------------------------------
+
 CREATE OR REPLACE FUNCTION ADD_PEDIDO(--DROP FUNCTION ADD_PEDIDO
 	IDENTIFICADOR_C VARCHAR(100), --CPF_C VARCHAR(15), 
 	NOME_P VARCHAR(50), 
@@ -205,47 +247,8 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
------------------------------------------------------NOTA FISCAL----------------------------------------------------------------------
-
-CREATE OR REPLACE FUNCTION NOTA_FISCAL(COD_P INT) --DROP FUNCTION NOTA_FISCAL
-RETURNS TABLE (
-	"n°Pedido" VARCHAR, 
-	Cliente VARCHAR(100), 
-	Produto VARCHAR(100), 
-	Valor NUMERIC(8,2), 
-	Quantidade INT, 
-	Total NUMERIC(8,2), 
-	Data VARCHAR(10), 
-	Hora VARCHAR(8), 
-	Funcionario VARCHAR(100), 
-	Pago TEXT) AS $$
-BEGIN
-	RETURN QUERY
-		SELECT 
-			(PDD.COD)::VARCHAR "n°Pedido", 
-			C.NOME Cliente, 
-			P.NOME Produto, 
-			P.VALOR_UNITARIO Valor, 
-			IP.QUANTIDADE Quantidade, 
-			(P.VALOR_UNITARIO * IP.QUANTIDADE) Total, 
-			(TO_CHAR(PDD.DATA_HORA, 'DD-MM-YYYY'))::VARCHAR(10) Data, 
-			(TO_CHAR(PDD.DATA_HORA, 'HH24:MI:SS'))::VARCHAR(8) Hora,
-			F.NOME Funcionario,
-			CASE 
-				WHEN PDD.PAGO THEN 'Pago'
-				ELSE 'A pagar'
-			END AS PAGAMENTO
-		FROM PEDIDO PDD 
-			JOIN ITEM_PEDIDO IP ON IP.COD_PEDIDO = PDD.COD 
-			JOIN ESTOQUE E ON E.COD = IP.COD_ESTOQUE 
-			JOIN CLIENTE C ON C.COD = PDD.COD_CLIENTE 
-			JOIN PRODUTO P ON P.COD = E.COD_PRODUTO 
-			JOIN FUNCIONARIO F ON F.COD = PDD.COD_FUNCIONARIO
-		WHERE PDD.COD = COD_P;
-END;
-$$ LANGUAGE PLPGSQL;
-
 ---------------------------------------------------------TESTES------------------------------------------------------------
+
 /*
 SELECT * FROM PEDIDO; --DELETE FROM PEDIDO
 SELECT * FROM ITEM_PEDIDO; --DELETE FROM ITEM_PEDIDO
