@@ -246,6 +246,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 ---------------------------------------------------------TESTES------------------------------------------------------------
+/*
 SELECT * FROM PEDIDO; --DELETE FROM PEDIDO
 SELECT * FROM ITEM_PEDIDO; --DELETE FROM ITEM_PEDIDO
 SELECT * FROM CREDIARIO; --DELETE FROM CREDIARIO
@@ -258,3 +259,4 @@ SELECT * FROM PAGAMENTO;
 
 SELECT ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Estampada', 1, 'Pix','João Silva');
 SELECT * FROM PAGAR_PEDIDO('123.456.789-10');
+*/
