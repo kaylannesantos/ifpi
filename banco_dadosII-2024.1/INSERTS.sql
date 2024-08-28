@@ -8,7 +8,7 @@ PERFORM CADASTRAR('CLIENTE','Ana Maria Santos', '456.789.123-45', '(89) 98765-43
 PERFORM CADASTRAR('CLIENTE','Pedro Souza Gomes', '654.321.987-00', '(86) 97654-3210', 'pedrogomes@gmail.com'); 
 PERFORM CADASTRAR('CLIENTE','Mariana Lima Silva', '789.123.456-78', '(86) 96543-2109', 'marisilva@gmail.com');
 	
-PERFORM CADASTRAR('CARGO','Gerente', 2250.00, 0.00);
+PERFORM CADASTRAR('CARGO','Gerente', 2150.00, 0.00);
 PERFORM CADASTRAR('CARGO','Vendedor', 1650.00, 0.1);
 PERFORM CADASTRAR('CARGO','Operador de Caixa', 1412.00, 0.05);
 
