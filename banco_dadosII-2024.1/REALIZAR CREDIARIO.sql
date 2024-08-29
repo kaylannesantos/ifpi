@@ -188,7 +188,7 @@ SELECT * FROM PRODUTO;
 SELECT * FROM PAGAMENTO;
 SELECT * FROM CARGO;
 
-SELECT ADD_PEDIDO('João Oliveira Menezes', 'Vestido Midi Floral', 1, 'Crediário','Ana Costa', 12);
+SELECT ADD_PEDIDO('João Oliveira Menezes', 'Calça Jeans Skinny', 4, 'Pix','Ana Costa');
 SELECT * FROM PAGAR_PEDIDO('João Oliveira Menezes');
 SELECT * FROM PAGAR_CREDIARIO('João Oliveira Menezes');
 */
