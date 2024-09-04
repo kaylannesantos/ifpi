@@ -243,3 +243,14 @@ BEGIN
 	SELECT * FROM NOTA_FISCAL(COD_P);
 END;
 $$ LANGUAGE PLPGSQL;
+
+/*
+select * from pedido
+select * from item_pedido
+select * from estoque
+select * from crediario
+select * from cliente
+select * from funcionario
+
+SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Estampada', 1, 'Dinheiro', 'Carlos Santos')
+*/
