@@ -1,6 +1,6 @@
 ## Trabalho Banco de Dados - Loja de Roupas 👚
 ### Ordem de execução dos arquivos .sql:
-1. [Creates](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/CREATES-INSERTS.sql)
+1. [Creates](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/trabalho-bdLoja/CREATES.sql)
 2. [Exceções](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/EXCECOES.sql)
 3. [Funções Insert](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20INSERT.sql)
 4. [Funções Update](https://github.com/kaylannesantos/ifpi/blob/main/banco_dadosII-2024.1/FUNCTIONS%20UPDATE.sql)
