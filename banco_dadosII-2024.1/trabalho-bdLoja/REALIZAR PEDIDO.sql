@@ -246,11 +246,15 @@ $$ LANGUAGE PLPGSQL;
 
 /*
 select * from pedido
+select * from produto
 select * from item_pedido
 select * from estoque
 select * from crediario
 select * from cliente
 select * from funcionario
 
-SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Estampada', 1, 'Dinheiro', 'Carlos Santos')
+SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Básica', 5, 'Dinheiro', '456.789.012-34')
+SELECT * FROM PAGAR_PEDIDO('123.456.789-10')
+
+SELECT * FROM COMISSAO_FUNCIONARIO
 */
