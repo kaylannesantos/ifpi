@@ -105,13 +105,15 @@ BEGIN
     -- Obter a meta e o valor acumulado da loja, referenciando as colunas com o nome da tabela
     SELECT ml.META_TOTAL, ml.VALOR_ACUMULADO INTO META, VALOR_ACUMULADO
     FROM META_LOJA ml
-    WHERE ml.COD_LOJA = CALCULAR_COMISSAO_GERENTE.COD_LOJA; -- Qualificando com o nome completo da função
+	WHERE ml.COD_LOJA = COD_LOJA;
+    --WHERE ml.COD_LOJA = CALCULAR_COMISSAO_GERENTE.COD_LOJA; -- Qualificando com o nome completo da função
     
     -- Verificar se o gerente está atribuído à loja, qualificando o COD_LOJA
     SELECT f.COD INTO COD_GERENTE
     FROM FUNCIONARIO f
     JOIN CARGO c ON f.COD_CARGO = c.COD
-    WHERE f.COD_LOJA = CALCULAR_COMISSAO_GERENTE.COD_LOJA -- Qualificando novamente com o nome completo da função
+    --WHERE f.COD_LOJA = CALCULAR_COMISSAO_GERENTE.COD_LOJA -- Qualificando novamente com o nome completo da função
+	WHERE f.COD_LOJA = COD_LOJA
     AND c.NOME ILIKE 'Gerente';
 
     IF VALOR_ACUMULADO >= META THEN
@@ -145,7 +147,7 @@ DECLARE 			--se sim, calcula a comissao do gerente sobre o valor acumulado
 BEGIN
 	SELECT META_TOTAL, VALOR_ACUMULADO INTO META, VALOR_ACUMULADO FROM META_LOJA WHERE COD_LOJA = NEW.COD_LOJA;
 
-	IF VALOR_ACUMULADO >= META THEN
+	IF NEW.VALOR_ACUMULADO >= NEW.META_TOTAL THEN
 		PERFORM CALCULAR_COMISSAO_GERENTE(NEW.COD_LOJA);
 	END IF;
 
