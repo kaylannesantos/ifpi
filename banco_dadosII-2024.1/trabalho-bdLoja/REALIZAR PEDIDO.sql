@@ -252,9 +252,10 @@ select * from estoque
 select * from crediario
 select * from cliente
 select * from funcionario
+select * from cargo
 
-SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Camiseta Básica', 5, 'Dinheiro', '456.789.012-34')
-SELECT * FROM PAGAR_PEDIDO('123.456.789-10')
+SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Sapato Social Masculino', 5, 'Pix', 'Roberto Pereira');
+SELECT * FROM PAGAR_PEDIDO('Maria Silva Oliveira');
 
-SELECT * FROM COMISSAO_FUNCIONARIO
+SELECT * FROM COMISSAO_FUNCIONARIO;
 */
