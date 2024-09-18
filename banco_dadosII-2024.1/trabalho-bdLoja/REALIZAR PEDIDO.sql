@@ -254,8 +254,10 @@ select * from cliente
 select * from funcionario
 select * from cargo
 
-SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Sapato Social Masculino', 5, 'Pix', 'Roberto Pereira');
+SELECT * FROM ADD_PEDIDO('Maria Silva Oliveira', 'Sapato Social Masculino', 10, 'Crediário', 'Roberto Pereira',4);
 SELECT * FROM PAGAR_PEDIDO('Maria Silva Oliveira');
+
+SELECT * FROM PAGAR_CREDIARIO('Maria Silva Oliveira');
 
 SELECT * FROM COMISSAO_FUNCIONARIO;
 */
