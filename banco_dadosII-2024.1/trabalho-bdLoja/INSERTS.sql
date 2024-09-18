@@ -17,14 +17,14 @@ PERFORM CADASTRAR('LOJA', 'Loja 2', '12.345.678/0002-86', 'Avenida Benhur Marque
 --PERFORM CADASTRAR('LOJA', 'Loja 5', '12.345.678/0005-59', 'Praça Esperança, Bairro Ministro Portela, José De Freitas (PI), N°2770, CEP 56789-012');
 
 --funcionario loja 1
-PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 1', 'João Silva', '123.456.789-01', '(89) 91234-5678', 'joaosilva@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 1', 'Carlos Santos', '345.678.901-23', '(89) 93456-7890', 'carlossantos@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 1', 'Ana Costa', '456.789.012-34', '(89) 94567-8901', 'ana.costa@email.com');
+PERFORM CADASTRAR('FUNCIONARIO', 'João Silva', '123.456.789-01', '(89) 91234-5678', 'joaosilva@email.com','Gerente', 'Loja 1');
+PERFORM CADASTRAR('FUNCIONARIO', 'Carlos Santos', '345.678.901-23', '(89) 93456-7890', 'carlossantos@email.com','Vendedor', 'Loja 1');
+PERFORM CADASTRAR('FUNCIONARIO', 'Ana Costa', '456.789.012-34', '(89) 94567-8901', 'ana.costa@email.com','Operador de Caixa', 'Loja 1');
 	
 --funcionario loja 2
-PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 2', 'Lucas Almeida', '678.901.234-56', '(89) 96789-0123', 'lucas.almeida@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Vendedor', 'Loja 2', 'Roberto Pereira', '890.123.456-78', '(89) 98901-2345', 'robertopereira@email.com');
-PERFORM CADASTRAR('FUNCIONARIO','Operador de Caixa', 'Loja 2', 'Juliana Martins', '901.234.567-89', '(89) 99012-3456', 'jumartins@email.com');
+PERFORM CADASTRAR('FUNCIONARIO', 'Lucas Almeida', '678.901.234-56', '(89) 96789-0123', 'lucas.almeida@email.com','Gerente', 'Loja 2');
+PERFORM CADASTRAR('FUNCIONARIO', 'Roberto Pereira', '890.123.456-78', '(89) 98901-2345', 'robertopereira@email.com','Vendedor', 'Loja 2');
+PERFORM CADASTRAR('FUNCIONARIO', 'Juliana Martins', '901.234.567-89', '(89) 99012-3456', 'jumartins@email.com','Operador de Caixa', 'Loja 2');
 	
 --funcionario loja 3
 --PERFORM CADASTRAR('FUNCIONARIO','Gerente', 'Loja 3', 'Juliana Rocha', '234.567.890-12', '(86) 91234-5678', 'julianarocha@email.com');
