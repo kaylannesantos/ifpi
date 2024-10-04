@@ -10,3 +10,7 @@ tsconfig.json
 # arq. .json
 *.json
 
+#arq. python
+__pycache__/
+*.py[cod]
+*$py.class
