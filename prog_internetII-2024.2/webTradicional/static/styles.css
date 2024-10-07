@@ -1,0 +1,99 @@
+body {
+    font-family: 'Courier New', Courier, monospace; /* Fonte padrão */
+    position: relative;
+    margin: 0; /* Remove margens padrão */
+    padding: 20px; /* Espaçamento interno */
+    color: #333; /* Cor do texto */
+}
+
+body::before {
+    content: ''; /* Cria um elemento vazio */
+    position: absolute; /* Posiciona o pseudo-elemento */
+    top: 0; /* Alinha ao topo */
+    left: 0; /* Alinha à esquerda */
+    right: 0; /* Alinha à direita */
+    bottom: 0; /* Alinha à parte inferior */
+    background-image: url('/static/images/book.jpg'); /* Altere para o caminho da sua imagem */
+    background-size: cover; /* Faz a imagem cobrir todo o fundo */
+    background-position: center; /* Centraliza a imagem */
+    background-repeat: no-repeat; /* Evita que a imagem se repita */
+    opacity: 0.2; /* Define a opacidade da imagem */
+    z-index: -1; /* Coloca o pseudo-elemento atrás do conteúdo */
+}
+
+h1 {
+    background-image: linear-gradient(to right, #4576a2, #7caad9);
+    color: white;/*color: #4CAF50;  Verde para o título principal */
+    text-align: center; /* Centraliza o título */
+    font-size: 2.5em; /* Tamanho do título */
+    padding: 15px;
+    border-radius: 2px;
+    margin: 20px 0;
+}
+
+h2 {
+    color: #4576a2; /* Verde para os subtítulos */
+    margin-top: 20px; /* Espaçamento acima do subtítulo */
+}
+
+form {
+    background-color: #fff; /* Fundo branco para o formulário */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 5px; /* Bordas arredondadas */
+    padding: 20px; /* Espaçamento interno do formulário */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 20px; /* Espaçamento abaixo do formulário */
+}
+
+label {
+    display: block; /* Cada label ocupa uma linha inteira */
+    margin-bottom: 5px; /* Espaçamento abaixo do label */
+}
+
+input[type="text"],
+input[type="date"],
+input[type="submit"] {
+    width: 100%; /* Ocupa toda a largura do formulário */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    border: 1px solid #ccc; /* Borda cinza clara */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+input[type="submit"] {
+    background-color: #4576a2; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda do botão */
+    cursor: pointer; /* Muda o cursor para ponteiro */
+    font-size: 1.1em; /* Aumenta o tamanho da fonte do botão */
+}
+
+input[type="submit"]:hover {
+    background-color: #6ca7df; /* Cor do botão ao passar o mouse */
+}
+
+table {
+    width: 100%; /* Ocupa toda a largura */
+    border-collapse: collapse; /* Remove espaçamento entre células */
+    margin-top: 20px; /* Espaçamento acima da tabela */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Borda cinza clara */
+    padding: 12px; /* Espaçamento interno */
+    text-align: left; /* Alinhamento do texto à esquerda */
+}
+
+th {
+    background-color: #70a3d3; /* Cor de fundo das células do cabeçalho */
+    color: white; /* Cor do texto no cabeçalho */
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+tr:hover {
+    background-color: #ddd; /* Cor de fundo ao passar o mouse */
+}
