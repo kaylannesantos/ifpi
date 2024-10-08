@@ -1,24 +1,19 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { listarComentarios, criarComentario, atualizarComentario, deletarComentario } from "../controllers/comment.controller";
+import { criarComentario, atualizarComentario, deletarComentario } from "../controllers/comment.controller";
+import { userAuth } from "../middlewere/user-auth.middlewere";// middleware de autenticação
+import { getIdUser } from "../controllers/user.controller";
 
 const router = Router();
 
-//listar os comentários de uma resenha
-router.get('/resenhas/:resenhaId/listar', async (req: Request, res: Response) => {
-    try {
-        const id = parseInt(req.params.resenhaId.trim());
-        const comentarios = await listarComentarios(id);
-
-        res.status(200).send(comentarios);
-    } catch (error) {
-        res.status(500).send({ message: "Erro ao buscar comentários." });
-    }
-});
-
 // Criar um novo comentário
-router.post('/criar', async (req: Request, res: Response) => {
+router.post('/criar', userAuth, async (req: Request, res: Response) => {
     try {
+        const userId = req.session?.user ? await getIdUser(req.session.user) : null;
+        if (!userId) {
+            return res.status(401).send({ message: "Usuário não autenticado." });
+        }
+
         const { texto, usuarioId, resenhaId, respostaAId } = req.body;
         const novoComentario = await criarComentario(texto, usuarioId, resenhaId, respostaAId);
         res.status(201).json(novoComentario);
@@ -28,11 +23,16 @@ router.post('/criar', async (req: Request, res: Response) => {
 });
 
 //atualizar um comentário
-router.put('/atualizar/:id', async (req: Request, res: Response) => {
+router.put('/atualizar/:id', userAuth, async (req: Request, res: Response) => {
     const { id } = req.params;//obtém o id da URL
     const { texto } = req.body;//obtém o novo comentario
 
     try {
+        const userId = req.session?.user ? await getIdUser(req.session.user) : null;
+        if (!userId) {
+            return res.status(401).send({ message: "Usuário não autenticado." });
+        }
+
         if (!texto) {
             return res.status(400).send({ message: 'Texto do comentário não pode ser vazio.' });
         }
@@ -49,8 +49,13 @@ router.put('/atualizar/:id', async (req: Request, res: Response) => {
 });
 
 //deletar comentário
-router.delete('/deletar/:id', async (req: Request, res: Response) => {
+router.delete('/deletar/:id', userAuth, async (req: Request, res: Response) => {
     try {
+        const userId = req.session?.user ? await getIdUser(req.session.user) : null;
+        if (!userId) {
+            return res.status(401).send({ message: "Usuário não autenticado." });
+        }
+        
         const id = parseInt(req.params.id.trim());
         const comentario = await deletarComentario(id);
 

@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+//lista todos os comentarios
 const listarComentarios = async (id: number) => {
     try {
         const comentarios = await prisma.comentario.findMany({
@@ -82,8 +83,5 @@ const deletarComentario = async (id: number) => {
         throw error;
     }
 };
-
-
-
 
 export { listarComentarios, criarComentario, atualizarComentario, deletarComentario };

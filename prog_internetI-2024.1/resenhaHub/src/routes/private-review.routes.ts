@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { createReview, updateReview, getAllReviewOfUser, checkReviewExists, formatReviews, deleteReview, reviewIsOfUser } from "../controllers/review.controller";
-import { userAuth } from "../middlewere/user-auth.middlewere";
+import { userAuth } from "../middlewere/user-auth.middlewere";// middleware de autenticação
 import { getIdUser } from "../controllers/user.controller";
 import path from "path";
 
