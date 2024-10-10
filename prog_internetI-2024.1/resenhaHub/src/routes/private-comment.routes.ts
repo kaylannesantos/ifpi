@@ -9,7 +9,7 @@ const router = Router();
 //COMENTÁRIOS A RESENHAS
 
 // Criar um novo comentário
-router.post('/criar-comentario', userAuth, async (req: Request, res: Response) => {
+router.post('/api/comentario/criar', userAuth, async (req: Request, res: Response) => {
     try {
         const userId = req.session?.user ? await getIdUser(req.session.user) : null;
         if (!userId) {
@@ -27,7 +27,7 @@ router.post('/criar-comentario', userAuth, async (req: Request, res: Response) =
 });
 
 //atualizar um comentário
-router.put('/atualizar-comentario/:id', userAuth, async (req: Request, res: Response) => {
+router.put('/api/comentario/atualizar/:id', userAuth, async (req: Request, res: Response) => {
     const { id } = req.params;//obtém o id da URL
     const { texto } = req.body;//obtém o novo comentario
 
@@ -53,7 +53,7 @@ router.put('/atualizar-comentario/:id', userAuth, async (req: Request, res: Resp
 });
 
 //deletar comentário
-router.delete('/deletar-comentario/:id', userAuth, async (req: Request, res: Response) => {
+router.delete('/api/comentario/deletar/:id', userAuth, async (req: Request, res: Response) => {
     try {
         const userId = req.session?.user ? await getIdUser(req.session.user) : null;
         if (!userId) {
@@ -73,7 +73,7 @@ router.delete('/deletar-comentario/:id', userAuth, async (req: Request, res: Res
 //RESPOSTAS A OUTROS COMENTARIOS
 
 // Listar respostas de um comentário específico
-router.get('/comentarios/:comentarioId/listar-respostas', async (req: Request, res: Response) => {
+router.get('/api/comentario/respostas/:comentarioId', async (req: Request, res: Response) => {
     try {
         const comentarioId = parseInt(req.params.comentarioId.trim());
         const respostas = await listarRespostas(comentarioId);
@@ -90,7 +90,7 @@ router.get('/comentarios/:comentarioId/listar-respostas', async (req: Request, r
 });
 
 //criar um comentario como resposta de outro comentario
-router.post('/responder-comentario/:id', userAuth, async (req: Request, res: Response) => {
+router.post('/api/comentario/responder/:id', userAuth, async (req: Request, res: Response) => {
     try {
         const userId = req.session?.user ? await getIdUser(req.session.user) : null;
         if (!userId) {
@@ -111,7 +111,7 @@ router.post('/responder-comentario/:id', userAuth, async (req: Request, res: Res
 });
 
 //atualizar um comentario
-router.put('/atualizar-resposta/:id', userAuth, async (req: Request, res: Response) => {
+router.put('/api/comentario/atualizar-resposta/:id', userAuth, async (req: Request, res: Response) => {
     const { id } = req.params; // Obtém o id da URL
     const { texto } = req.body; // Obtém o novo texto da resposta
 
@@ -133,7 +133,7 @@ router.put('/atualizar-resposta/:id', userAuth, async (req: Request, res: Respon
     }
 });
 
-router.delete('/deletar-resposta/:id', userAuth, async (req: Request, res: Response) => {
+router.delete('/api/comentario/deletar-resposta/:id', userAuth, async (req: Request, res: Response) => {
     try {
         const userId = req.session?.user ? await getIdUser(req.session.user) : null;
         if (!userId) {
