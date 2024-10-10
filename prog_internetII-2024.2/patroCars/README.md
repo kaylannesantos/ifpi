@@ -40,7 +40,6 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
 
 2. **Crie um ambiente virtual (opcional, mas recomendado)**:
     ```bash
-    bash
     Copiar código
     python -m venv venv
     source venv/bin/activate  # Para Linux/Mac
@@ -61,6 +60,7 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
 5. **Crie a base de dados no PostgreSQL**:
     ```bash
     CREATE DATABASE montadora_db;
+
     CREATE TABLE montadoras (
     id VARCHAR PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
