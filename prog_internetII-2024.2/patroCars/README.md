@@ -53,11 +53,12 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
     psycopg2-binary
     jinja2
     python-ulid
-**Então, execute o comando**:
+    
+4. **Então, execute o comando**:
     ```bash
     pip install -r requirements.txt
 
-4. **Crie a base de dados no PostgreSQL**:
+5. **Crie a base de dados no PostgreSQL**:
     ```bash
     CREATE DATABASE montadora_db;
     CREATE TABLE montadoras (
@@ -88,6 +89,6 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
         vendido BOOLEAN NOT NULL DEFAULT FALSE
     );
 
-5. **Inicie o servidor FastAPI**:
+6. **Inicie o servidor FastAPI**:
     ```bash
     uvicorn app.main:app --reload
