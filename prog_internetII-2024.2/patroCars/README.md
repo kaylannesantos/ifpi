@@ -58,7 +58,7 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
     pip install -r requirements.txt
 
 5. **Crie a base de dados no PostgreSQL**:
-    ```bash
+    ```sql
     CREATE DATABASE montadora_db;
 
     CREATE TABLE montadoras (
@@ -88,6 +88,7 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
         placa VARCHAR(20) NOT NULL UNIQUE,
         vendido BOOLEAN NOT NULL DEFAULT FALSE
     );
+    ```
 
 6. **Inicie o servidor FastAPI**:
     ```bash
