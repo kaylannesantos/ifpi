@@ -82,5 +82,54 @@ def deleteMontadora(id:str):
     return {'message': f'Montadora deletada com sucesso.'}
 
 ##MODELOS
+##list
+def listModeloVeiculo():
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    cursor.execute('SELECT * FROM modelo')
+    modelosVeiculo = cursor.fetchall()
+
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return modelosVeiculo
+
+##create
+def createModeloVeiculo(nome: str ,montadora_id: str, valor_referencia: int, motorizacao: int, turbo: bool, automatico: bool):
+    modelo = ModeloVeiculo(nome, montadora_id, valor_referencia, motorizacao, turbo, automatico)
+
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    cursor.execute(
+        'INSERT INTO modelo(id, nome, montadora_id, valor_referencia, motorizacao, turbo, automatico) VALUES(%s,%s,%s,%s,%s,%s,%s)',
+        (
+            modelo.id,
+            modelo.nome,
+            modelo.montadora_id,
+            modelo.valor_referencia,
+            modelo.motorizacao,
+            modelo.turbo,
+            modelo.automatico
+        )
+    )
+    db.commit()
+    cursor.close()
+    db.close()
+
+    return {
+        "message": "Montadora criada com sucesso.",
+        "montadora": {
+            "id": id,
+            "nome": modelo.nome,
+            "montadora_id":modelo.montadora_id,
+            "valor_referencia": modelo.valor_referencia,
+            "motorizacao": modelo.motorizacao,
+            "turbo":modelo.turbo,
+            "automatico":modelo.automatico
+        }
+    }
 
 ##VEÍCULOS
