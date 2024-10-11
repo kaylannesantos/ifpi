@@ -1,23 +1,22 @@
 from fastapi import APIRouter
-from ..crud import createMontadora, listMontadora, deleteMontadora,updateMontadora
 from ..schemas import MontadoraSchema
+from ..crud import createMontadora, listMontadora, deleteMontadora,updateMontadora
 
 router = APIRouter()
 
-@router.get('/montadoras_list')
+@router.get('/list')
 async def list_montadora():
     montadoras = listMontadora()
     return {'montadoras':montadoras}
 
-@router.post("/montadoras_create")
+@router.post("/create")
 async def create_montadora(montadora:MontadoraSchema):
     return createMontadora(montadora.nome, montadora.pais, montadora.ano_fundacao)
 
-@router.put('/montadoras_update/{id}')
+@router.put('/update/{id}')
 async def update_montadora(id: str, montadora:MontadoraSchema):
     return updateMontadora(id, montadora)
 
-
-@router.delete('/montadoras_delete/{id}')
+@router.delete('/delete/{id}')
 async def delete_montadora(id: str):
     return deleteMontadora(id)

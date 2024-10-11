@@ -1,10 +1,10 @@
 from fastapi import APIRouter
 from app.schemas import ModeloVeiculoSchema
-from app.crud import listModeloVeiculo,createModeloVeiculo
+from app.crud import listModeloVeiculo,createModeloVeiculo,updateModeloVeiculo,deleteModeloVeiculo
 
 router = APIRouter()
 
-@router.get('/modelos_list')
+@router.get('/list')
 async def list_modeloVeiculo():
     modelosVeiculo = listModeloVeiculo()
     return {'Modelos de Veículos':modelosVeiculo}
@@ -19,3 +19,11 @@ async def create_modelo(modelo: ModeloVeiculoSchema):
         modelo.turbo,
         modelo.automatico
     )
+
+@router.put('/update/{id}')
+async def update_modelo(id: str, modelo: ModeloVeiculoSchema):
+    return updateModeloVeiculo(id, modelo)
+
+@router.delete('/delete/{id}')
+async def delete_modelo(id:str):
+    return deleteModeloVeiculo(id)
