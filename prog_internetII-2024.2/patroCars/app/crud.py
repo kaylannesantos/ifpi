@@ -9,11 +9,19 @@ def listMontadora():
     cursor = db.cursor()
 
     cursor.execute('SELECT * FROM montadora')
-    montadoras = cursor.fetchall()
+    rows = cursor.fetchall()
 
-    db.commit()# Salva as mudanças no banco
-    cursor.close()# Fecha o cursor
-    db.close()# Fecha a conexão com o banco de dados
+    montadoras = []
+    for row in rows:
+        montadoras.append({
+            'id':row[0],
+            'nome':row[1],
+            'pais':row[2],
+            'ano_fundacao':row[3]
+        })
+
+    cursor.close()
+    db.close()
 
     return montadoras
 

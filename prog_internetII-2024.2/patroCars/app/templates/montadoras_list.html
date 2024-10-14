@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
+    <title>PatroCars - Montadoras</title>
+</head>
+<body>
+    <h1>PatroCars</h1>
+    <a href="/montadora/form">Adicionar Montadora</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>País</th>
+                <th>Ano Fundação</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for montadora in montadoras %}
+            <tr>
+                <td>{{ montadora.id }}</td>
+                <td>{{ montadora.nome }}</td>
+                <td>{{ montadora.pais }}</td>
+                <td>{{ montadora.ano_fundacao }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>      
+    </table>
+</body>
+</html>
