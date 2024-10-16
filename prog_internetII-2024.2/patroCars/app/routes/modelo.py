@@ -44,7 +44,7 @@ async def update_modelo(
 @router.post('/delete/{id}')
 async def delete_modelo(id:str):
     deleteModeloVeiculo(id)
-    return RedirectResponse(url='/modelos/list',status_code=303)
+    return RedirectResponse(url='/modelo/list',status_code=303)
 
 #form de modelos
 @router.get("/form", response_class=HTMLResponse)

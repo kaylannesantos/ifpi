@@ -35,7 +35,7 @@
                 <td>
                     <a href="/modelo/form/{{ modelo.id }}">Editar</a>
                     <form action="/modelo/delete/{{ modelo.id }}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Deseja realmente excluir este modelo?');">Excluir</button>
+                        <button type="submit" class="delete-button" onclick="return confirm('Deseja realmente excluir este modelo?');">Excluir</button>
                     </form>
                 </td>
             </tr>

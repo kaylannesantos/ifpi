@@ -9,9 +9,9 @@ body {
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
-    display: flex; /* Adicionado para flexbox */
-    flex-direction: column; /* Direção da coluna */
-    min-height: 100vh; /* Garante que o corpo ocupe toda a altura da tela */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
@@ -41,6 +41,7 @@ h1, h2 {
 
 table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
 }
@@ -79,7 +80,7 @@ select {
 
 button {
     padding: 10px 15px;
-    background-color: #28a745;
+    background-color: #dc3545; /* Cor padrão */
     color: white;
     border: none;
     border-radius: 5px;
@@ -90,17 +91,16 @@ button:hover {
     background-color: #218838;
 }
 
-button {
-    padding: 10px 15px;
-    background-color: #28a745; /* Cor padrão */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+button:active {
+    background-color: #1e7e34;
 }
 
-button:active {
-    background-color: #218838; /* Cor ao clicar */
+.delete-button {
+    background-color: #dc3545 !important; /* Vermelho para o botão de excluir */
+}
+
+.delete-button:hover {
+    opacity: 0.8; /* Opacidade reduzida ao passar o cursor */
 }
 
 footer {
@@ -108,6 +108,20 @@ footer {
     padding: 10px 0;
     background: #457d97;
     color: white;
-    margin-top: auto; /* Adicionado para empurrar o footer para o final */
+    margin-top: auto;
     width: 100%;
+}
+
+.action-buttons {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-button, .delete-button {
+    padding: 10px 15px;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
