@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>PatroCars - Adicionar Veículo</title>
+</head>
+<body>
+    <h1>{{ 'Editar' if veiculo else 'Adicionar' }} Veículo</h1>
+    <form action="{% if veiculo %}/veiculo/update/{{ veiculo.id }}{% else %}/veiculo/create{% endif %}" method="post">
+        <label for="modelo_id">Modelo:</label>
+        <select id="modelo_id" name="modelo_id" required>
+            <option value="">Selecione um Modelo</option>
+            {% for modelo in modelos %}
+            <option value="{{ modelo.id }}" {% if veiculo and modelo.id == veiculo.modelo_id %}selected{% endif %}>{{ modelo.nome }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <label for="cor">Cor:</label>
+        <input type="text" id="cor" name="cor" value="{{ veiculo.cor if veiculo else '' }}" required>
+        <br>
+        <label for="ano_fabricacao">Ano de Fabricação:</label>
+        <input type="number" id="ano_fabricacao" name="ano_fabricacao" value="{{ veiculo.ano_fabricacao if veiculo else '' }}" required>
+        <br>
+        <label for="ano_modelo">Ano do Modelo:</label>
+        <input type="number" id="ano_modelo" name="ano_modelo" value="{{ veiculo.ano_modelo if veiculo else '' }}" required>
+        <br>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" value="{{ veiculo.valor if veiculo else '' }}" required>
+        <br>
+        <label for="placa">Placa:</label>
+        <input type="text" id="placa" name="placa" value="{{ veiculo.placa if veiculo else '' }}" required>
+        <br>
+        <label for="vendido">Vendido:</label>
+        <input type="hidden" name="vendido" value="False">
+        <input type="checkbox" id="vendido" name="vendido" value="True" {% if veiculo and veiculo.vendido %}checked{% endif %}>
+        <br>
+        <button type="submit">{{ 'Atualizar' if veiculo else 'Adicionar' }}</button>
+    </form>
+</body>
+</html>

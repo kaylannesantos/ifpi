@@ -3,10 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/app/static/style.css">
-    <title>PatroCars</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <title>PatroCars - Página Inicial</title>
 </head>
 <body>
+    <header>
+        <h1>Bem-vindo ao Sistema PatroCars</h1>
+        <nav>
+            <ul>
+                <li><a href="/montadora/list">Montadoras</a></li>
+                <li><a href="/modelo/list">Modelos</a></li>
+                <li><a href="/veiculo/list">Veículos</a></li>
+            </ul>
+        </nav>
+    </header>
     
+    <main>
+        <section>
+            <h2>Gestão de Montadoras</h2>
+            <p>Gerencie as montadoras de veículos, incluindo a criação, listagem e edição de montadoras.</p>
+            <a href="/montadora/form">Adicionar Montadora</a>
+        </section>
+        
+        <section>
+            <h2>Gestão de Modelos</h2>
+            <p>Gerencie os modelos de veículos associados às montadoras, com opções de adicionar e listar modelos.</p>
+            <a href="/modelo/form">Adicionar Modelo</a>
+        </section>
+        
+        <section>
+            <h2>Gestão de Veículos</h2>
+            <p>Gerencie os veículos reais disponíveis, incluindo o cadastro de novos veículos e a listagem completa.</p>
+            <a href="/veiculo/form">Adicionar Veículo</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 PatroCars. Todos os direitos reservados.</p>
+    </footer>
 </body>
 </html>

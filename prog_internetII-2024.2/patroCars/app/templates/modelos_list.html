@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <title>PatroCars - Modelos Veículos</title>
+</head>
+<body>
+    <h1>PatroCars</h1>
+    <a href="/modelo/form">Adicionar Modelo de Veículo</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Montadora</th>
+                <th>Valor</th>
+                <th>Motorização</th>
+                <th>Turbo</th>
+                <th>Automático</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for modelo in modelos %}
+            <tr>
+                <td>{{ modelo.id }}</td>
+                <td>{{ modelo.nome }}</td>
+                <td>{{ modelo.montadora }}</td>
+                <td>{{ modelo.valor_referencia }}</td>
+                <td>{{ modelo.motorizacao }}</td>
+                <td>{{ modelo.turbo }}</td>
+                <td>{{ modelo.automatico }}</td>
+                <td>
+                    <a href="/modelo/form/{{ modelo.id }}">Editar</a>
+                    <form action="/modelo/delete/{{ modelo.id }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Deseja realmente excluir este modelo?');">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>      
+    </table>
+</body>
+</html>

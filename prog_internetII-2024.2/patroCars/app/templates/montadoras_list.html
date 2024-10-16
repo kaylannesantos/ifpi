@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <title>PatroCars - Montadoras</title>
 </head>
 <body>
@@ -26,6 +26,12 @@
                 <td>{{ montadora.nome }}</td>
                 <td>{{ montadora.pais }}</td>
                 <td>{{ montadora.ano_fundacao }}</td>
+                <td>
+                    <a href="/montadora/form/{{ montadora.id }}">Editar</a>
+                    <form action="/montadora/delete/{{ montadora.id }}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Deseja realmente excluir esta Montadora?');">Excluir</button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </tbody>      
