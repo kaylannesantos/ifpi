@@ -1,3 +1,4 @@
+/* Estilos globais */
 * {
     margin: 0;
     padding: 0;
@@ -5,123 +6,177 @@
 }
 
 body {
-    font-family: 'Courier New', Courier, monospace;
-    background-color: #f4f4f4;
-    color: #333;
+    font-family: Arial, sans-serif;
     line-height: 1.6;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    color: #333;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
 }
 
+/* Cabeçalho */
 header {
-    background: #457d97;
+    background: linear-gradient(90deg, #005f91, #00a3e0);
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Links principais */
+a {
+    color: #005f91;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #00a3e0;
+}
+
+/* Botões */
+button, .create-button, .delete-button {
+    background-color: #005f91;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover, .create-button:hover, .delete-button:hover {
+    background-color: #003c63;
+}
+
+.create-button {
+    background-color: #007cba;
+}
+
+.delete-button {
+    background-color: #c0392b;
+}
+
+.delete-button:hover {
+    background-color: #e74c3c;
+}
+
+/* Principal */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+section {
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+section h2 {
+    color: #005f91;
+}
+
+/* Formulários */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+}
+
+form input, form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="checkbox"] {
+    width: auto;
+}
+
+/* Rodapé */
+footer {
+    background: #333;
     color: #fff;
     padding: 10px 0;
     text-align: center;
 }
 
-nav ul {
-    list-style: none;
+footer p {
+    margin: 0;
 }
 
-nav ul li {
-    display: inline;
-    margin: 0 10px;
+footer a {
+    color: #00a3e0;
 }
 
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
-
-h1, h2 {
-    margin: 20px 0;
-}
-
+/* Tabelas */
 table {
     width: 100%;
-    max-width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
 }
 
 table, th, td {
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
-th, td {
-    padding: 10px;
-    text-align: left;
+table th {
+    background-color: #005f91;
+    color: #fff;
 }
 
-th {
-    background-color: #007bff;
-    color: white;
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
 
-form {
-    margin: 20px 0;
-    padding: 20px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 1.5em;
+    }
 
-input[type="text"],
-input[type="number"],
-select {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
+    header nav ul li {
+        display: block;
+        margin: 5px 0;
+    }
 
-button {
-    padding: 10px 15px;
-    background-color: #dc3545; /* Cor padrão */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    section {
+        margin: 10px;
+        padding: 15px;
+    }
 
-button:hover {
-    background-color: #218838;
-}
-
-button:active {
-    background-color: #1e7e34;
-}
-
-.delete-button {
-    background-color: #dc3545 !important; /* Vermelho para o botão de excluir */
-}
-
-.delete-button:hover {
-    opacity: 0.8; /* Opacidade reduzida ao passar o cursor */
-}
-
-footer {
-    text-align: center;
-    padding: 10px 0;
-    background: #457d97;
-    color: white;
-    margin-top: auto;
-    width: 100%;
-}
-
-.action-buttons {
-    margin-top: 10px;
-    display: flex;
-    gap: 10px;
-}
-
-.action-button, .delete-button {
-    padding: 10px 15px;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    table {
+        font-size: 0.9em;
+    }
 }

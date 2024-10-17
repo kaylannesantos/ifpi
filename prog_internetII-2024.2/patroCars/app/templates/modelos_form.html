@@ -35,7 +35,7 @@
         <input type="hidden" name="automatico" value="False">
         <input type="checkbox" id="automatico" name="automatico" value="True" {% if modelo and modelo.automatico %}checked{% endif %}>
         <br>
-        <button type="submit">{{ 'Salvar' if modelo else 'Adicionar' }}</button>
+        <button type="submit" class="create-button">{{ 'Salvar' if modelo else 'Adicionar' }}</button>
     </form>
 </body>
 </html>

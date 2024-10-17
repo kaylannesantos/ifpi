@@ -37,7 +37,7 @@
         <input type="hidden" name="vendido" value="False">
         <input type="checkbox" id="vendido" name="vendido" value="True" {% if veiculo and veiculo.vendido %}checked{% endif %}>
         <br>
-        <button type="submit">{{ 'Atualizar' if veiculo else 'Adicionar' }}</button>
+        <button type="submit" class="create-button">{{ 'Atualizar' if veiculo else 'Adicionar' }}</button>
     </form>
 </body>
 </html>
