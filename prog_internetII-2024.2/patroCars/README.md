@@ -1,6 +1,6 @@
 # Primeiro Mini Projeto - Montadora de Veículos (PatroCars)
 
-## Descrição
+## Sobre
 
 O projeto **Montadora de Veículos** é um sistema web CRUD básico desenvolvido com **FastAPI** e **PostgreSQL**. O sistema permite o gerenciamento de montadoras e veículos associados, oferecendo funcionalidades para adicionar, listar, editar e remover montadoras e veículos.
 
@@ -25,7 +25,7 @@ O projeto **Montadora de Veículos** é um sistema web CRUD básico desenvolvido
 
 ## Pré-requisitos
 
-- Python 3.7 ou superior
+- Python
 - PostgreSQL
 - pip (gerenciador de pacotes do Python)
 
@@ -35,7 +35,7 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
 
 1. **Clone o repositório**:
    ```bash
-   git clone https://github.com/seu_usuario/montadoraDeVeiculos.git
+   git clone https://github.com/kaylannesantos/ifpi/edit/main/prog_internetII-2024.2/patroCars
    cd montadoraDeVeiculos
 
 2. **Crie um ambiente virtual (opcional, mas recomendado)**:
