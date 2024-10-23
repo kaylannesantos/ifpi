@@ -59,8 +59,6 @@ Siga os passos abaixo para configurar o ambiente e instalar as dependências nec
 
 5. **Crie a base de dados no PostgreSQL**:
     ```sql
-    CREATE DATABASE montadora_db;
-
     CREATE TABLE montadoras (
     id VARCHAR PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
