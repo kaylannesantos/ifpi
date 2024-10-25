@@ -1,0 +1,15 @@
+Requisitos - Pizzaria
+
+o sistema da pizzaria possui um conjunto de funcionalidades:
+- Consultar cardápio
+- Fazer pedido
+- pagar pedido(cartão ou pix)
+- cancelar pedido
+- cadastrar endereço
+- fazer entrega
+- confirmar entrega
+
+Um cliente só pode realizar o pedido mediante consulta do cardápio;
+Um cliente pode cadastrar o endereço caso não tenha cadastrado ou tenha mudado de endereço;
+O entregador só pode realizar a entrega mediante a confirmação de pagamento do cliente;
+A forma de pagamento pode ser no cartão ou pix;
