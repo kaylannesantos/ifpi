@@ -1,4 +1,4 @@
-### Instalação o dart
+## Instalação do dart
 
 1. Baixe o [flutter](https://docs.flutter.dev/get-started/install) que ele já vem com o dart instalado.
 2. Descompacte o arquivo **.rar**.
