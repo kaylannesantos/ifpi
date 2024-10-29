@@ -15,28 +15,28 @@
     sudo apt install redis-server
 
 5. Verifique a versão do Redis:
-    bash```
+    bash ```
     redis-server --version
 
 6. Inicie o servidor Redis:
-    bash```
+    bash ```
     redis-server
 
 7. Inicie a conexão:
-    bash```
+    bash ```
     redis-cli
 
 8. Para saber se a conexão foi feita corretamente:
-    bash```
+    bash ```
     ping
 
 9. Teste: 
-    bash```
+    bash ```
     set chave "valor"
     keys *
     get chave
 
 10. Para encerrar a conexão:
-    bash```
+    bash ```
     exit
 
