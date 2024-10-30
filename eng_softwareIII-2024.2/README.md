@@ -1,6 +1,4 @@
-## ENGENHARIA DE SOFTWARE 3
-
-> **Projeto DesenhoHub**
+## ENGENHARIA DE SOFTWARE 3 - Projeto DesenhoHub
 
 - Ferramentas
 
