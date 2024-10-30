@@ -6,6 +6,5 @@
 
 > Etapas
 
-1. Esquema inicial do projeto - Definições do problema e funcionalidades
+1. [Etapa de definições do problema e funcionalidades](https://github.com/kaylannesantos/projetoEngSoftware3)
 
-[1Etapa](https://github.com/kaylannesantos/projetoEngSoftware3)
