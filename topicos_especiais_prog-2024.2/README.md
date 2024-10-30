@@ -39,4 +39,3 @@
 10. Para encerrar a conexão:
     ```bash 
     exit
-
