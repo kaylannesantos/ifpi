@@ -9,7 +9,7 @@
 </head>
 <body>
     <h1 class="title">{{ 'Editar' if veiculo else 'Adicionar' }} Veículo</h1>
-    <form action="{% if veiculo %}/veiculo/update/{{ veiculo.id }}{% else %}/veiculo/create{% endif %}" method="post">
+    <form class="form" action="{% if veiculo %}/veiculo/update/{{ veiculo.id }}{% else %}/veiculo/create{% endif %}" method="post">
         <label for="modelo_id">Modelo:</label>
         <select id="modelo_id" name="modelo_id" required>
             <option value="">Selecione um Modelo</option>

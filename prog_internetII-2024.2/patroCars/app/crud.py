@@ -26,7 +26,6 @@ def getMontadoraById(id: str):
 
     return montadora
 
-
 def listMontadora():
     db = get_db_connection()
     cursor = db.cursor()

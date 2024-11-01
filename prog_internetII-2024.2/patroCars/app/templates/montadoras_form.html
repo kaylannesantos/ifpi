@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1 class="title">Adicionar Montadora</h1>
-    <form action="{% if montadora %}/montadora/update/{{ montadora.id }}{% else %}/montadora/create{% endif %}" method="post">
+    <form class="form" action="{% if montadora %}/montadora/update/{{ montadora.id }}{% else %}/montadora/create{% endif %}" method="post">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="{{ montadora.nome if montadora else '' }}" required>
         <br>

@@ -9,15 +9,17 @@
 </head>
 <body>
     <h1 class="title">Adicionar Modelo</h1>
-    <form action="{% if modelo %}/modelo/update/{{ modelo.id }}{% else %}/modelo/create{% endif %}" method="post">
+    <form class="form" action="{% if modelo %}/modelo/update/{{ modelo.id }}{% else %}/modelo/create{% endif %}" method="post">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="{{ modelo.nome if modelo else '' }}" required>
         <br>
         <label for="montadora_id">Montadora:</label>
         <select id="montadora_id" name="montadora_id" value="{{ modelo.montadora_id if modelo else '' }}" required>
-            <option value="">Selecione uma Montadora</option>
             {% for montadora in montadoras %}
-            <option value="{{ montadora.id }}">{{ montadora.nome }}</option>
+                <option value="{{ montadora.id }}"
+                    {% if modelo and modelo.montadora_id == montadora.id %} selected {% endif %}>
+                    {{ montadora.nome }}
+                </option>
             {% endfor %}
         </select>
         <br>

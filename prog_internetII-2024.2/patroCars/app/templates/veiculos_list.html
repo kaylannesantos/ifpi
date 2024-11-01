@@ -7,7 +7,20 @@
     <title>PatroCars - Veículos</title>
 </head>
 <body>
-    <h1>PatroCars</h1>
+    <header>
+        <div class="logo-container">
+            <img src="/static/image/carro.png" alt="Logo PatroCars" class="logo">
+            <span class="system-name">PatroCars</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/montadora/list">Montadoras</a></li>
+                <li><a href="/modelo/list">Modelos</a></li>
+                <li><a href="/veiculo/list">Veículos</a></li>
+            </ul>
+        </nav>
+    </header>
     <a href="/veiculo/form">Adicionar Veículo</a>
 
     <table>
@@ -33,7 +46,7 @@
                 <td>{{ veiculo.ano_modelo }}</td>
                 <td>{{ veiculo.valor }}</td>
                 <td>{{ veiculo.placa }}</td>
-                <td>{{ veiculo.vendido }}</td>
+                <td>{{ "Sim" if veiculo.vendido else "Não"}}</td>
                 <td>
                     <form action="/veiculo/form/{{ veiculo.id }}" method="get"  style="display: inline;">
                         <button type="submit" class="edit-button">Editar</button>

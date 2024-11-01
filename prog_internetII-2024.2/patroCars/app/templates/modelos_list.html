@@ -7,9 +7,21 @@
     <title>PatroCars - Modelos Veículos</title>
 </head>
 <body>
-    <h1>PatroCars</h1>
-    <a href="/modelo/form">Adicionar Modelo de Veículo</a>
-
+    <header>
+        <div class="logo-container">
+            <img src="/static/image/carro.png" alt="Logo PatroCars" class="logo">
+            <span class="system-name">PatroCars</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/montadora/list">Montadoras</a></li>
+                <li><a href="/modelo/list">Modelos</a></li>
+                <li><a href="/veiculo/list">Veículos</a></li>
+            </ul>
+        </nav>
+    </header>
+    <a href="/modelo/form">Adicionar Modelo de Veículo</a>  
     <table>
         <thead>
             <tr>
@@ -30,8 +42,8 @@
                 <td>{{ modelo.montadora }}</td>
                 <td>{{ modelo.valor_referencia }}</td>
                 <td>{{ modelo.motorizacao }}</td>
-                <td>{{ modelo.turbo }}</td>
-                <td>{{ modelo.automatico }}</td>
+                <td>{{"Sim" if modelo.turbo else "Não"}}</td>
+                <td>{{ "Sim" if modelo.automatico else "Não"}}</td>
                 <td>
                     <form action="/modelo/form/{{ modelo.id }}" method="get" style="display: inline;">
                         <button type="submit" class="edit-button">Editar</button>
