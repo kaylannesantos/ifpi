@@ -8,7 +8,7 @@
     <title>PatroCars - Adicionar Veículo</title>
 </head>
 <body>
-    <h1>{{ 'Editar' if veiculo else 'Adicionar' }} Veículo</h1>
+    <h1 class="title">{{ 'Editar' if veiculo else 'Adicionar' }} Veículo</h1>
     <form action="{% if veiculo %}/veiculo/update/{{ veiculo.id }}{% else %}/veiculo/create{% endif %}" method="post">
         <label for="modelo_id">Modelo:</label>
         <select id="modelo_id" name="modelo_id" required>
@@ -33,9 +33,11 @@
         <label for="placa">Placa:</label>
         <input type="text" id="placa" name="placa" value="{{ veiculo.placa if veiculo else '' }}" required>
         <br>
-        <label for="vendido">Vendido:</label>
-        <input type="hidden" name="vendido" value="False">
-        <input type="checkbox" id="vendido" name="vendido" value="True" {% if veiculo and veiculo.vendido %}checked{% endif %}>
+        <div class="checkbox-container">
+            <label for="vendido">Vendido:</label>
+            <input type="hidden" name="vendido" value="False">
+            <input type="checkbox" id="vendido" name="vendido" value="True" {% if veiculo and veiculo.vendido %}checked{% endif %}>
+        </div>
         <br>
         <button type="submit" class="create-button">{{ 'Atualizar' if veiculo else 'Adicionar' }}</button>
     </form>

@@ -35,7 +35,9 @@
                 <td>{{ veiculo.placa }}</td>
                 <td>{{ veiculo.vendido }}</td>
                 <td>
-                    <a href="/veiculo/form/{{ veiculo.id }}">Editar</a>
+                    <form action="/veiculo/form/{{ veiculo.id }}" method="get"  style="display: inline;">
+                        <button type="submit" class="edit-button">Editar</button>
+                    </form>
                     <form action="/veiculo/delete/{{ veiculo.id }}" method="post" style="display:inline;">
                         <button type="submit" class="delete-button" onclick="return confirm('Deseja realmente excluir este veículo?');">Excluir</button>
                     </form>

@@ -5,12 +5,21 @@
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;;
+    font-family: 'Montserrat', sans-serif;
     line-height: 1.6;
     color: #333;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    font-size: 16px;
+}
+
+.title {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center; /* Centraliza o texto */
+    margin-top: 20px; /* Espaço acima do título (opcional) */
+    font-size: 2em; /* Tamanho da fonte (opcional) */
+    color: #000000; /* Cor do texto (opcional) */
 }
 
 /* Cabeçalho */
@@ -24,6 +33,7 @@ header {
 header h1 {
     font-size: 2em;
     margin: 0;
+    text-align: center;
 }
 
 header nav ul {
@@ -58,28 +68,42 @@ a:hover {
 
 /* Botões */
 button, .create-button, .delete-button {
-    background-color: #005f91;
     color: #fff;
     padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 2px;
     cursor: pointer;
-}
-
-button:hover, .create-button:hover, .delete-button:hover {
-    background-color: #003c63;
+    font-size: 14px;
 }
 
 .create-button {
-    background-color: #007cba;
+    background-color: #04AA6D;
+}
+.create-button:hover{
+    background-color: #059862;
+}
+
+.edit-button {
+    background-color: #005f91;
+}
+.edit-button:hover {
+    background-color: #003c63;
 }
 
 .delete-button {
     background-color: #c0392b;
 }
-
 .delete-button:hover {
     background-color: #e74c3c;
+}
+
+/* Estilo dos botões */
+.edit-button, .delete-button {
+    display: inline-block; /* Impede que os botões ocupem toda a largura */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Principal */
@@ -100,11 +124,17 @@ section h2 {
     color: #005f91;
 }
 
-/* Formulários */
+/* Formulários*/
 form {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    max-width: 600px; /* Define a largura máxima */
+    width: 90%; /* Torna o formulário responsivo */
+    margin: 0 auto; /* Centraliza o formulário */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    padding: 20px; /* Adiciona espaço interno */
 }
 
 form label {
@@ -122,18 +152,16 @@ form input[type="checkbox"] {
     width: auto;
 }
 
-/* Rodapé */
+/*Rodapé */
 footer {
     background: #333;
     color: #fff;
     padding: 10px 0;
     text-align: center;
 }
-
 footer p {
     margin: 0;
 }
-
 footer a {
     color: #00a3e0;
 }
@@ -148,6 +176,7 @@ table {
 table, th, td {
     border: 1px solid #ddd;
     padding: 8px;
+    text-align: center;
 }
 
 table th {
@@ -178,4 +207,15 @@ table tr:nth-child(even) {
     table {
         font-size: 0.9em;
     }
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5); /* Aumenta o tamanho do checkbox em 50% */
+    margin: 10px; /* Adiciona um espaço ao redor para um melhor layout */
+}
+
+.checkbox-container {
+    display: flex;              /* Alinha os elementos em linha */
+    align-items: center;       /* Alinha verticalmente no centro */
+    gap: 10px;                 /* Espaço entre a checkbox e o label */
 }
