@@ -4,24 +4,8 @@
     box-sizing: border-box;
 }
 
-/*
 body {
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-*/
-
-body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Montserrat', sans-serif;    
     line-height: 1.6;
     color: #333;
     background-color: #f4f4f4; /* Esta cor ainda será usada se a imagem não carregar */
@@ -31,9 +15,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('/static/image/fundo-car.jpg'); /* Adicione o caminho para sua imagem aqui */
-    background-size: cover; /* Faz a imagem cobrir todo o corpo */
-    background-position: center; /* Centraliza a imagem */
+    /*background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
+    url('/static/image/car2000.jpg');  Adicione o caminho para sua imagem aqui */
+    /*background-size: cover;  Faz a imagem cobrir todo o corpo */
+    /*background-position: center;  Centraliza a imagem */
 }
 
 main {
@@ -58,6 +43,8 @@ header {
     background: linear-gradient(90deg, #005f91, #00a3e0);
     padding: 10px 20px;
     color: #fff;
+
+    margin-bottom: 20px; /* Adiciona espaço abaixo do cabeçalho */
 }
 
 /* Logo e nome do sistema */
@@ -67,7 +54,7 @@ header {
 }
 
 .logo {
-    width: 50px; /* Ajuste o tamanho do ícone conforme necessário */
+    width: 30px; /* Ajuste o tamanho do ícone conforme necessário */
     height: auto;
     margin-right: 10px;
 }
@@ -96,7 +83,7 @@ header {
     text-decoration: underline;
 }
 
-
+/* Header */
 header nav ul {
     list-style: none;
     padding: 0;

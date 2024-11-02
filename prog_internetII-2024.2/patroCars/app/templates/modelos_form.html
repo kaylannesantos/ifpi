@@ -8,13 +8,28 @@
     <title>PatroCars - Adicionar Modelo</title>
 </head>
 <body>
-    <h1 class="title">Adicionar Modelo</h1>
+    <header>
+        <div class="logo-container">
+            <img src="/static/image/carro.png" alt="Logo PatroCars" class="logo">
+            <span class="system-name">PatroCars</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/montadora/list">Montadoras</a></li>
+                <li><a href="/modelo/list">Modelos</a></li>
+                <li><a href="/veiculo/list">Veículos</a></li>
+            </ul>
+        </nav>
+    </header>
     <form class="form" action="{% if modelo %}/modelo/update/{{ modelo.id }}{% else %}/modelo/create{% endif %}" method="post">
+        <h1 class="title">Adicionar Modelo</h1>
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="{{ modelo.nome if modelo else '' }}" required>
         <br>
         <label for="montadora_id">Montadora:</label>
         <select id="montadora_id" name="montadora_id" value="{{ modelo.montadora_id if modelo else '' }}" required>
+            <option value="">Selecione uma Montadora</option>
             {% for montadora in montadoras %}
                 <option value="{{ montadora.id }}"
                     {% if modelo and modelo.montadora_id == montadora.id %} selected {% endif %}>

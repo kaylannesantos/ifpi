@@ -7,8 +7,23 @@
     <title>PatroCars - Adicionar Montadora</title>
 </head>
 <body>
-    <h1 class="title">Adicionar Montadora</h1>
+    <link href="https://db.onlinewebfonts.com/c/1769cbf3b0514c7fad86318143c7ab6e?family=Teko" rel="stylesheet" type="text/css"/>
+    <header>
+        <div class="logo-container">
+            <img src="/static/image/carro.png" alt="Logo PatroCars" class="logo">
+            <span class="system-name">PatroCars</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/montadora/list">Montadoras</a></li>
+                <li><a href="/modelo/list">Modelos</a></li>
+                <li><a href="/veiculo/list">Veículos</a></li>
+            </ul>
+        </nav>
+    </header>
     <form class="form" action="{% if montadora %}/montadora/update/{{ montadora.id }}{% else %}/montadora/create{% endif %}" method="post">
+        <h1 class="title">Adicionar Montadora</h1>
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" value="{{ montadora.nome if montadora else '' }}" required>
         <br>
