@@ -1,44 +1,24 @@
-from carregar_relatorio import r
+import redis
 import json
 
-def consultar_redis(nome_relatorio, indice=None, campo=None, valor=None):
-    """
-    Consulta o Redis por índice ou por um valor específico em um campo.
+# Conexão com o Redis (ajuste a configuração se necessário)
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+# Função para consultar dados no Redis
+def consultar_redis(nome_relatorio, indice):
+    chave = f"{nome_relatorio}:{indice}"  # A chave única para o relatório e índice
+    resultado = r.get(chave)  # Recupera o valor do Redis usando a chave
     
-    Args:
-        nome_relatorio (str): Nome da aba/relatório.
-        indice (int, opcional): Índice para consulta direta.
-        campo (str, opcional): Nome do campo para busca específica.
-        valor (qualquer tipo, opcional): Valor a buscar no campo especificado.
-
-    Returns:
-        dict ou str: Dicionário com o registro ou mensagem de erro.
-    """
-    # Consulta por índice
-    if indice is not None:
-        chave = f"{nome_relatorio}:{indice}"
-        resultado = r.get(chave)
-        if resultado:
-            return json.loads(resultado)
-        else:
-            return "Registro não encontrado pelo índice."
-
-    # Consulta por campo e valor
-    elif campo and valor is not None:
-        for chave in r.scan_iter(f"{nome_relatorio}:*"):
-            registro = json.loads(r.get(chave))
-            if registro.get(campo) == valor:
-                return registro
-        return "Registro não encontrado pelo valor."
-
+    # Se o resultado existe, converte de volta para um dicionário
+    if resultado:
+        return json.loads(resultado)
     else:
-        return "Parâmetros de consulta inválidos. Forneça um índice ou campo e valor."
+        return "Registro não encontrado."
 
-# Exemplos de consulta
-# Consulta pelo índice 0 na aba 'Estado'
-resultado_indice = consultar_redis('Estado', indice=0)
-print("Resultado da consulta por índice:", resultado_indice)
+# Exemplo de consulta para um valor específico
+resultado_estado_0 = consultar_redis('Estado', 6)  # Consulta o primeiro registro da aba 'Estado'
+print("Resultado da consulta para o estado 0:", resultado_estado_0)
 
-# Consulta pelo valor 'SP' na coluna 'Estado' na aba 'Estado'
-resultado_valor = consultar_redis('Estado', campo='Estado', valor='SP')
-print("Resultado da consulta por valor:", resultado_valor)
+# Exemplo de consulta para o foco de incêndio em determinado mês
+resultado_mes_2023_01 = consultar_redis('FocosPorMes', '2024-06')  # Consulta focos por mês para Janeiro de 2023
+print("Resultado da consulta para Janeiro de 2023:", resultado_mes_2023_01)

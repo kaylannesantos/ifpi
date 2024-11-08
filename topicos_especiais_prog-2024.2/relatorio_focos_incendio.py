@@ -1,4 +1,24 @@
 import pandas as pd
+import redis
+import json
+
+# Conexão com o Redis (ajuste a configuração se necessário)
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+# Função para salvar os dados no Redis
+def salvar_no_redis(nome_relatorio, dataframe):
+    # Verifica se é uma Series ou DataFrame
+    if isinstance(dataframe, pd.Series):
+        # Para Series, usa items() para iterar sobre os valores e índices
+        for idx, valor in dataframe.items():
+            chave = f"{nome_relatorio}:{idx}"  # Chave única para cada valor
+            # Cria um dicionário com a chave sendo o índice e o valor sendo o valor da Series
+            r.set(chave, json.dumps({nome_relatorio: valor}))
+    else:
+        # Para DataFrame, usa iterrows()
+        for idx, row in dataframe.iterrows():
+            chave = f"{nome_relatorio}:{idx}"  # Chave única para cada linha
+            r.set(chave, json.dumps(row.to_dict()))  # Converte a linha em JSON e armazena no Redis
 
 # Carrega os dados de incêndio a partir de um arquivo CSV
 df = pd.read_csv('focos_incendio.csv')
@@ -6,47 +26,20 @@ df = pd.read_csv('focos_incendio.csv')
 # Converte a coluna 'DataHora' para o tipo datetime
 df['DataHora'] = pd.to_datetime(df['DataHora'], format='%Y/%m/%d %H:%M:%S')
 
-# Amostra dos dados
-print("Amostra dos dados:")
-print(df.head())
-
-# Relatório de focos de incêndio por estado
+# Relatórios de focos de incêndio por estado, município, etc.
 focos_por_estado = df['Estado'].value_counts()
-print("\nFocos de incêndio por estado:")
-print(focos_por_estado)
-
-# Relatório de focos de incêndio por município
 focos_por_municipio = df['Municipio'].value_counts()
-print("\nFocos de incêndio por município:")
-print(focos_por_municipio)
-
-# Média de RiscoFogo por estado
 risco_fogo_medio = df.groupby('Estado')['RiscoFogo'].mean()
-print("\nMédia de risco de fogo por estado:")
-print(risco_fogo_medio)
-
-# Média de Precipitação por bioma
 precipitacao_media_bioma = df.groupby('Bioma')['Precipitacao'].mean()
-print("\nMédia de precipitação por bioma:")
-print(precipitacao_media_bioma)
-
-# Média de FRP (Fire Radiative Power) por estado
 frp_medio_estado = df.groupby('Estado')['FRP'].mean()
-print("\nMédia de FRP por estado:")
-print(frp_medio_estado)
-
-# Focos de incêndio por mês
 focos_por_mes = df.groupby(df['DataHora'].dt.to_period('M')).size()
-print("\nFocos de incêndio por mês:")
-print(focos_por_mes)
 
-# Exporta o relatório para um arquivo Excel
-with pd.ExcelWriter('relatorio_focos_incendio.xlsx') as writer:
-    focos_por_estado.to_frame(name='Focos por Estado').to_excel(writer, sheet_name='Estado')
-    focos_por_municipio.to_frame(name='Focos por Município').to_excel(writer, sheet_name='Município')
-    risco_fogo_medio.to_frame(name='Risco Médio de Fogo').to_excel(writer, sheet_name='Risco de Fogo')
-    precipitacao_media_bioma.to_frame(name='Precipitação Média por Bioma').to_excel(writer, sheet_name='Precipitação Bioma')
-    frp_medio_estado.to_frame(name='FRP Médio por Estado').to_excel(writer, sheet_name='FRP Estado')
-    focos_por_mes.to_frame(name='Focos por Mês').to_excel(writer, sheet_name='Focos por Mês')
+# Salva os dados no Redis, cada um com nome de relatório
+salvar_no_redis('Estado', focos_por_estado)
+salvar_no_redis('Municipio', focos_por_municipio)
+salvar_no_redis('RiscoFogo', risco_fogo_medio)
+salvar_no_redis('Precipitacao', precipitacao_media_bioma)
+salvar_no_redis('FRP', frp_medio_estado)
+salvar_no_redis('FocosPorMes', focos_por_mes)
 
-print("Relatório gerado e exportado para 'relatorio_focos_incendio.xlsx'")
+print("Relatório salvo no Redis.")
