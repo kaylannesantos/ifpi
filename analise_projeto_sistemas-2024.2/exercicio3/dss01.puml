@@ -1,0 +1,15 @@
+@startuml dss01
+actor Funcionario
+participant "Sistema" as Sistema
+
+Funcionario -> Sistema: Manter dados do ponto
+Funcionario <-- Sistema: Ultimos registro (Inserir, Alterar e Remover)
+Funcionario -> Sistema: Inserir ponto
+activate Sistema
+Funcionario <-- Sistema: Tela de inserção dos dados (hr_inicio, hr_termino, dt e n_projeto)
+Funcionario -> Sistema: Preencher e confirmar os dados
+activate Funcionario
+Funcionario <-- Sistema: Confirma dados inseridos
+deactivate Sistema
+Funcionario <-- Sistema : "Ponto inserido com sucesso."
+deactivate Funcionario

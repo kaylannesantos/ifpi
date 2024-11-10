@@ -1,0 +1,19 @@
+@startuml dss02
+actor Cliente
+actor Garçom
+participant "Sistema" as Sistema
+actor Cozinha
+
+Cliente -> Garçom: Solicita Cardapio
+Garçom --> Cliente: Entrega Cardapio
+Cliente -> Garçom: Escolhe e informa o prato
+activate Cliente
+Garçom -> Sistema: Registra o pedido
+Garçom -> Cozinha: Envia o pedido
+activate Garçom
+Cozinha -> Cozinha: Prepara o prato
+Cozinha --> Garçom: Entrega o prato
+deactivate Garçom
+Garçom --> Cliente: Entrega o prato
+deactivate Cliente
+@enduml

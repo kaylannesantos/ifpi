@@ -1,0 +1,19 @@
+@startuml dss03
+actor Cliente
+participant "Caixa Eletrônico" as CE
+participant "Conta Bancária" as CB
+participant Banco
+
+Cliente -> CE: Solicita o saque
+CE -> CB: Consulta e verifica o saldo
+alt Saldo Suficiente
+    CB --> CE : "Saldo OK"
+    CE -> Banco: Solicita autorização
+    Banco --> CE: "Autorizada"
+    CE --> Cliente :Libera o dinheiro
+    CE -> CB: Atualiza o saldo
+else Saldo Insuficiente
+    CB --> CE : "Saldo insuficiente"
+    CE --> Cliente : "Saldo insuficiente"
+end
+@enduml
