@@ -18,7 +18,12 @@ def salvar_no_redis(nome_relatorio, dataframe):
         # Para DataFrame, usa iterrows()
         for idx, row in dataframe.iterrows():
             chave = f"{nome_relatorio}:{idx}"  # Chave única para cada linha
-            r.set(chave, json.dumps(row.to_dict()))  # Converte a linha em JSON e armazena no Redis
+            # Convertendo Timestamps para string
+            row_dict = row.to_dict()
+            for key, value in row_dict.items():
+                if isinstance(value, pd.Timestamp):
+                    row_dict[key] = value.strftime('%Y-%m-%d %H:%M:%S')  # Formato desejado para DataHora
+            r.set(chave, json.dumps(row_dict))  # Converte a linha em JSON e armazena no Redis
 
 # Carrega os dados de incêndio a partir de um arquivo CSV
 df = pd.read_csv('focos_incendio.csv')
