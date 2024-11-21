@@ -1,12 +1,6 @@
 import pandas as pd
 import psycopg2
-from psycopg2 import sql
 
-# Caminho do arquivo CSV
-#file_path = '/mnt/data/focos_incendio.csv'
-
-# Leitura do CSV usando pandas
-#df = pd.read_csv(file_path)
 df = pd.read_csv('focos_incendio.csv')
 
 # Conexão com o PostgreSQL

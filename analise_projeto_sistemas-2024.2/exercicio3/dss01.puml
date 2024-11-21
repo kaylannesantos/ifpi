@@ -1,6 +1,6 @@
 @startuml dss01
 actor Funcionario
-participant "Sistema" as Sistema
+participant Sistema
 
 Funcionario -> Sistema: Manter dados do ponto
 Funcionario <-- Sistema: Ultimos registro (Inserir, Alterar e Remover)
