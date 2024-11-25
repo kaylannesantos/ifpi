@@ -1,0 +1,30 @@
+@startuml DSS - Reservar Livro
+skinparam ParticipantBackgroundColor LightBlue
+actor "Usuário" as user
+participant Sistema
+
+user -> Sistema : Realiza Login
+Sistema --> user : Exibe a tela inicial
+user -> Sistema: Pesquisa o livro por: titulo, autor, ISBN
+activate Sistema
+activate user
+Sistema --> user: Exibe o livro buscado(nome, status, qtd_exemplares, autor, genero, idioma)
+deactivate Sistema
+deactivate user
+alt Quantidade Exemplares Suficiente
+    user -> Sistema : Clica em: "Reservar o livro"
+    activate Sistema
+    activate user
+    Sistema --> user : Notificação: "Livro reservado com sucesso".
+    deactivate Sistema
+    deactivate user
+    user -> Sistema : Clica em perfil
+    Sistema --> user : Exibe Perfil
+    user -> Sistema : Clica em 'Sair'
+else Quantidade Exemplares Insuficiente
+    user -> Sistema : Volta a tela inicial
+    user -> Sistema : Clica em perfil
+    Sistema --> user : Exibe Perfil
+    user -> Sistema : Clica em 'Sair'
+end
+@enduml

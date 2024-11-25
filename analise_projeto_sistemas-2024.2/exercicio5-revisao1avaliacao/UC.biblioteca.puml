@@ -1,0 +1,26 @@
+@startuml UC-biblioteca
+!define UseCaseColor LightBlue
+
+' Declaração de atores
+actor "Usuário" as user
+
+' Casos de uso
+usecase "Realizar Cadastro" as RealizarCadastro #UseCaseColor
+usecase "Realizar Login" as Login #UseCaseColor
+usecase "Pesquisar Livro" as PesquisarLivro #UseCaseColor
+usecase "Realizar Empréstimo" as RealizarEmprestimo #UseCaseColor
+usecase "Reservar Livro" as ReservarLivro #UseCaseColor
+usecase "Devolver Livro" as DevolverLivro #UseCaseColor
+usecase "Notificar Reserva" as NotificarReserva #UseCaseColor
+
+' Relacionamentos principais
+user --> RealizarCadastro
+RealizarCadastro --> Login
+Login <-- PesquisarLivro : <<extends>>
+Login <-- ReservarLivro : <<extends>>
+Login <-- RealizarEmprestimo : <<extends>>
+
+' Relacionamentos de dependência
+RealizarEmprestimo --> DevolverLivro : <<include>>
+ReservarLivro --> NotificarReserva : <<include>>
+@enduml
