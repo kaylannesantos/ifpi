@@ -1,0 +1,16 @@
+@startuml UC - sistemaBancario
+actor Cliente 
+
+usecase "Transferir Dinheiro" as TD
+usecase Login 
+usecase "Consultar Saldo" as CS
+usecase "Realizar Saque" as RS
+usecase "Emitir Extrato" as EE
+
+Cliente --> Login
+Login <-- CS : <<extends>>
+Login <-- RS : <<extends>>
+RS <-- EE : <<extends>>
+TD <-- EE : <<include>>
+
+@enduml

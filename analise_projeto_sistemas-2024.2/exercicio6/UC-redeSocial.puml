@@ -1,0 +1,9 @@
+@startuml UC - redeSocial
+actor "Usuário" as user
+
+usecase "Realizar Login" as login
+usecase "Realizar Cadastro" as cadastro
+
+user --> login
+user --> cadastro
+@enduml

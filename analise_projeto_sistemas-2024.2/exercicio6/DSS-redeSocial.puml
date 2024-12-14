@@ -1,0 +1,21 @@
+@startuml DSS-redeSocial
+actor "Usuário" as user
+participant "Sistema de Autenticação" as auth
+database "Banco de Dados" as db
+
+'== Fluxo Principal ==
+alt Fluxo Principal
+user -> auth: Inserir login e senha
+auth -> db: Verificar login e senha
+db --> auth: Credenciais válidas
+auth --> user: Login bem-sucedido ("Usuário e senha corretos.")
+
+'== Fluxo Alternativo: Falha na autenticação ==
+else Fluxo Alternativo: Falha na autenticação
+user -> auth: Inserir login e senha
+auth -> db: Verificar login e senha
+db --> auth: Credenciais inválidas
+auth --> user: Notificar falha na autenticação ("Senha incorreta")
+
+end
+@enduml

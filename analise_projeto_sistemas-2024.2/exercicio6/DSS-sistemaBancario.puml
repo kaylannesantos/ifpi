@@ -1,0 +1,23 @@
+@startuml DSS-sistemaBancario
+actor "Cliente" as user
+participant "Sistema Bancário" as SB
+
+user -> SB : Login
+SB --> user : Tela Inicial
+user -> SB : Opção Transferir Dinheiro
+SB --> user : "Digite o valor que deseja transferir:"
+user -> SB : Digita o valor a transferir
+SB --> user : "Digite a conta de destino:"
+user -> SB : Digita a conta de destino
+SB -> SB : Consulta o Saldo
+alt Saldo Suficiente
+    SB --> user : Revisar transferência
+    user -> SB : Confirma operação de transferência
+    SB --> user : "Transferência realizada com sucesso."
+    SB -> user : Emite Extrato 
+else Saldo Insuficiente
+    SB -> SB : Transação cancelada
+    SB --> user : "Saldo Insuficiente."
+end
+SB --> user : Operação Encerrada
+@enduml
