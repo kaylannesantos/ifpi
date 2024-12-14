@@ -6,4 +6,5 @@ usecase "Realizar Cadastro" as cadastro
 
 user --> login
 user --> cadastro
+
 @enduml
