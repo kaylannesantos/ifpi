@@ -1,36 +1,46 @@
 @startuml Diagrama de Classe - Biblioteca
+' Classe Livro
 class Livro {
-    + String nome
-    + int idade
-    + String tipo
-    + void comer()
-    + void dormir()
+    + String titulo
+    + String autor
+    + String isbn
+    + Boolean disponivel
+    + void emprestar()
+    + void devolver()
 }
 
+' Classe Cliente
 class Cliente {
     + String nome
+    + Integer id
     + String telefone
-    + String email
-    + void agendarConsulta(Pet pet, String data)
+    + String endereco
+    + void realizarEmprestimo()
+    + void devolverLivro()
 }
 
+' Classe Empréstimo
 class Emprestimo {
-    + String data
-    + String hora
-    + String observacoes
-    + void confirmar()
-    + void cancelar()
+    + Date dataEmprestimo
+    + Date dataDevolucao
+    + Livro livro
+    + Cliente cliente
+    + void calcularMulta()
+    + void finalizarEmprestimo()
 }
 
+' Classe Funcionário
 class Funcionario {
-    + String data
-    + String hora
-    + String observacoes
-    + void confirmar()
-    + void cancelar()
+    + String nome
+    + Integer matricula
+    + String cargo
+    + void registrarEmprestimo()
+    + void registrarDevolucao()
 }
 
-Tutor "1" -- "0..*" Pet : possui
-Pet "1" --> "0..*" Consulta : está associado
-Consulta "1" --> "1" Tutor : é agendada por
+' Relacionamentos
+Cliente "1" -- "0..*" Emprestimo : realiza
+Livro "1" --> "0..*" Emprestimo : está associado
+Funcionario "1" --> "0..*" Emprestimo : registra
+
 @enduml
