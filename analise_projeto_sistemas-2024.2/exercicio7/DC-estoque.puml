@@ -1,0 +1,30 @@
+@startuml Diagrama de Classe - Cadastro de Produtos em Estoque
+
+class Produto {
+    + nome: string
+    + codigo: int
+    + preco: float
+    + disponivel: boolean
+    + atualizarProduto(): void
+}
+
+class Fornecedor {
+    + nome: string
+    + cnpj: string
+    + endereco: string
+    + produto: Produto
+    + fornecerProduto(): void
+    + registrarFornecedor(): void
+}
+
+class Lote {
+    + dataRecebimento: date
+    + quantidade:  int
+    + registrarLote(): void
+}
+
+' Relacionamentos
+Fornecedor "1..1" -- "0..*" Produto : fornece
+Produto "1..1" -- "0..*" Lote : recebido
+
+@enduml

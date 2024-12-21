@@ -1,0 +1,38 @@
+@startuml Diagrama de Classe - Hotel
+
+class Hospede {
+    + nome: string
+    + telefone: string
+    + endereco: string
+    + solicitarReserva(): void
+}
+
+class Quarto {
+    + categoria: string
+    + numero: int
+    + disponivel: boolean
+}
+
+class Reserva {
+    + dataReserva: date
+    + dataHospedagem: date
+    + hospede:  Hospede
+    + quarto: Quarto
+    + pago: boolean
+    + realizarReserva(): void
+    + cancelarReserva(): void
+}
+
+class Pagamento {
+    + dataPagamento: date
+    + valorReserva: float
+    + reserva: Reserva
+    + realizarPagamento(): void
+}
+
+' Relacionamentos
+Hospede "1..1" -- "1..*" Reserva : solicita
+Reserva "1..1" -- "1..*" Quarto : reserva
+Reserva "1..1" -- "1..*" Pagamento : tem
+
+@enduml

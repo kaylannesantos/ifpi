@@ -1,41 +1,38 @@
 @startuml Diagrama de Classe - Biblioteca
-' Classe Livro
+
 class Livro {
-    + String titulo
-    + String autor
-    + String isbn
-    + Boolean disponivel
-    + void emprestar()
-    + void devolver()
+    + titulo: string
+    + autor: string
+    + isbn: string
+    + disponivel: boolean
+    + emprestar(): void
+    + devolver(): void
 }
 
-' Classe Cliente
 class Cliente {
-    + String nome
-    + Integer id
-    + String telefone
-    + String endereco
-    + void realizarEmprestimo()
-    + void devolverLivro()
+    + nome: string
+    + id: int
+    + telefone: string
+    + endereco: string
+    + realizarEmprestimo(): void
+    + devolverLivro(): void
 }
 
-' Classe Empréstimo
 class Emprestimo {
-    + Date dataEmprestimo
-    + Date dataDevolucao
-    + Livro livro
-    + Cliente cliente
-    + void calcularMulta()
-    + void finalizarEmprestimo()
+    + dataEmprestimo: date
+    + dataDevolucao: date
+    + livro: Livro
+    + cliente: Cliente
+    + calcularMulta(): void
+    + finalizarEmprestimo(): void
 }
 
-' Classe Funcionário
 class Funcionario {
-    + String nome
-    + Integer matricula
-    + String cargo
-    + void registrarEmprestimo()
-    + void registrarDevolucao()
+    + nome: string
+    + matricula: int
+    + cargo: string
+    + registrarEmprestimo(): void
+    + registrarDevolucao(): void
 }
 
 ' Relacionamentos
