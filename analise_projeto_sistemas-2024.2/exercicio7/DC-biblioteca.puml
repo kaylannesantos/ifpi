@@ -1,2 +1,36 @@
-@startuml Diagrama de Classes - Biblioteca
+@startuml Diagrama de Classe - Biblioteca
+class Livro {
+    + String nome
+    + int idade
+    + String tipo
+    + void comer()
+    + void dormir()
+}
+
+class Cliente {
+    + String nome
+    + String telefone
+    + String email
+    + void agendarConsulta(Pet pet, String data)
+}
+
+class Emprestimo {
+    + String data
+    + String hora
+    + String observacoes
+    + void confirmar()
+    + void cancelar()
+}
+
+class Funcionario {
+    + String data
+    + String hora
+    + String observacoes
+    + void confirmar()
+    + void cancelar()
+}
+
+Tutor "1" -- "0..*" Pet : possui
+Pet "1" --> "0..*" Consulta : está associado
+Consulta "1" --> "1" Tutor : é agendada por
 @enduml
