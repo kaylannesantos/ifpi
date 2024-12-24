@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../model/models/ItemModel.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -10,12 +9,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  // Lista de itens
-  List<ItemModel> items = [
-    ItemModel(nome: "Item I", check: true),
-    ItemModel(nome: "Item II", check: false),
-    ItemModel(nome: "Item III", check: true),
-  ];
+  String result = '';
+  final TextEditingController _gasolinaController = TextEditingController();
+  final TextEditingController _alcoolController = TextEditingController();
+
+  void calcularGasolina() {
+    String mensagem = '';
+    double valorGasolina = double.tryParse(_gasolinaController.text) ?? 0.0;
+    double valorAlcool = double.tryParse(_alcoolController.text) ?? 0.0;
+
+    double resultado = valorAlcool / valorGasolina * 100;
+
+    if (resultado >= 70) {
+      mensagem = 'Abasteça com Alcool';
+    }else{
+      mensagem = 'Abasteça com Gasolina';
+    }
+
+    // Atualiza o estado para que a interface seja reconstruída
+    setState(() {
+      result = mensagem;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +48,115 @@ class MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
 
             const Text(
-              'Lista de Itens:',
+              'Gasolina x Alcool',
               style: TextStyle(fontSize: 20),
             ),
 
-            // Testando o uso ListView para exibir os itens
-            Expanded(
-              child: ListView.builder(
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  ItemModel item = items[index];
-                  return ListTile(
-                    title: Text(item.nome ?? "No Name"),
-                    trailing: Icon(
-                      item.check == true ? Icons.check_circle : Icons.cancel,
-                      color: item.check == true ? Colors.green : Colors.red,
-                    ),
-                  );
-                },
+            const SizedBox(height: 20),
+
+            // Primeiro ícone com círculo
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 200, // Tamanho do círculo
+                  height: 200, // Tamanho do círculo
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.green, // Cor do círculo
+                  ),
+                  child: const Icon(
+                    Icons.local_gas_station_outlined,
+                    size: 150,
+                    color: Colors.white, // Cor do ícone
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 15),
+
+            // Linha com três ícones, cada um com seu círculo
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.orange,
+                  ),
+                  child: const Icon(
+                    Icons.local_gas_station_outlined,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                ),
+
+                const SizedBox(width: 40),
+
+                // Espaçamento entre os ícones
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.grey,
+                  ),
+                  child: const Icon(
+                    Icons.local_gas_station_outlined,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                ),
+
+                const SizedBox(width: 40),
+
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.blue,
+                  ),
+                  child: const Icon(
+                    Icons.local_gas_station_outlined,
+                    size: 50,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+
+            TextField(
+              controller: _gasolinaController,
+              decoration: const InputDecoration(
+                labelText: 'Valor da gasolina',
+                //border: OutlineInputBorder()
               ),
+            ),
+
+            TextField(
+              controller: _alcoolController,
+              decoration: const InputDecoration(
+              labelText: 'Valor do alcool',
+              //border: OutlineInputBorder()
+              ),
+            ),
+
+            ElevatedButton(
+              onPressed: calcularGasolina, 
+              child: const Text('Calcular')),
+
+            // Resultado
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Resultado: $result',
+                  style: TextStyle(fontSize: 24),
+                )
+              ],
             ),
 
           ],
