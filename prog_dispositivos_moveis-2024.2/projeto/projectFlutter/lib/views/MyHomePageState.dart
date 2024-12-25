@@ -32,8 +32,6 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +47,7 @@ class MyHomePageState extends State<MyHomePage> {
 
             const Text(
               'Gasolina x Alcool',
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 24),
             ),
 
             const SizedBox(height: 20),
@@ -146,7 +144,8 @@ class MyHomePageState extends State<MyHomePage> {
 
             ElevatedButton(
               onPressed: calcularGasolina, 
-              child: const Text('Calcular')),
+              child: const Text('Calcular')
+            ),
 
             // Resultado
             Row(
