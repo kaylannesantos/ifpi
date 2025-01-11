@@ -1,0 +1,38 @@
+@startuml DC - Pedidos de Restaurante
+
+class Item {
+    +nome: String
+    +preco: Float
+    +descricao: String
+}
+
+class Cardapio {
+    +nome: String
+}
+
+class PedidoItem {
+    +quantidade: Int
+}
+
+class Pedido {
+    +data: Date
+    +hora: Time
+    +valorTotal: Float
+}
+
+class Pagamento {
+    +tipo: String
+    +valor: Float
+}
+
+class Cliente {
+    +nome: String
+    +telefone: String
+}
+
+Cardapio "1..1" -- "0..*" Item : contém
+Pedido "1..1" --> "1..*" PedidoItem : possui
+Item "1..1" --> "1..*" PedidoItem : esta em
+Cliente "1..1" -- "0..*" Pedido : realiza
+Pedido "1..1" -- "1..*" Pagamento : tem
+@enduml

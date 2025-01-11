@@ -1,0 +1,23 @@
+@startuml DC - Cadastro de Funcionarios
+
+class Funcionario {
+    +nome: String
+    +cpf: String
+    +cargo: String
+    +salario: Float
+}
+
+class Gerente {
+    +gerenciar(): void
+}
+
+class Departamento {
+    +nome: String
+    +gerente: Gerente
+}
+
+Funcionario <|-- Gerente
+Departamento "1..1" -- "1..1" Funcionario : gerencia >
+Gerente "1" --> "1" Departamento : tem > 
+
+@enduml

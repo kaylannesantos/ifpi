@@ -1,0 +1,38 @@
+@startuml DC - Gestão de Estacionamento
+
+class Estacionamento {
+    +nome: String 
+    +capacidadeMaxima: int 
+}
+
+class Vaga {
+    +numero: int 
+    +tipo: String 
+}
+
+class Cliente {
+    +nome: String 
+    +cpf: int 
+}
+
+class Veiculo {
+    +placa: String
+    +ano_fabricacao: int
+    +modelo: String
+    +cor: String
+}
+
+class Registro {
+    +dataEntrada: Date
+    +horaEntrada: Time
+    +dataSaida: Date
+    +horaSaida: Time
+    +tempoPermanencia(): Float
+}
+
+Estacionamento "1..1" -- "1..*" Vaga: possui >
+Vaga "1..1" -- "0..*" Registro: esta >
+Veiculo "1..1" -- "1..*" Registro: esta associado >
+Cliente "1..1" -- "0..*" Veiculo: possui >
+
+@enduml

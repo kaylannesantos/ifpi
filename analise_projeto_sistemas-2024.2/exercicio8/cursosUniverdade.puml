@@ -1,0 +1,39 @@
+@startuml DC - Cadastro de Cursos de uma Universidade
+
+class Universidade {
+    +nome: String
+}
+
+class Curso {
+    +nome: String 
+    +codigo: int
+}
+
+class Aluno {
+    +nome: String 
+    +matricula: String 
+    +dtNascimento: Date 
+}
+
+class Professor {
+    +nome: String 
+    +matricula: int 
+}
+
+class Disciplina {
+    +nome: String 
+    +cargaHoraria: int 
+}
+
+class Matricula {
+    +datMatricula: Date
+    +situacao: String
+}
+
+Universidade "1..1" -- "0..*" Curso : oferece
+Curso "1..1" -- "0..*" Aluno : tem
+Curso "1..1" -- "1..1" Professor : orienta
+Curso "1..1" -- "1..*" Disciplina : possui
+Aluno "1..1" -- "0..*" Matricula : realiza
+Disciplina "1..1" --> "1..*" Matricula : está associada
+@enduml

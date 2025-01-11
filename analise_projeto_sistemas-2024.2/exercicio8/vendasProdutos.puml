@@ -1,0 +1,33 @@
+@startuml DC - Vendas de Produtos
+
+class Produto {
+    +nome: String 
+    +preco: int 
+    +codigo: int
+}
+
+class Cliente {
+    +nome: String
+    +email: String
+    +numero: int
+}
+
+class Venda {
+    +cliente: Cliente 
+    +total: Float 
+    +dataVenda: Date
+    +status: boolean
+}
+
+class ItemVenda {
+    +produto: Produto
+    +venda: Venda
+    +totalItem: Float
+    +quantItem: int
+}
+
+Cliente "1..1" -- "0..*" Venda: realiza >
+Venda "1..1" -- "1..*" ItemVenda: contém >
+Produto "1..1" -- "1..*" ItemVenda: tem >
+
+@enduml
