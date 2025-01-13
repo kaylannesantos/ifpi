@@ -15,7 +15,18 @@ class _List extends State<List>{
       ),
 
       body: const Center(
-        child: Text('Listagem')
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Listagem',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
+        ),
       )
     );
   }

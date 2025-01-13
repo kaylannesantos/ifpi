@@ -17,10 +17,21 @@ class _Login extends State<Login>{
         title: const Text('Login'),
       ),
 
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),//
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+              'Login',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 24),//espaçamento
+
             TextField(
               controller: _name,
               decoration: const InputDecoration(
@@ -28,6 +39,8 @@ class _Login extends State<Login>{
                 border: OutlineInputBorder(),
               ),
             ),
+
+            const SizedBox(height: 5),//espaçamento
 
             TextField(
               controller: _password,

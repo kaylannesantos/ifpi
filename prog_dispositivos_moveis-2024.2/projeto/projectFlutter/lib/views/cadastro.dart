@@ -18,10 +18,22 @@ class _Cadastro extends State<Cadastro>{
         title: const Text('Cadastro'),
       ),
 
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Text(
+              'Cadastro',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 24),//espaçamento
+
             TextField(
               controller: _name,
               decoration: const InputDecoration(
@@ -30,6 +42,8 @@ class _Cadastro extends State<Cadastro>{
               ),
             ),
 
+            const SizedBox(height: 5),//espaçamento
+
             TextField(
               controller: _password,
               decoration: const InputDecoration(
@@ -37,6 +51,8 @@ class _Cadastro extends State<Cadastro>{
                 border: OutlineInputBorder(),
               ),
             ),
+
+            const SizedBox(height: 5),//espaçamento
 
             TextField(
               controller: _email,
