@@ -18,7 +18,7 @@ class _Login extends State<Login>{
       ),
 
       body: Padding(
-        padding: const EdgeInsets.all(16.0),//
+        padding: const EdgeInsets.all(16.0),//espaçamento interno (padding) ao redor do conteúdo do widge
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
