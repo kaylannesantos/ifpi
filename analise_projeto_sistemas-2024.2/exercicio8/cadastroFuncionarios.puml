@@ -16,8 +16,16 @@ class Departamento {
     +gerente: Gerente
 }
 
+class RH {
+    +departamento: Departamento
+    +gerenciarFuncionarios():void
+}
+
+
 Funcionario <|-- Gerente
 Departamento "1..1" -- "1..1" Funcionario : gerencia >
+RH --|> Departamento
 Gerente "1" --> "1" Departamento : tem > 
+
 
 @enduml

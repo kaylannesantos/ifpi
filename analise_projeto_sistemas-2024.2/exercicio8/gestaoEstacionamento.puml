@@ -12,15 +12,18 @@ class Vaga {
 
 class Cliente {
     +nome: String 
-    +cpf: int 
+    +cpf: int
 }
+
 
 class Veiculo {
     +placa: String
     +ano_fabricacao: int
     +modelo: String
     +cor: String
+    +cliente: Cliente
 }
+
 
 class Registro {
     +dataEntrada: Date
@@ -30,7 +33,8 @@ class Registro {
     +tempoPermanencia(): Float
 }
 
-Estacionamento "1..1" -- "1..*" Vaga: possui >
+Estacionamento "1..1" -- "1..*" Vaga: tem >
+Estacionamento "1..1" -- "1..*" Registro: possui >
 Vaga "1..1" -- "0..*" Registro: esta >
 Veiculo "1..1" -- "1..*" Registro: esta associado >
 Cliente "1..1" -- "0..*" Veiculo: possui >
