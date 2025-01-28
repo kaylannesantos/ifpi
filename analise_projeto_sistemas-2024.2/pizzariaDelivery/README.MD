@@ -1,40 +1,31 @@
 # Pizzaria - Sistema de Controle de Pedidos
 
-Este projeto é uma aplicação simples para gerenciar pedidos de uma pizzaria utilizando uma interface gráfica em Python (Tkinter) com persistência de dados em um banco de dados PostgreSQL.
-
 ---
 
 ## **Pré-requisitos**
 
-### Instalações Necessárias:
-1. **Python 3.x**: Certifique-se de que o Python esteja instalado no seu sistema.
-2. **Biblioteca psycopg2**: Para conectar ao PostgreSQL. Instale com:
+1. **Biblioteca psycopg2**: Para conectar ao PostgreSQL. Instale com:
    ```bash
    pip install psycopg2
    ```
-3. **PostgreSQL**: Instale e configure o PostgreSQL no seu computador.
+2. **PostgreSQL**: Instale e configure o PostgreSQL no seu computador.
 
 ---
 
 ## **Configuração do Banco de Dados**
 
 ### Criar Banco de Dados e Tabela:
-1. Abra o terminal do PostgreSQL e conecte-se ao banco de dados padrão:
-   ```sql
-   psql -U seu_usuario
-   ```
-
-2. Crie o banco de dados "pizzaria":
+1. Crie o banco de dados "pizzaria":
    ```sql
    CREATE DATABASE pizzaria;
    ```
 
-3. Acesse o banco de dados criado:
+2. Acesse o banco de dados criado:
    ```sql
    \c pizzaria
    ```
 
-4. Crie a tabela `pedidos`:
+3. Crie a tabela `pedidos`:
    ```sql
    CREATE TABLE pedidos (
        id SERIAL PRIMARY KEY,
@@ -45,7 +36,6 @@ Este projeto é uma aplicação simples para gerenciar pedidos de uma pizzaria u
        data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
    );
    ```
-
 ---
 
 ## **Configuração do Código**
@@ -63,7 +53,6 @@ Este projeto é uma aplicação simples para gerenciar pedidos de uma pizzaria u
            port="5432"
        )
    ```
-
 ---
 
 ## **Como Executar**
