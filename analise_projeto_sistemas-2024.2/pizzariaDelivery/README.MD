@@ -1,7 +1,5 @@
 # Pizzaria - Sistema de Controle de Pedidos
 
----
-
 ## **Pré-requisitos**
 
 1. **Biblioteca psycopg2**: Para conectar ao PostgreSQL. Instale com:
