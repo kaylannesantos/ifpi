@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'view/gameScreen.dart'; // Certifique-se de que o arquivo da tela está salvo como game_screen.dart
+import 'view/game_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.orange,
       ),
-      home: GameScreen(),
+      home: const GameScreen(),
     );
   }
 }

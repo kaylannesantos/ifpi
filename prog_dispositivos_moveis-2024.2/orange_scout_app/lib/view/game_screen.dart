@@ -20,7 +20,7 @@ class GameScreen extends StatelessWidget {
           // Coluna 1: TIME 1
           Expanded(
             child: Container(
-            color: Color(0xFF3A2E2E),
+            color: const Color(0xFF3A2E2E),
             child: Column(
               children: [
                 Container(
@@ -40,7 +40,7 @@ class GameScreen extends StatelessWidget {
                       height: 50,
                       margin: const EdgeInsets.all(4),
                       child: Center(
-                          child: Text("Jogador ${index + 1}", style: TextStyle(color: Color(0xFFF6B712)),)
+                          child: Text("Jogador ${index + 1}", style: const TextStyle(color: Color(0xFFF6B712)),)
                       ),
                     ),
                   ),
@@ -53,7 +53,7 @@ class GameScreen extends StatelessWidget {
           // Coluna 2: AÇÕES DO TIME 1
           Expanded(
           child: Container(
-          color: Color(0xFF3A2E2E),
+          color: const Color(0xFF3A2E2E),
             child: Column(
               children: [
                 Container(
