@@ -23,5 +23,4 @@ y_pred = modelo.predict(X_test)
 
 # Avaliar o modelo
 print("Acurácia:", accuracy_score(y_test, y_pred))
-print("\nRelatório de Classificação:\n", classification_report(y_test, y_pred,
-target_names=iris.target_names))
+print("\nRelatório de Classificação:\n", classification_report(y_test, y_pred,target_names=iris.target_names))
