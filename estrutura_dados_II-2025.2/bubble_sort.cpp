@@ -14,7 +14,7 @@ void bubble_sort(vector<double> &v) {
                 trocou = true;
             }
         }
-        if (!trocou) break; // otimização: já está ordenado
+        if (!trocou) break;
     }
 }
 
